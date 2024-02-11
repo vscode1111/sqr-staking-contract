@@ -106,7 +106,7 @@ export async function getSQRStakingContext(
   const sqrStakingFactory = (await ethers.getContractFactory(
     SQR_STAKING_NAME,
   )) as unknown as SQRStaking__factory;
-  const owner2SqrLockupFactory = (await ethers.getContractFactory(
+  const owner2SqrStakingFactory = (await ethers.getContractFactory(
     SQR_STAKING_NAME,
     owner2,
   )) as unknown as SQRStaking__factory;
@@ -138,7 +138,7 @@ export async function getSQRStakingContext(
 
   return {
     sqrStakingFactory,
-    owner2SqrLockupFactory,
+    owner2SqrSkakingFactory: owner2SqrStakingFactory,
     sqrStakingAddress,
     ownerSQRStaking,
     user1SQRStaking,

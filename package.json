@@ -1,6 +1,6 @@
 {
-  "name": "msq-lockup-contract",
-  "description": "Solidity smart contracts for SQR lockup functionality",
+  "name": "msq-staking-contract",
+  "description": "Solidity smart contracts for SQR staking functionality",
   "version": "0.0.11",
   "scripts": {
     "clean": "shx rm -rf ./dist ./artifacts ./cache ./coverage ./typechain-types ./coverage.json && yarn typechain",

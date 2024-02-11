@@ -7,7 +7,7 @@ import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "./interfaces/IPermitToken.sol";
 
-import "hardhat/console.sol";
+// import "hardhat/console.sol";
 
 contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgradeable {
   /// @custom:oz-upgrades-unsafe-allow constructor
@@ -62,7 +62,7 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
   uint256 public stakedAmount;
   uint256 public paidAmount;
 
-  uint256 public stakingID;
+  uint256 public stakingId;
 
   uint256 internal _multiplierDivider;
   uint256 internal _apyDivider;
@@ -91,7 +91,6 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
   }
 
   function stake(uint256 amount, uint256 StakingTypeID) external {
-    // console.log(111, amount, _minStakAmount);
     address sender = _msgSender();
 
     require(sqrToken.allowance(sender, address(this)) >= amount, "User must allow to use of funds");
@@ -104,14 +103,14 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
       1 ether;
     sqrToken.transferFrom(sender, address(this), amount);
 
-    stakingID++;
+    stakingId++;
 
     stakingData[sender].push(StakEntry(amount, block.timestamp, StakingTypeID, false));
     _stakesCount[sender] += 1;
-    _stakOwners[stakingID] = sender;
+    _stakOwners[stakingId] = sender;
     stakedAmount += amount;
 
-    emit Staked(stakingID, amount, gAmount, sender);
+    emit Staked(stakingId, amount, gAmount, sender);
   }
 
   function unstake(uint256 id) external {
@@ -132,7 +131,7 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
     paidAmount += withdrawAmount;
     stakedAmount -= staking.amount;
 
-    emit Unstaked(stakingID, withdrawAmount, sender);
+    emit Unstaked(stakingId, withdrawAmount, sender);
   }
 
   function getStakesCount(address user) public view returns (uint256) {

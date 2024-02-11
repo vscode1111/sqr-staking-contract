@@ -1,4 +1,4 @@
-# Solidity smart contracts for SQR lockup functionality
+# Solidity smart contracts for SQR staking functionality
 
 ## Getting Started
 

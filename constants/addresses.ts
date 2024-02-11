@@ -9,7 +9,7 @@ export enum CONTRACT_LIST {
 
 export const TOKENS: Record<CONTRACT_LIST, DeployNetworks> = {
   SQR_STAKING: {
-    bsc: '0x3f1Ba41D0b48CdAfAABC5D87075aCbC6dCFe62A4', //Main
+    bsc: '0x77180DFf7A52bd7F1661973cA8D0ef79EbcE5D65', //test
     // bsc: '', //Main
     // bsc: '', //Prod
   },
