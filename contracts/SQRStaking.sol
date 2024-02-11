@@ -28,7 +28,7 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
     stakingTypes.push(StakingType(365 days, 40, 20));
     stakingTypes.push(StakingType(730 days, 60, 30));
 
-    sqrToken = IERC20(_sqrToken);
+    sqrToken = IPermitToken(_sqrToken);
     _multiplierDivider = 10;
     _apyDivider = 1000;
     _minStakAmount = 1e5; //0.001 SQR
