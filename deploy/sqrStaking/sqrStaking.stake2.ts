@@ -20,7 +20,7 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<voi
 
     const params = {
       amount: seedData.stake2,
-      stakingTypeId: StakingTypeID.Type91Days,
+      stakingTypeId: StakingTypeID.Type30Days,
     };
 
     if (params.amount > currentAllowance) {

@@ -16,6 +16,7 @@
     "deploy:fetch": "hardhat deploy --tags SQRStaking:fetch",
     "deploy:stake1": "hardhat deploy --tags SQRStaking:stake1",
     "deploy:stake2": "hardhat deploy --tags SQRStaking:stake2",
+    "deploy:unstake1": "hardhat deploy --tags SQRStaking:unstake1",
     "deploy:emergency-withdrawn": "hardhat deploy --tags SQRStaking:emergency-withdrawn",
     "deploy:publish-abi": "hardhat deploy --tags SQRStaking:publish-abi",
     "lint": "yarn lint:sol && yarn lint:ts && yarn prettier:check",

@@ -8,6 +8,8 @@
     "max-line-length": ["error", 120],
     "named-parameters-mapping": "warn",
     "no-console": "off",
+    "custom-errors": "on",
+    "no-empty-blocks": "off",
     "not-rely-on-time": "off",
     "prettier/prettier": [
       "error",

@@ -17,13 +17,13 @@ export function shouldBehaveCorrectFunding(): void {
 
     it('user1 tries to stake zero amount', async function () {
       await expect(
-        this.user1SQRStaking.stake(seedData.zero, StakingTypeID.Type91Days),
+        this.user1SQRStaking.stake(seedData.zero, StakingTypeID.Type30Days),
       ).revertedWith(errorMessage.youCantStakeThatFewTokens);
     });
 
     it('user1 tries to stake without allowence', async function () {
       await expect(
-        this.user1SQRStaking.stake(seedData.stake1, StakingTypeID.Type91Days),
+        this.user1SQRStaking.stake(seedData.stake1, StakingTypeID.Type30Days),
       ).revertedWith(errorMessage.userMustAllowToUseOfFund);
     });
 
@@ -31,13 +31,13 @@ export function shouldBehaveCorrectFunding(): void {
       await this.user1SQRToken.approve(this.sqrStakingAddress, seedData.extraStake1);
 
       await expect(
-        this.user1SQRStaking.stake(seedData.stake1, StakingTypeID.Type91Days),
+        this.user1SQRStaking.stake(seedData.stake1, StakingTypeID.Type30Days),
       ).revertedWith(errorMessage.userMustHaveFunds);
     });
 
     it('user2 tries to stake without allowence', async function () {
       await expect(
-        this.user2SQRStaking.stake(seedData.stake2, StakingTypeID.Type91Days),
+        this.user2SQRStaking.stake(seedData.stake2, StakingTypeID.Type30Days),
       ).revertedWith(errorMessage.userMustAllowToUseOfFund);
     });
 
@@ -57,7 +57,7 @@ export function shouldBehaveCorrectFunding(): void {
 
       it('user1 is allowed to stake (check event)', async function () {
         const receipt = await waitTx(
-          this.user1SQRStaking.stake(seedData.stake1, StakingTypeID.Type91Days),
+          this.user1SQRStaking.stake(seedData.stake1, StakingTypeID.Type30Days),
         );
         const eventLog = findEvent<StakeEventArgs>(receipt);
 

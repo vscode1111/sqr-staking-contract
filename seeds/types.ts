@@ -29,8 +29,10 @@ export type DeployTokenArgs = [
 ];
 
 export const enum StakingTypeID {
-  Type91Days = 0,
-  Type182Days = 1,
-  Type365Days = 2,
-  Type730Days = 4,
+  Type30Days = 0,
+  Type90Days = 1,
+  Type180Days = 2,
+  Type360Days = 3,
+  Type720Days = 4,
+  Type10Minutes = 5,
 }
