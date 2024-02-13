@@ -14,7 +14,12 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
     _disableInitializers();
   }
 
-  function initialize(address _newOwner, address _sqrToken) public initializer {
+  function initialize(
+    address _newOwner,
+    address _sqrToken,
+    address _coldWallet,
+    uint256 _balanceLimit
+  ) public initializer {
     require(_newOwner != address(0), "New owner address can't be zero");
     require(_sqrToken != address(0), "SQR token address can't be zero");
 
@@ -32,6 +37,8 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
     sqrToken = IPermitToken(_sqrToken);
     _apyDivider = 1000;
     _minStakeAmount = 1e5; //0.001 SQR
+    coldWallet = _coldWallet;
+    balanceLimit = _balanceLimit;
   }
 
   function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
@@ -57,6 +64,9 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
 
   mapping(address user => StakingEntry[] stakes) public stakingData;
 
+  address public coldWallet;
+  uint256 public balanceLimit;
+
   IPermitToken public sqrToken;
   uint256 public stakedAmount;
   uint256 public paidAmount;
@@ -69,8 +79,14 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
 
   event Staked(uint256 id, uint256 amount, address user);
   event Unstaked(uint256 id, uint256 amount, address user);
+  event ChangeBalanceLimit(address indexed sender, uint256 balanceLimit);
 
   //Functions-------------------------------------------
+
+  function changeBalanceLimit(uint256 _balanceLimit) external onlyOwner {
+    balanceLimit = _balanceLimit;
+    emit ChangeBalanceLimit(_msgSender(), _balanceLimit);
+  }
 
   function getStakingOptionInfo(uint256 id) public view returns (uint256, uint256) {
     StakingType memory stakingType = stakingTypes[id];
@@ -104,7 +120,33 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
     _stakesOwners[stakingid] = sender;
     stakedAmount += amount;
 
-    sqrToken.transferFrom(sender, address(this), amount);
+    uint256 contractBalance = getBalance();
+    uint256 supposedBalance = contractBalance + amount;
+
+    if (supposedBalance > balanceLimit) {
+      uint256 userToContractAmount = 0;
+      uint256 userToColdWalletAmount = supposedBalance - balanceLimit;
+      uint256 contractToColdWalletAmount = 0;
+
+      if (amount > userToColdWalletAmount) {
+        userToContractAmount = amount - userToColdWalletAmount;
+      } else {
+        userToColdWalletAmount = amount;
+        contractToColdWalletAmount = contractBalance - balanceLimit;
+      }
+
+      if (userToContractAmount > 0) {
+        sqrToken.transferFrom(sender, address(this), userToContractAmount);
+      }
+      if (userToColdWalletAmount > 0) {
+        sqrToken.transferFrom(sender, coldWallet, userToColdWalletAmount);
+      }
+      if (contractToColdWalletAmount > 0) {
+        sqrToken.transfer(coldWallet, contractToColdWalletAmount);
+      }
+    } else {
+      sqrToken.transferFrom(sender, address(this), amount);
+    }
 
     emit Staked(stakingid, amount, sender);
   }
@@ -137,6 +179,10 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
 
   function getStakeOwner(uint256 id) public view returns (address) {
     return _stakesOwners[id];
+  }
+
+  function getBalance() public view returns (uint256) {
+    return sqrToken.balanceOf(address(this));
   }
 
   function emergencyWithdrawn() external onlyOwner {
