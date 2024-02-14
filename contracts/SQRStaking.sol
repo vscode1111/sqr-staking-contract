@@ -50,13 +50,13 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
   //Variables, structs, modifiers, events------------------------
 
   struct StakingEntry {
-    bytes32 userID;
-    bytes32 stakingID;
+    bytes32 userId;
+    bytes32 transactionId;
     uint256 amount;
     uint256 amountClaimed;
     uint256 stakedAt;
     uint256 claimedAt;
-    uint256 stakingTypeID;
+    uint256 stakingTypeId;
     bool withdrawn;
   }
 
@@ -115,85 +115,85 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
   }
 
   function stakeSig(
-    uint256 stakingTypeID,
-    string memory userID,
-    string memory stakingID,
+    uint256 stakingTypeId,
+    string memory userId,
+    string memory transactionId,
     uint256 amount,
     uint32 timestampLimit,
     bytes memory signature
   ) external nonReentrant {
     require(
-      verifySignature(msg.sender, userID, stakingID, timestampLimit, signature),
+      verifySignature(msg.sender, userId, transactionId, timestampLimit, signature),
       "Invalid signature"
     );
-    _stake(amount, stakingTypeID, stakingID, userID, timestampLimit);
+    _stake(amount, stakingTypeId, transactionId, userId, timestampLimit);
   }
 
   function claimSig(
-    string memory stakingID,
-    string memory userID,
+    string memory transactionId,
+    string memory userId,
     uint32 timestampLimit,
     bytes memory signature
   ) external nonReentrant {
     require(
-      verifySignature(msg.sender, userID, stakingID, timestampLimit, signature),
+      verifySignature(msg.sender, userId, transactionId, timestampLimit, signature),
       "Invalid signature"
     );
-    _claim(stakingID);
+    _claim(transactionId);
   }
 
   function restakeSig(
-    string memory stakingID,
-    string memory userID,
+    string memory transactionId,
+    string memory userId,
     uint32 timestampLimit,
     bytes memory signature
   ) external nonReentrant {
     require(
-      verifySignature(msg.sender, userID, stakingID, timestampLimit, signature),
+      verifySignature(msg.sender, userId, transactionId, timestampLimit, signature),
       "Invalid signature"
     );
-    _restake(stakingID);
+    _restake(transactionId);
   }
 
   function withdrawSig(
-    string memory stakingID,
-    string memory userID,
+    string memory transactionId,
+    string memory userId,
     uint32 timestampLimit,
     bytes memory signature
   ) external nonReentrant {
     require(
-      verifySignature(msg.sender, userID, stakingID, timestampLimit, signature),
+      verifySignature(msg.sender, userId, transactionId, timestampLimit, signature),
       "Invalid signature"
     );
-    _unstake(stakingID);
+    _unstake(transactionId);
   }
 
   function _stake(
     uint256 amount,
-    uint256 stakingTypeID,
-    string memory stakingID,
-    string memory userID,
+    uint256 stakingTypeId,
+    string memory transactionId,
+    string memory userId,
     uint32 timestampLimit
   ) private nonReentrant {
     address sender = _msgSender();
-    bytes32 stackingIDHash = getHash(stakingID);
+    bytes32 stackingIDHash = getHash(transactionId);
 
     require(block.timestamp <= timestampLimit, "Timeout blocker");
     require(stakes[stackingIDHash].stakedAt != 0, "Conflict");
     require(sqrToken.allowance(sender, address(this)) >= amount, "User must allow to use of funds");
     require(sqrToken.balanceOf(sender) >= amount, "User must have funds");
-    require(stakingTypeID < stakingTypes.length, "Staking type isnt found");
+    require(stakingTypeId < stakingTypes.length, "Staking type isnt found");
     require(amount >= _minStakeAmount, "You cant stake that few tokens");
 
     stakingData[sender].push(
       StakingEntry(
-        getHash(userID),
+        getHash(userId),
         stackingIDHash,
         amount,
         0,
         block.timestamp,
         block.timestamp,
-        stakingTypeID,
+        stakingTypeId,
         false
       )
     );
@@ -232,15 +232,15 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
     emit Staked(stackingIDHash, amount, sender);
   }
 
-  function _claim(string memory stakingID) private nonReentrant {
+  function _claim(string memory transactionId) private nonReentrant {
     address sender = _msgSender();
-    bytes32 stackingIDHash = getHash(stakingID);
+    bytes32 stackingIDHash = getHash(transactionId);
 
     require(_stakesOwners[stackingIDHash] == sender, "This stake doesnt belong to the sender");
     StakingEntry storage staking = stakes[stackingIDHash];
 
     require(!staking.withdrawn, "Already withdrawn");
-    (, uint256 apy) = getStakingOptionInfo(staking.stakingTypeID);
+    (, uint256 apy) = getStakingOptionInfo(staking.stakingTypeId);
 
     uint256 withdrawAmount = calculateAPY(staking.amount, apy, block.timestamp - staking.claimedAt);
     staking.amountClaimed += withdrawAmount;
@@ -250,18 +250,18 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
 
     sqrToken.transfer(sender, withdrawAmount);
 
-    emit APYClaim(staking.stakingID, withdrawAmount, sender);
+    emit APYClaim(staking.transactionId, withdrawAmount, sender);
   }
 
-  function _restake(string memory stakingID) private nonReentrant {
+  function _restake(string memory transactionId) private nonReentrant {
     address sender = _msgSender();
-    bytes32 stackingIDHash = getHash(stakingID);
+    bytes32 stackingIDHash = getHash(transactionId);
 
     require(_stakesOwners[stackingIDHash] == sender, "This stake doesnt belong to the sender");
     StakingEntry storage staking = stakes[stackingIDHash];
 
     require(!staking.withdrawn, "Already withdrawn");
-    (, uint256 apy) = getStakingOptionInfo(staking.stakingTypeID);
+    (, uint256 apy) = getStakingOptionInfo(staking.stakingTypeId);
 
     uint256 restakeAmount = calculateAPY(staking.amount, apy, block.timestamp - staking.claimedAt);
     staking.claimedAt = block.timestamp;
@@ -269,18 +269,18 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
 
     paidAmount += restakeAmount;
 
-    emit APYRestake(staking.stakingID, restakeAmount, sender);
+    emit APYRestake(staking.transactionId, restakeAmount, sender);
   }
 
-  function _unstake(string memory stakingID) private nonReentrant {
+  function _unstake(string memory transactionId) private nonReentrant {
     address sender = _msgSender();
-    bytes32 stackingIDHash = getHash(stakingID);
+    bytes32 stackingIDHash = getHash(transactionId);
 
     require(_stakesOwners[stackingIDHash] == sender, "This stake doesnt belong to the sender");
     StakingEntry storage staking = stakes[stackingIDHash];
 
     require(!staking.withdrawn, "Already withdrawn");
-    (uint256 duration, uint256 apy) = getStakingOptionInfo(staking.stakingTypeID);
+    (uint256 duration, uint256 apy) = getStakingOptionInfo(staking.stakingTypeId);
     require(block.timestamp > staking.stakedAt + duration, "Too early to withdraw");
 
     staking.withdrawn = true;
@@ -293,18 +293,18 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
 
     sqrToken.transfer(sender, withdrawAmount);
 
-    emit Unstaked(staking.stakingID, withdrawAmount, sender);
+    emit Unstaked(staking.transactionId, withdrawAmount, sender);
   }
 
   function verifySignature(
     address from,
-    string memory userID,
-    string memory stakingID,
+    string memory userId,
+    string memory transactionId,
     uint32 timestampLimit,
     bytes memory signature
   ) private view returns (bool) {
     bytes32 messageHash = keccak256(
-      abi.encodePacked(from, address(this), userID, stakingID, timestampLimit)
+      abi.encodePacked(from, address(this), userId, transactionId, timestampLimit)
     );
     address recover = messageHash.toEthSignedMessageHash().recover(signature);
     return recover == owner();
