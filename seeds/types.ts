@@ -1,15 +1,17 @@
+import { BigNumberish } from 'ethers/utils';
+
 export interface ContractConfig {
   newOwner: string;
   sqrToken: string;
-  // coldWallet: string;
-  // balanceLimit: bigint;
+  coldWallet: string;
+  balanceLimit: bigint;
 }
 
 export type DeployContractArgs = [
   newOwner: string,
   sqrToken: string,
-  // coldWallet: string,
-  // balanceLimit: BigNumberish,
+  coldWallet: string,
+  balanceLimit: BigNumberish,
 ];
 
 export interface TokenConfig {

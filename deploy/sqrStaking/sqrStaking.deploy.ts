@@ -20,8 +20,8 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<voi
     const { sqrStakingAddress } = await getSQRStakingContext(await getUsers(), {
       newOwner: contractConfig.newOwner,
       sqrToken: contractConfig.sqrToken,
-      // coldWallet: contractConfig.coldWallet,
-      // balanceLimit: contractConfig.balanceLimit,
+      coldWallet: contractConfig.coldWallet,
+      balanceLimit: contractConfig.balanceLimit,
     });
     console.log(`${SQR_STAKING_NAME} deployed to ${sqrStakingAddress}`);
     if (verifyRequired) {

@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { BigNumberish } from 'ethers/utils';
 import { v4 as uuidv4 } from 'uuid';
 import { toUnixTime, toWei } from '~common';
 import { DeployNetworkKey } from '~types';
@@ -39,19 +40,19 @@ const extContractConfig = isTest ? testContractConfig : prodContractConfig;
 export const contractConfig: ContractConfig = {
   newOwner: '0x81aFFCB2FaCEcCaE727Fa4b1B2ef534a1Da67791',
   sqrToken: '0x4072b57e9B3dA8eEB9F8998b69C868E9a1698E54',
-  // coldWallet: '0x81aFFCB2FaCEcCaE727Fa4b1B2ef534a1Da67791',
-  // balanceLimit: toWei(1000, sqrDecimals),
+  coldWallet: '0x81aFFCB2FaCEcCaE727Fa4b1B2ef534a1Da67791',
+  balanceLimit: toWei(1000, sqrDecimals),
   ...extContractConfig,
 };
 
 export function getContractArgs(
   newOwner: string,
   sqrToken: string,
-  // coldWallet: string,
-  // balanceLimit: BigNumberish,
+  coldWallet: string,
+  balanceLimit: BigNumberish,
 ): DeployContractArgs {
-  // return [newOwner, sqrToken, coldWallet, balanceLimit];
-  return [newOwner, sqrToken];
+  return [newOwner, sqrToken, coldWallet, balanceLimit];
+  // return [newOwner, sqrToken];
 }
 
 export const tokenConfig: TokenConfig = {

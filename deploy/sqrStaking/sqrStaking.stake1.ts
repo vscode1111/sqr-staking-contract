@@ -3,7 +3,7 @@ import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { callWithTimerHre, toNumberDecimals, waitTx } from '~common';
 import { SQR_STAKING_NAME } from '~constants';
 import { StakingTypeID, contractConfig, seedData } from '~seeds';
-import { getAddressesFromHre, getContext } from '~utils';
+import { getAddressesFromHre, getContext, signMessageForStake } from '~utils';
 
 const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<void> => {
   await callWithTimerHre(async () => {
@@ -11,7 +11,7 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<voi
     console.log(`${SQR_STAKING_NAME} ${sqrStakingAddress} is staking...`);
     const sqrTokenAddress = contractConfig.sqrToken;
     const context = await getContext(sqrTokenAddress, sqrStakingAddress);
-    const { user1Address, user1SQRToken, user1SQRStaking } = context;
+    const { owner2, user1Address, user1SQRToken, user1SQRStaking } = context;
 
     const decimals = Number(await user1SQRToken.decimals());
 
@@ -21,7 +21,12 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<voi
     const params = {
       amount: seedData.stake1,
       stakingTypeId: StakingTypeID.Type10Minutes,
+      stakingID: seedData.skakeTransationId1,
+      timestampLimit: seedData.nowPlus1m,
+      signature: '',
     };
+
+    params.signature = await signMessageForStake(owner2, user1Address, seedData.nowPlus1m);
 
     if (params.amount > currentAllowance) {
       const askAllowance = seedData.allowance;
@@ -33,7 +38,16 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<voi
 
     console.table(params);
 
-    await waitTx(user1SQRStaking.stake(params.amount, params.stakingTypeId), 'stake');
+    await waitTx(
+      user1SQRStaking.stakeSig(
+        params.amount,
+        params.stakingTypeId,
+        params.stakingID,
+        params.timestampLimit,
+        params.signature,
+      ),
+      'stakeSig',
+    );
   }, hre);
 };
 

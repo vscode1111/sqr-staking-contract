@@ -6,8 +6,8 @@ export function getContractArgsEx() {
     ? getContractArgs(
         contractConfig.newOwner,
         contractConfig.sqrToken,
-        // contractConfig.coldWallet,
-        // contractConfig.balanceLimit,
+        contractConfig.coldWallet,
+        contractConfig.balanceLimit,
       )
     : undefined;
 }

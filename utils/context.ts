@@ -121,8 +121,8 @@ export async function getSQRStakingContext(
       getContractArgs(
         deployData?.newOwner ?? '',
         deployData?.sqrToken ?? '',
-        // deployData?.coldWallet ?? '',
-        // deployData?.balanceLimit ?? BigInt(0),
+        deployData?.coldWallet ?? '',
+        deployData?.balanceLimit ?? BigInt(0),
       ),
       OPTIONS,
     )) as unknown as SQRStaking;
