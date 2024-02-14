@@ -7711,9 +7711,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msq-lockup-contract@workspace:.":
+"msq-staking-contract@workspace:.":
   version: 0.0.0-use.local
-  resolution: "msq-lockup-contract@workspace:."
+  resolution: "msq-staking-contract@workspace:."
   dependencies:
     "@commitlint/cli": ^17.7.2
     "@commitlint/config-conventional": ^17.7.0
