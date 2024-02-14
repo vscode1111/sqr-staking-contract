@@ -50,7 +50,8 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
   //Variables, structs, modifiers, events------------------------
 
   struct StakingEntry {
-    uint256 stakingID;
+    bytes32 userID;
+    bytes32 stakingID;
     uint256 amount;
     uint256 amountClaimed;
     uint256 stakedAt;
@@ -67,10 +68,10 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
   StakingType[] public stakingTypes;
 
   mapping(address user => uint256 stakesCount) private _stakesCount;
-  mapping(uint256 stakeID => address stakeOwner) private _stakesOwners;
+  mapping(bytes32 stakeID => address stakeOwner) private _stakesOwners;
 
   mapping(address user => StakingEntry[] stakes) public stakingData;
-  mapping(uint256 stakeID => StakingEntry stake) public stakes;
+  mapping(bytes32 stakeID => StakingEntry stake) public stakes;
 
   address public coldWallet;
   uint256 public balanceLimit;
@@ -83,10 +84,10 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
   uint256 internal _apyDivider;
   uint256 internal _minStakeAmount;
 
-  event Staked(uint256 id, uint256 amount, address user);
-  event Unstaked(uint256 id, uint256 amount, address user);
-  event APYClaim(uint256 id, uint256 amount, address user);
-  event APYRestake(uint256 id, uint256 amount, address user);
+  event Staked(bytes32 id, uint256 amount, address user);
+  event Unstaked(bytes32 id, uint256 amount, address user);
+  event APYClaim(bytes32 id, uint256 amount, address user);
+  event APYRestake(bytes32 id, uint256 amount, address user);
   event ChangeBalanceLimit(address indexed sender, uint256 balanceLimit);
 
   //Functions-------------------------------------------
@@ -114,36 +115,90 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
   }
 
   function stakeSig(
-    uint256 amount,
     uint256 stakingTypeID,
-    uint256 stakingID,
+    string memory userID,
+    string memory stakingID,
+    uint256 amount,
     uint32 timestampLimit,
     bytes memory signature
   ) external nonReentrant {
-    require(verifySignature(msg.sender, timestampLimit, signature), "Invalid signature");
-    _stake(amount, stakingTypeID, stakingID, timestampLimit);
+    require(
+      verifySignature(msg.sender, userID, stakingID, timestampLimit, signature),
+      "Invalid signature"
+    );
+    _stake(amount, stakingTypeID, stakingID, userID, timestampLimit);
+  }
+
+  function claimSig(
+    string memory stakingID,
+    string memory userID,
+    uint32 timestampLimit,
+    bytes memory signature
+  ) external nonReentrant {
+    require(
+      verifySignature(msg.sender, userID, stakingID, timestampLimit, signature),
+      "Invalid signature"
+    );
+    _claim(stakingID);
+  }
+
+  function restakeSig(
+    string memory stakingID,
+    string memory userID,
+    uint32 timestampLimit,
+    bytes memory signature
+  ) external nonReentrant {
+    require(
+      verifySignature(msg.sender, userID, stakingID, timestampLimit, signature),
+      "Invalid signature"
+    );
+    _restake(stakingID);
+  }
+
+  function withdrawSig(
+    string memory stakingID,
+    string memory userID,
+    uint32 timestampLimit,
+    bytes memory signature
+  ) external nonReentrant {
+    require(
+      verifySignature(msg.sender, userID, stakingID, timestampLimit, signature),
+      "Invalid signature"
+    );
+    _unstake(stakingID);
   }
 
   function _stake(
     uint256 amount,
     uint256 stakingTypeID,
-    uint256 stakingID,
+    string memory stakingID,
+    string memory userID,
     uint32 timestampLimit
   ) private nonReentrant {
     address sender = _msgSender();
+    bytes32 stackingIDHash = getHash(stakingID);
 
     require(block.timestamp <= timestampLimit, "Timeout blocker");
-    require(stakes[stakingID].stakedAt != 0, "Conflict");
+    require(stakes[stackingIDHash].stakedAt != 0, "Conflict");
     require(sqrToken.allowance(sender, address(this)) >= amount, "User must allow to use of funds");
     require(sqrToken.balanceOf(sender) >= amount, "User must have funds");
     require(stakingTypeID < stakingTypes.length, "Staking type isnt found");
     require(amount >= _minStakeAmount, "You cant stake that few tokens");
 
     stakingData[sender].push(
-      StakingEntry(stakingID, amount, 0, block.timestamp, block.timestamp, stakingTypeID, false)
+      StakingEntry(
+        getHash(userID),
+        stackingIDHash,
+        amount,
+        0,
+        block.timestamp,
+        block.timestamp,
+        stakingTypeID,
+        false
+      )
     );
     _stakesCount[sender] += 1;
-    _stakesOwners[stakingID] = sender;
+    _stakesOwners[stackingIDHash] = sender;
     stakedAmount += amount;
 
     uint256 contractBalance = getBalance();
@@ -174,14 +229,15 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
       sqrToken.transferFrom(sender, address(this), amount);
     }
 
-    emit Staked(stakingID, amount, sender);
+    emit Staked(stackingIDHash, amount, sender);
   }
 
-  function claim(uint256 stakingID) external nonReentrant {
+  function _claim(string memory stakingID) private nonReentrant {
     address sender = _msgSender();
+    bytes32 stackingIDHash = getHash(stakingID);
 
-    require(_stakesOwners[stakingID] == sender, "This stake doesnt belong to the sender");
-    StakingEntry storage staking = stakes[stakingID];
+    require(_stakesOwners[stackingIDHash] == sender, "This stake doesnt belong to the sender");
+    StakingEntry storage staking = stakes[stackingIDHash];
 
     require(!staking.withdrawn, "Already withdrawn");
     (, uint256 apy) = getStakingOptionInfo(staking.stakingTypeID);
@@ -197,11 +253,12 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
     emit APYClaim(staking.stakingID, withdrawAmount, sender);
   }
 
-  function restake(uint256 stakingID) external nonReentrant {
+  function _restake(string memory stakingID) private nonReentrant {
     address sender = _msgSender();
+    bytes32 stackingIDHash = getHash(stakingID);
 
-    require(_stakesOwners[stakingID] == sender, "This stake doesnt belong to the sender");
-    StakingEntry storage staking = stakes[stakingID];
+    require(_stakesOwners[stackingIDHash] == sender, "This stake doesnt belong to the sender");
+    StakingEntry storage staking = stakes[stackingIDHash];
 
     require(!staking.withdrawn, "Already withdrawn");
     (, uint256 apy) = getStakingOptionInfo(staking.stakingTypeID);
@@ -215,11 +272,12 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
     emit APYRestake(staking.stakingID, restakeAmount, sender);
   }
 
-  function unstake(uint256 stakingID) external nonReentrant {
+  function _unstake(string memory stakingID) private nonReentrant {
     address sender = _msgSender();
+    bytes32 stackingIDHash = getHash(stakingID);
 
-    require(_stakesOwners[stakingID] == sender, "This stake doesnt belong to the sender");
-    StakingEntry storage staking = stakes[stakingID];
+    require(_stakesOwners[stackingIDHash] == sender, "This stake doesnt belong to the sender");
+    StakingEntry storage staking = stakes[stackingIDHash];
 
     require(!staking.withdrawn, "Already withdrawn");
     (uint256 duration, uint256 apy) = getStakingOptionInfo(staking.stakingTypeID);
@@ -240,10 +298,14 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
 
   function verifySignature(
     address from,
+    string memory userID,
+    string memory stakingID,
     uint32 timestampLimit,
     bytes memory signature
   ) private view returns (bool) {
-    bytes32 messageHash = keccak256(abi.encodePacked(from, timestampLimit));
+    bytes32 messageHash = keccak256(
+      abi.encodePacked(from, address(this), userID, stakingID, timestampLimit)
+    );
     address recover = messageHash.toEthSignedMessageHash().recover(signature);
     return recover == owner();
   }
@@ -252,12 +314,16 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
     return _stakesCount[user];
   }
 
-  function getStakeOwner(uint256 id) public view returns (address) {
-    return _stakesOwners[id];
+  function getStakeOwner(string memory id) public view returns (address) {
+    return _stakesOwners[getHash(id)];
   }
 
   function getBalance() public view returns (uint256) {
     return sqrToken.balanceOf(address(this));
+  }
+
+  function getHash(string memory value) private pure returns (bytes32) {
+    return keccak256(abi.encodePacked(value));
   }
 
   function emergencyWithdrawn() external onlyOwner {

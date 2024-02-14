@@ -22,6 +22,7 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<voi
       amount: seedData.stake1,
       stakingTypeId: StakingTypeID.Type10Minutes,
       stakingID: seedData.skakeTransationId1,
+      userID: seedData.userId1,
       timestampLimit: seedData.nowPlus1m,
       signature: '',
     };
@@ -40,9 +41,10 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<voi
 
     await waitTx(
       user1SQRStaking.stakeSig(
-        params.amount,
         params.stakingTypeId,
+        params.userID,
         params.stakingID,
+        params.amount,
         params.timestampLimit,
         params.signature,
       ),
