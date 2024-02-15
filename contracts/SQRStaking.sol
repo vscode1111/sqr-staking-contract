@@ -31,11 +31,10 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
     __UUPSUpgradeable_init();
 
     _transferOwnership(_newOwner);
+    stakingTypes.push(StakingType(10 days, 80));
     stakingTypes.push(StakingType(30 days, 100));
     stakingTypes.push(StakingType(90 days, 125));
-    stakingTypes.push(StakingType(180 days, 150));
     stakingTypes.push(StakingType(360 days, 200));
-    stakingTypes.push(StakingType(720 days, 300));
     stakingTypes.push(StakingType(10 minutes, 1000));
 
     sqrToken = IPermitToken(_sqrToken);
@@ -56,7 +55,7 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
     uint256 amountClaimed;
     uint256 stakedAt;
     uint256 claimedAt;
-    uint256 stakingTypeId;
+    uint32 stakingTypeId;
     bool withdrawn;
   }
 
@@ -117,11 +116,11 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
   function stakeSig(
     string memory userId,
     string memory transactionId,
-    uint256 stakingTypeId,
+    uint32 stakingTypeId,
     uint256 amount,
     uint32 timestampLimit,
     bytes memory signature
-  ) external nonReentrant {
+  ) external {
     require(
       verifyStakingSignature(userId, transactionId, msg.sender, amount, timestampLimit, signature),
       "Invalid signature"
@@ -134,7 +133,7 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
     string memory transactionId,
     uint32 timestampLimit,
     bytes memory signature
-  ) external nonReentrant {
+  ) external {
     require(
       verifySignature(userId, transactionId, msg.sender, timestampLimit, signature),
       "Invalid signature"
@@ -147,7 +146,7 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
     string memory transactionId,
     uint32 timestampLimit,
     bytes memory signature
-  ) external nonReentrant {
+  ) external {
     require(
       verifySignature(userId, transactionId, msg.sender, timestampLimit, signature),
       "Invalid signature"
@@ -160,7 +159,7 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
     string memory transactionId,
     uint32 timestampLimit,
     bytes memory signature
-  ) external nonReentrant {
+  ) external {
     require(
       verifySignature(userId, transactionId, msg.sender, timestampLimit, signature),
       "Invalid signature"
@@ -172,14 +171,13 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
     string memory userId,
     string memory transactionId,
     uint256 amount,
-    uint256 stakingTypeId,
+    uint32 stakingTypeId,
     uint32 timestampLimit
   ) private nonReentrant {
     address sender = _msgSender();
     bytes32 stackingIDHash = getHash(transactionId);
 
     require(block.timestamp <= timestampLimit, "Timeout blocker");
-    require(stakes[stackingIDHash].stakedAt != 0, "Conflict");
     require(sqrToken.allowance(sender, address(this)) >= amount, "User must allow to use of funds");
     require(sqrToken.balanceOf(sender) >= amount, "User must have funds");
     require(stakingTypeId < stakingTypes.length, "Staking type isnt found");
@@ -300,7 +298,7 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
     string memory userId,
     string memory transactionId,
     address from,
-    uint32 timestampLimit,
+    uint256 timestampLimit,
     bytes memory signature
   ) private view returns (bool) {
     bytes32 messageHash = keccak256(
@@ -315,7 +313,7 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
     string memory transactionId,
     address from,
     uint256 amount,
-    uint32 timestampLimit,
+    uint256 timestampLimit,
     bytes memory signature
   ) private view returns (bool) {
     bytes32 messageHash = keccak256(
