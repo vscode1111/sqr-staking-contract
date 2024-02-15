@@ -115,64 +115,64 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
   }
 
   function stakeSig(
-    uint256 stakingTypeId,
     string memory userId,
     string memory transactionId,
+    uint256 stakingTypeId,
     uint256 amount,
     uint32 timestampLimit,
     bytes memory signature
   ) external nonReentrant {
     require(
-      verifySignature(msg.sender, userId, transactionId, timestampLimit, signature),
+      verifyStakingSignature(userId, transactionId, msg.sender, amount, timestampLimit, signature),
       "Invalid signature"
     );
-    _stake(amount, stakingTypeId, transactionId, userId, timestampLimit);
+    _stake(userId, transactionId, amount, stakingTypeId, timestampLimit);
   }
 
   function claimSig(
-    string memory transactionId,
     string memory userId,
+    string memory transactionId,
     uint32 timestampLimit,
     bytes memory signature
   ) external nonReentrant {
     require(
-      verifySignature(msg.sender, userId, transactionId, timestampLimit, signature),
+      verifySignature(userId, transactionId, msg.sender, timestampLimit, signature),
       "Invalid signature"
     );
     _claim(transactionId);
   }
 
   function restakeSig(
-    string memory transactionId,
     string memory userId,
+    string memory transactionId,
     uint32 timestampLimit,
     bytes memory signature
   ) external nonReentrant {
     require(
-      verifySignature(msg.sender, userId, transactionId, timestampLimit, signature),
+      verifySignature(userId, transactionId, msg.sender, timestampLimit, signature),
       "Invalid signature"
     );
     _restake(transactionId);
   }
 
   function withdrawSig(
-    string memory transactionId,
     string memory userId,
+    string memory transactionId,
     uint32 timestampLimit,
     bytes memory signature
   ) external nonReentrant {
     require(
-      verifySignature(msg.sender, userId, transactionId, timestampLimit, signature),
+      verifySignature(userId, transactionId, msg.sender, timestampLimit, signature),
       "Invalid signature"
     );
     _unstake(transactionId);
   }
 
   function _stake(
+    string memory userId,
+    string memory transactionId,
     uint256 amount,
     uint256 stakingTypeId,
-    string memory transactionId,
-    string memory userId,
     uint32 timestampLimit
   ) private nonReentrant {
     address sender = _msgSender();
@@ -297,14 +297,29 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
   }
 
   function verifySignature(
-    address from,
     string memory userId,
     string memory transactionId,
+    address from,
     uint32 timestampLimit,
     bytes memory signature
   ) private view returns (bool) {
     bytes32 messageHash = keccak256(
-      abi.encodePacked(from, address(this), userId, transactionId, timestampLimit)
+      abi.encodePacked(userId, transactionId, from, address(this), timestampLimit)
+    );
+    address recover = messageHash.toEthSignedMessageHash().recover(signature);
+    return recover == owner();
+  }
+
+  function verifyStakingSignature(
+    string memory userId,
+    string memory transactionId,
+    address from,
+    uint256 amount,
+    uint32 timestampLimit,
+    bytes memory signature
+  ) private view returns (bool) {
+    bytes32 messageHash = keccak256(
+      abi.encodePacked(userId, transactionId, from, amount, address(this), timestampLimit)
     );
     address recover = messageHash.toEthSignedMessageHash().recover(signature);
     return recover == owner();
