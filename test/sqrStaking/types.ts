@@ -1,4 +1,4 @@
-import { StakedEvent } from '~typechain-types/contracts/SQRStaking';
+import { ChangeBalanceLimitEvent, DepositEvent } from '~typechain-types/contracts/SQRStaking';
 import { ContextBase } from '~types';
 
 type Fixture<T> = () => Promise<T>;
@@ -13,4 +13,6 @@ export interface EventArgs<T> {
   args: T;
 }
 
-export type StakeEventArgs = StakedEvent.Event & EventArgs<[number, number, number, string]>;
+export type ChangeBalanceLimitArgs = ChangeBalanceLimitEvent.Event & EventArgs<[string, bigint]>;
+
+export type DepositEventArgs = DepositEvent.Event & EventArgs<[string, number]>;

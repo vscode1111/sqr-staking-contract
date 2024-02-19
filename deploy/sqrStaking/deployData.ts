@@ -1,7 +1,7 @@
 import { toUnixTime, toWei } from '~common';
 import { sqrDecimals } from '~seeds';
 
-export const verifyRequired = true;
+export const verifyRequired = false;
 export const verifyArgsRequired = false;
 
 export const deployData = {

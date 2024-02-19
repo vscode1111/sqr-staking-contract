@@ -1,4 +1,4 @@
-import { BigNumberish } from 'ethers/utils';
+import { BigNumberish } from 'ethers';
 
 export interface ContractConfig {
   newOwner: string;
@@ -29,12 +29,3 @@ export type DeployTokenArgs = [
   initMint: bigint,
   decimals_: bigint | number,
 ];
-
-export const enum StakingTypeID {
-  Type30Days = 0,
-  Type90Days = 1,
-  Type180Days = 2,
-  Type360Days = 3,
-  Type720Days = 4,
-  Type10Minutes = 5,
-}

@@ -1,11 +1,32 @@
 import { expect } from 'chai';
 import { ZeroAddress } from 'ethers';
-import { contractConfig } from '~seeds';
+import { waitTx } from '~common';
+import { contractConfig, seedData } from '~seeds';
 import { getSQRStakingContext, getUsers } from '~utils';
-import { errorMessage } from '.';
+import { ChangeBalanceLimitArgs, errorMessage } from '.';
+import { findEvent } from './utils';
 
 export function shouldBehaveCorrectControl(): void {
   describe('control', () => {
+    it('user1 tries to change balanceLimit', async function () {
+      await expect(this.user1SQRStaking.changeBalanceLimit(seedData.balanceLimit)).revertedWith(
+        errorMessage.onlyOwner,
+      );
+    });
+
+    it('owner2 changes balanceLimit', async function () {
+      await this.owner2SQRStaking.changeBalanceLimit(seedData.balanceLimit);
+
+      const receipt = await waitTx(this.owner2SQRStaking.changeBalanceLimit(seedData.balanceLimit));
+      const eventLog = findEvent<ChangeBalanceLimitArgs>(receipt);
+      expect(eventLog).not.undefined;
+      const [account, amount] = eventLog?.args;
+      expect(account).eq(this.owner2Address);
+      expect(amount).eq(seedData.balanceLimit);
+
+      expect(await this.owner2SQRStaking.balanceLimit()).eq(seedData.balanceLimit);
+    });
+
     it('owner tries to deploy with zero new owner address', async function () {
       const users = await getUsers();
       await expect(
@@ -24,6 +45,16 @@ export function shouldBehaveCorrectControl(): void {
           sqrToken: ZeroAddress,
         }),
       ).revertedWith(errorMessage.sqrTokeAddressCantBeZero);
+    });
+
+    it('owner tries to deploy with zero cold wallet address', async function () {
+      const users = await getUsers();
+      await expect(
+        getSQRStakingContext(users, {
+          ...contractConfig,
+          coldWallet: ZeroAddress,
+        }),
+      ).revertedWith(errorMessage.coldWalletAddressCantBeZero);
     });
   });
 }

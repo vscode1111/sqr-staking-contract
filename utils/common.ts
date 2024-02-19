@@ -1,19 +1,17 @@
 import { Signer } from 'ethers';
 import { signMessage } from '~common';
 
-export async function signMessageForStake(
+export async function signMessageForDeposit(
   signer: Signer,
-  uid: string,
-  txId: string,
-  from: string,
+  userId: string,
+  transactionId: string,
   amount: bigint,
-  to: string,
   timestampLimit: number,
 ) {
   return signMessage(
     signer,
-    // userId,  transactionId,  from, amount, to,  timestampLimit
-    ['string', 'string', 'address', 'uint256', 'address', 'uint32'],
-    [uid, txId, from, amount, to, timestampLimit],
+    // userId,  transactionId, amount, timestampLimit
+    ['string', 'string', 'uint256', 'uint32'],
+    [userId, transactionId, amount, timestampLimit],
   );
 }

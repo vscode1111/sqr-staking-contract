@@ -138,7 +138,7 @@ export async function getSQRStakingContext(
 
   return {
     sqrStakingFactory,
-    owner2SqrSkakingFactory: owner2SqrStakingFactory,
+    owner2SqrStakingFactory,
     sqrStakingAddress,
     ownerSQRStaking,
     user1SQRStaking,

@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.17;
 
-import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import {UUPSUpgradeable} from "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
-import {ReentrancyGuardUpgradeable} from "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
-import {IPermitToken} from "./interfaces/IPermitToken.sol";
-
-// import "hardhat/console.sol";
+import "./interfaces/IPermitToken.sol";
 
 contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgradeable {
   using ECDSA for bytes32;
@@ -25,21 +23,13 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
   ) public initializer {
     require(_newOwner != address(0), "New owner address can't be zero");
     require(_sqrToken != address(0), "SQR token address can't be zero");
-    require(_balanceLimit > 0, "Balance limit can't be zero");
+    require(_coldWallet != address(0), "Cold wallet address can't be zero");
 
     __Ownable_init();
     __UUPSUpgradeable_init();
 
     _transferOwnership(_newOwner);
-    stakingTypes.push(StakingType(10 days, 80));
-    stakingTypes.push(StakingType(30 days, 100));
-    stakingTypes.push(StakingType(90 days, 125));
-    stakingTypes.push(StakingType(360 days, 200));
-    stakingTypes.push(StakingType(10 minutes, 1000));
-
     sqrToken = IPermitToken(_sqrToken);
-    _apyDivider = 1000;
-    _minStakeAmount = 1e5; //0.001 SQR
     coldWallet = _coldWallet;
     balanceLimit = _balanceLimit;
   }
@@ -47,47 +37,27 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
   function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
 
   //Variables, structs, modifiers, events------------------------
-
-  struct StakingEntry {
-    bytes32 userId;
-    bytes32 transactionId;
-    uint256 amount;
-    uint256 amountClaimed;
-    uint256 stakedAt;
-    uint256 claimedAt;
-    uint32 stakingTypeId;
-    bool withdrawn;
-  }
-
-  struct StakingType {
-    uint256 duration;
-    uint256 apy;
-  }
-
-  StakingType[] public stakingTypes;
-
-  mapping(address user => uint256 stakesCount) private _stakesCount;
-  mapping(bytes32 stakeID => address stakeOwner) private _stakesOwners;
-
-  mapping(address user => StakingEntry[] stakes) public stakingData;
-  mapping(bytes32 stakeID => StakingEntry stake) public stakes;
-
+  IPermitToken public sqrToken;
   address public coldWallet;
   uint256 public balanceLimit;
+  uint256 public totalBalance;
 
-  IPermitToken public sqrToken;
-  uint256 public stakedAmount;
-  uint256 public paidAmount;
+  mapping(bytes32 => FundItem) private _balances;
+  mapping(bytes32 => TransactionItem) private _transactionIds;
 
-  uint256 internal _multiplierDivider;
-  uint256 internal _apyDivider;
-  uint256 internal _minStakeAmount;
+  struct FundItem {
+    uint256 balance;
+  }
 
-  event Staked(bytes32 id, uint256 amount, address user);
-  event Unstaked(bytes32 id, uint256 amount, address user);
-  event APYClaim(bytes32 id, uint256 amount, address user);
-  event APYRestake(bytes32 id, uint256 amount, address user);
+  struct TransactionItem {
+    uint256 amount;
+  }
+
   event ChangeBalanceLimit(address indexed sender, uint256 balanceLimit);
+
+  event Deposit(address indexed account, uint256 amount);
+
+  event EmergencyWithdraw(address indexed token, address indexed to, uint256 amount);
 
   //Functions-------------------------------------------
 
@@ -96,108 +66,64 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
     emit ChangeBalanceLimit(_msgSender(), _balanceLimit);
   }
 
-  function getStakingOptionInfo(uint256 id) public view returns (uint256, uint256) {
-    StakingType memory stakingType = stakingTypes[id];
-    return (stakingType.duration, stakingType.apy);
+  function fetchFundItem(string memory userId) external view returns (FundItem memory) {
+    return _balances[getHash(userId)];
   }
 
-  function calculateAPY(
-    uint256 amount,
-    uint256 apy,
-    uint256 duration
-  ) public view returns (uint256) {
-    return (((amount * apy)) * duration) / _apyDivider / 365 days;
+  function getBalance() public view returns (uint256) {
+    return sqrToken.balanceOf(address(this));
   }
 
-  function setMinStakeAmount(uint256 amnt) external onlyOwner {
-    _minStakeAmount = amnt;
+  function balanceOf(string memory userId) external view returns (uint256) {
+    FundItem storage fund = _balances[getHash(userId)];
+    return fund.balance;
   }
 
-  function stakeSig(
-    string memory userId,
-    string memory transactionId,
-    uint32 stakingTypeId,
-    uint256 amount,
-    uint32 timestampLimit,
-    bytes memory signature
-  ) external {
-    require(
-      verifyStakingSignature(userId, transactionId, msg.sender, amount, timestampLimit, signature),
-      "Invalid signature"
+  function getHash(string memory value) private pure returns (bytes32) {
+    return keccak256(abi.encodePacked(value));
+  }
+
+  function fetchTransactionItem(
+    string memory transactionId
+  ) external view returns (TransactionItem memory) {
+    return _transactionIds[getHash(transactionId)];
+  }
+
+  function getTransactionItem(
+    string memory transactionId
+  ) private view returns (bytes32, TransactionItem memory) {
+    bytes32 transactionIdHash = getHash(transactionId);
+    return (transactionIdHash, _transactionIds[transactionIdHash]);
+  }
+
+  function _setTransactionId(uint256 amount, string memory transactionId) private {
+    (bytes32 transactionIdHash, TransactionItem memory transactionItem) = getTransactionItem(
+      transactionId
     );
-    _stake(userId, transactionId, amount, stakingTypeId, timestampLimit);
+    require(transactionItem.amount == 0, "This transactionId was used before");
+    _transactionIds[transactionIdHash] = TransactionItem(amount);
   }
 
-  function claimSig(
-    string memory userId,
-    string memory transactionId,
-    uint32 timestampLimit,
-    bytes memory signature
-  ) external {
-    require(
-      verifySignature(userId, transactionId, msg.sender, timestampLimit, signature),
-      "Invalid signature"
-    );
-    _claim(transactionId);
-  }
-
-  function restakeSig(
-    string memory userId,
-    string memory transactionId,
-    uint32 timestampLimit,
-    bytes memory signature
-  ) external {
-    require(
-      verifySignature(userId, transactionId, msg.sender, timestampLimit, signature),
-      "Invalid signature"
-    );
-    _restake(transactionId);
-  }
-
-  function withdrawSig(
-    string memory userId,
-    string memory transactionId,
-    uint32 timestampLimit,
-    bytes memory signature
-  ) external {
-    require(
-      verifySignature(userId, transactionId, msg.sender, timestampLimit, signature),
-      "Invalid signature"
-    );
-    _unstake(transactionId);
-  }
-
-  function _stake(
+  function _deposit(
     string memory userId,
     string memory transactionId,
     uint256 amount,
-    uint32 stakingTypeId,
     uint32 timestampLimit
   ) private nonReentrant {
-    address sender = _msgSender();
-    bytes32 transactionIdHash = getHash(transactionId);
-
+    require(amount > 0, "Amount must be greater than zero");
     require(block.timestamp <= timestampLimit, "Timeout blocker");
-    require(sqrToken.allowance(sender, address(this)) >= amount, "User must allow to use of funds");
-    require(sqrToken.balanceOf(sender) >= amount, "User must have funds");
-    require(stakingTypeId < stakingTypes.length, "Staking type isnt found");
-    require(amount >= _minStakeAmount, "You cant stake that few tokens");
 
-    stakingData[sender].push(
-      StakingEntry(
-        getHash(userId),
-        transactionIdHash,
-        amount,
-        0,
-        block.timestamp,
-        block.timestamp,
-        stakingTypeId,
-        false
-      )
-    );
-    _stakesCount[sender] += 1;
-    _stakesOwners[transactionIdHash] = sender;
-    stakedAmount += amount;
+    address sender = _msgSender();
+
+    require(sqrToken.allowance(sender, address(this)) >= amount, "User must allow to use of funds");
+
+    require(sqrToken.balanceOf(sender) >= amount, "User must have funds");
+
+    _setTransactionId(amount, transactionId);
+
+    FundItem storage fund = _balances[getHash(userId)];
+    fund.balance += amount;
+    totalBalance += amount;
 
     uint256 contractBalance = getBalance();
     uint256 supposedBalance = contractBalance + amount;
@@ -227,123 +153,40 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
       sqrToken.transferFrom(sender, address(this), amount);
     }
 
-    emit Staked(transactionIdHash, amount, sender);
+    emit Deposit(sender, amount);
   }
 
-  function _claim(string memory transactionId) private nonReentrant {
-    address sender = _msgSender();
-    bytes32 transactionIdHash = getHash(transactionId);
-
-    require(_stakesOwners[transactionIdHash] == sender, "This stake doesnt belong to the sender");
-    StakingEntry storage staking = stakes[transactionIdHash];
-
-    require(!staking.withdrawn, "Already withdrawn");
-    (, uint256 apy) = getStakingOptionInfo(staking.stakingTypeId);
-
-    uint256 withdrawAmount = calculateAPY(staking.amount, apy, block.timestamp - staking.claimedAt);
-    staking.amountClaimed += withdrawAmount;
-    staking.claimedAt = block.timestamp;
-
-    paidAmount += withdrawAmount;
-
-    sqrToken.transfer(sender, withdrawAmount);
-
-    emit APYClaim(staking.transactionId, withdrawAmount, sender);
-  }
-
-  function _restake(string memory transactionId) private nonReentrant {
-    address sender = _msgSender();
-    bytes32 transactionIdHash = getHash(transactionId);
-
-    require(_stakesOwners[transactionIdHash] == sender, "This stake doesnt belong to the sender");
-    StakingEntry storage staking = stakes[transactionIdHash];
-
-    require(!staking.withdrawn, "Already withdrawn");
-    (, uint256 apy) = getStakingOptionInfo(staking.stakingTypeId);
-
-    uint256 restakeAmount = calculateAPY(staking.amount, apy, block.timestamp - staking.claimedAt);
-    staking.claimedAt = block.timestamp;
-    staking.amount += restakeAmount;
-
-    paidAmount += restakeAmount;
-
-    emit APYRestake(staking.transactionId, restakeAmount, sender);
-  }
-
-  function _unstake(string memory transactionId) private nonReentrant {
-    address sender = _msgSender();
-    bytes32 transactionIdHash = getHash(transactionId);
-
-    require(_stakesOwners[transactionIdHash] == sender, "This stake doesnt belong to the sender");
-    StakingEntry storage staking = stakes[transactionIdHash];
-
-    require(!staking.withdrawn, "Already withdrawn");
-    (uint256 duration, uint256 apy) = getStakingOptionInfo(staking.stakingTypeId);
-    require(block.timestamp > staking.stakedAt + duration, "Too early to withdraw");
-
-    staking.withdrawn = true;
-    uint256 withdrawAmount = staking.amount +
-      calculateAPY(staking.amount, apy, block.timestamp - staking.stakedAt) -
-      staking.amountClaimed;
-
-    paidAmount += withdrawAmount;
-    stakedAmount -= staking.amount;
-
-    sqrToken.transfer(sender, withdrawAmount);
-
-    emit Unstaked(staking.transactionId, withdrawAmount, sender);
-  }
-
-  function verifySignature(
+  function verifyStakeSignature(
     string memory userId,
     string memory transactionId,
-    address from,
-    uint256 timestampLimit,
-    bytes memory signature
-  ) private view returns (bool) {
-    bytes32 messageHash = keccak256(
-      abi.encodePacked(userId, transactionId, from, address(this), timestampLimit)
-    );
-    address recover = messageHash.toEthSignedMessageHash().recover(signature);
-    return recover == owner();
-  }
-
-  function verifyStakingSignature(
-    string memory userId,
-    string memory transactionId,
-    address from,
     uint256 amount,
-    uint256 timestampLimit,
+    uint32 timestampLimit,
     bytes memory signature
   ) private view returns (bool) {
     bytes32 messageHash = keccak256(
-      abi.encodePacked(userId, transactionId, from, amount, address(this), timestampLimit)
+      abi.encodePacked(userId, transactionId, amount, timestampLimit)
     );
     address recover = messageHash.toEthSignedMessageHash().recover(signature);
     return recover == owner();
   }
 
-  function getStakesCount(address user) public view returns (uint256) {
-    return _stakesCount[user];
+  function depositSig(
+    string memory userId,
+    string memory transactionId,
+    uint256 amount,
+    uint32 timestampLimit,
+    bytes memory signature
+  ) external {
+    require(
+      verifyStakeSignature(userId, transactionId, amount, timestampLimit, signature),
+      "Invalid signature"
+    );
+    _deposit(userId, transactionId, amount, timestampLimit);
   }
 
-  function getStakeOwner(string memory id) public view returns (address) {
-    return _stakesOwners[getHash(id)];
-  }
-
-  function getBalance() public view returns (uint256) {
-    return sqrToken.balanceOf(address(this));
-  }
-
-  function getHash(string memory value) private pure returns (bytes32) {
-    return keccak256(abi.encodePacked(value));
-  }
-
-  function emergencyWithdrawn() external onlyOwner {
-    sqrToken.transfer(msg.sender, sqrToken.balanceOf(address(this)));
-  }
-
-  function emergencyWithdrawnValue() external onlyOwner {
-    payable(msg.sender).transfer(address(this).balance);
+  function emergencyWithdraw(address token, address to, uint256 amount) external onlyOwner {
+    IPermitToken permitToken = IPermitToken(token);
+    permitToken.transfer(to, amount);
+    emit EmergencyWithdraw(token, to, amount);
   }
 }

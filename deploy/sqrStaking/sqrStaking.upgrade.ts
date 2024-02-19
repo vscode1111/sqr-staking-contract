@@ -10,11 +10,11 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<voi
   await callWithTimerHre(async () => {
     const { sqrStakingAddress } = getAddressesFromHre(hre);
     console.log(`${SQR_STAKING_NAME} ${sqrStakingAddress} is upgrading...`);
-    const { owner2SqrSkakingFactory } = await getSQRStakingContext(
+    const { owner2SqrStakingFactory } = await getSQRStakingContext(
       await getUsers(),
       sqrStakingAddress,
     );
-    await upgrades.upgradeProxy(sqrStakingAddress, owner2SqrSkakingFactory);
+    await upgrades.upgradeProxy(sqrStakingAddress, owner2SqrStakingFactory);
     console.log(`${SQR_STAKING_NAME} upgraded to ${sqrStakingAddress}`);
     if (verifyRequired) {
       await verifyContract(sqrStakingAddress, hre);

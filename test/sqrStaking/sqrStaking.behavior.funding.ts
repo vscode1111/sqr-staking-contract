@@ -1,55 +1,282 @@
+import { expect } from 'chai';
+import { INITIAL_POSITIVE_CHECK_TEST_TITLE, waitTx } from '~common';
+import { contractConfig, seedData } from '~seeds';
+import { signMessageForDeposit } from '~utils';
+import { errorMessage } from './testData';
+import { DepositEventArgs } from './types';
+import { checkTotalSQRBalance, findEvent, getSQRTokenBalance } from './utils';
+
 export function shouldBehaveCorrectFunding(): void {
-  // describe('funding', () => {
-  //   beforeEach(async function () {
-  //     await checkTotalSQRBalance(this);
-  //   });
-  //   afterEach(async function () {
-  //     await checkTotalSQRBalance(this);
-  //   });
-  //   it('user1 tries to stake zero amount', async function () {
-  //     await expect(
-  //       this.user1SQRStaking.stake(seedData.zero, StakingTypeID.Type30Days),
-  //     ).revertedWith(errorMessage.youCantStakeThatFewTokens);
-  //   });
-  //   it('user1 tries to stake without allowence', async function () {
-  //     await expect(
-  //       this.user1SQRStaking.stake(seedData.stake1, StakingTypeID.Type30Days),
-  //     ).revertedWith(errorMessage.userMustAllowToUseOfFund);
-  //   });
-  //   it('user1 tries to stake with allowence but no funds', async function () {
-  //     await this.user1SQRToken.approve(this.sqrStakingAddress, seedData.extraStake1);
-  //     await expect(
-  //       this.user1SQRStaking.stake(seedData.stake1, StakingTypeID.Type30Days),
-  //     ).revertedWith(errorMessage.userMustHaveFunds);
-  //   });
-  //   it('user2 tries to stake without allowence', async function () {
-  //     await expect(
-  //       this.user2SQRStaking.stake(seedData.stake2, StakingTypeID.Type30Days),
-  //     ).revertedWith(errorMessage.userMustAllowToUseOfFund);
-  //   });
-  //   describe('user1 and user2 have tokens and approved contract to use these', () => {
-  //     beforeEach(async function () {
-  //       await this.owner2SQRToken.transfer(this.user1Address, seedData.userInitBalance);
-  //       await this.user1SQRToken.approve(this.sqrStakingAddress, seedData.stake1);
-  //       await this.owner2SQRToken.transfer(this.user2Address, seedData.userInitBalance);
-  //       await this.user2SQRToken.approve(this.sqrStakingAddress, seedData.stake2);
-  //     });
-  //     it(INITIAL_POSITIVE_CHECK_TEST_TITLE, async function () {
-  //       expect(await getSQRTokenBalance(this, this.user1Address)).eq(seedData.userInitBalance);
-  //       expect(await getSQRTokenBalance(this, this.user2Address)).eq(seedData.userInitBalance);
-  //     });
-  //     it('user1 is allowed to stake (check event)', async function () {
-  //       const receipt = await waitTx(
-  //         this.user1SQRStaking.stake(seedData.stake1, StakingTypeID.Type30Days),
-  //       );
-  //       const eventLog = findEvent<StakeEventArgs>(receipt);
-  //       expect(eventLog).not.undefined;
-  //       const [id, PNLamount, PNLgAmount, user] = eventLog?.args;
-  //       expect(id).eq(1);
-  //       expect(PNLamount).eq(seedData.stake1);
-  //       expect(PNLgAmount).eq(seedData.zero);
-  //       expect(user).eq(this.user1Address);
-  //     });
-  //   });
-  // });
+  describe('funding', () => {
+    beforeEach(async function () {
+      await checkTotalSQRBalance(this);
+    });
+
+    afterEach(async function () {
+      await checkTotalSQRBalance(this);
+    });
+
+    it('user1 tries to deposit zero amount', async function () {
+      const signature = await signMessageForDeposit(
+        this.owner2,
+        seedData.userId1,
+        seedData.depositTransationId1,
+        seedData.zero,
+        seedData.nowPlus1m,
+      );
+
+      await expect(
+        this.user1SQRStaking.depositSig(
+          seedData.userId1,
+          seedData.depositTransationId1,
+          seedData.zero,
+          seedData.nowPlus1m,
+          signature,
+        ),
+      ).revertedWith(errorMessage.amountMustBeGreaterThanZero);
+    });
+
+    it('user1 tries to deposit without allowence', async function () {
+      const signature = await signMessageForDeposit(
+        this.owner2,
+        seedData.userId1,
+        seedData.depositTransationId1,
+        seedData.deposit1,
+        seedData.nowPlus1m,
+      );
+
+      await expect(
+        this.user1SQRStaking.depositSig(
+          seedData.userId1,
+          seedData.depositTransationId1,
+          seedData.deposit1,
+          seedData.nowPlus1m,
+          signature,
+        ),
+      ).revertedWith(errorMessage.userMustAllowToUseOfFund);
+    });
+
+    it('user1 tries to deposit with allowence but no funds', async function () {
+      await this.user1SQRToken.approve(this.sqrStakingAddress, seedData.extraDeposit1);
+
+      const signature = await signMessageForDeposit(
+        this.owner2,
+        seedData.userId1,
+        seedData.depositTransationId1,
+        seedData.deposit1,
+        seedData.nowPlus1m,
+      );
+
+      await expect(
+        this.user1SQRStaking.depositSig(
+          seedData.userId1,
+          seedData.depositTransationId1,
+          seedData.deposit1,
+          seedData.nowPlus1m,
+          signature,
+        ),
+      ).revertedWith(errorMessage.userMustHaveFunds);
+    });
+
+    it('user2 tries to deposit without allowence', async function () {
+      const signature = await signMessageForDeposit(
+        this.owner2,
+        seedData.userId2,
+        seedData.depositTransationId2,
+        seedData.deposit2,
+        seedData.nowPlus1m,
+      );
+
+      await expect(
+        this.user2SQRStaking.depositSig(
+          seedData.userId2,
+          seedData.depositTransationId2,
+          seedData.deposit2,
+          seedData.nowPlus1m,
+          signature,
+        ),
+      ).revertedWith(errorMessage.userMustAllowToUseOfFund);
+    });
+
+    describe('user1 and user2 have tokens and approved contract to use these', () => {
+      beforeEach(async function () {
+        await this.owner2SQRToken.transfer(this.user1Address, seedData.userInitBalance);
+        await this.user1SQRToken.approve(this.sqrStakingAddress, seedData.deposit1);
+
+        await this.owner2SQRToken.transfer(this.user2Address, seedData.userInitBalance);
+        await this.user2SQRToken.approve(this.sqrStakingAddress, seedData.deposit2);
+      });
+
+      it(INITIAL_POSITIVE_CHECK_TEST_TITLE, async function () {
+        expect(await getSQRTokenBalance(this, this.user1Address)).eq(seedData.userInitBalance);
+        expect(await getSQRTokenBalance(this, this.user2Address)).eq(seedData.userInitBalance);
+      });
+
+      it('user1 is allowed to deposit (check event)', async function () {
+        const signature = await signMessageForDeposit(
+          this.owner2,
+          seedData.userId1,
+          seedData.depositTransationId1,
+          seedData.deposit1,
+          seedData.nowPlus1m,
+        );
+
+        const receipt = await waitTx(
+          this.user1SQRStaking.depositSig(
+            seedData.userId1,
+            seedData.depositTransationId1,
+            seedData.deposit1,
+            seedData.nowPlus1m,
+            signature,
+          ),
+        );
+        const eventLog = findEvent<DepositEventArgs>(receipt);
+
+        expect(eventLog).not.undefined;
+        const [account, amount] = eventLog?.args;
+        expect(account).eq(this.user1Address);
+        expect(amount).eq(seedData.deposit1);
+      });
+
+      it('user1 deposited extrafunds', async function () {
+        await this.user1SQRToken.approve(this.sqrStakingAddress, seedData.extraDeposit1);
+
+        const signature = await signMessageForDeposit(
+          this.owner2,
+          seedData.userId1,
+          seedData.depositTransationId1,
+          seedData.extraDeposit1,
+          seedData.nowPlus1m,
+        );
+
+        await this.user1SQRStaking.depositSig(
+          seedData.userId1,
+          seedData.depositTransationId1,
+          seedData.extraDeposit1,
+          seedData.nowPlus1m,
+          signature,
+        );
+
+        expect(await this.owner2SQRStaking.getBalance()).eq(
+          await this.owner2SQRStaking.balanceLimit(),
+        );
+
+        expect(await getSQRTokenBalance(this, this.user1Address)).eq(
+          seedData.userInitBalance - seedData.extraDeposit1,
+        );
+        expect(await getSQRTokenBalance(this, this.sqrStakingAddress)).eq(
+          contractConfig.balanceLimit,
+        );
+
+        expect(await this.owner2SQRStaking.balanceOf(seedData.userId1)).eq(seedData.extraDeposit1);
+
+        const fundItem = await this.user1SQRStaking.fetchFundItem(seedData.userId1);
+        expect(fundItem.balance).eq(seedData.extraDeposit1);
+
+        expect(await this.owner2SQRStaking.totalBalance()).eq(seedData.extraDeposit1);
+      });
+
+      it('user1 deposits when user2 tranfered tokens to contract directly', async function () {
+        await this.user2SQRToken.transfer(this.sqrStakingAddress, seedData.extraDeposit2);
+
+        await this.user1SQRToken.approve(this.sqrStakingAddress, seedData.extraDeposit1);
+
+        const signature = await signMessageForDeposit(
+          this.owner2,
+          seedData.userId1,
+          seedData.depositTransationId1,
+          seedData.deposit1,
+          seedData.nowPlus1m,
+        );
+
+        await this.user1SQRStaking.depositSig(
+          seedData.userId1,
+          seedData.depositTransationId1,
+          seedData.deposit1,
+          seedData.nowPlus1m,
+          signature,
+        );
+
+        expect(await this.owner2SQRStaking.getBalance()).eq(
+          await this.owner2SQRStaking.balanceLimit(),
+        );
+
+        expect(await getSQRTokenBalance(this, this.user1Address)).eq(
+          seedData.userInitBalance - seedData.deposit1,
+        );
+
+        expect(await this.owner2SQRStaking.balanceOf(seedData.userId1)).eq(seedData.deposit1);
+
+        const fundItem = await this.user1SQRStaking.fetchFundItem(seedData.userId1);
+        expect(fundItem.balance).eq(seedData.deposit1);
+
+        expect(await this.owner2SQRStaking.totalBalance()).eq(seedData.deposit1);
+
+        const transactionItem = await this.user1SQRStaking.fetchTransactionItem(
+          seedData.depositTransationId1,
+        );
+        expect(transactionItem.amount).eq(seedData.deposit1);
+      });
+
+      describe('user1 deposited funds', () => {
+        beforeEach(async function () {
+          const signature = await signMessageForDeposit(
+            this.owner2,
+            seedData.userId1,
+            seedData.depositTransationId1,
+            seedData.deposit1,
+            seedData.nowPlus1m,
+          );
+
+          await this.user1SQRStaking.depositSig(
+            seedData.userId1,
+            seedData.depositTransationId1,
+            seedData.deposit1,
+            seedData.nowPlus1m,
+            signature,
+          );
+        });
+
+        it(INITIAL_POSITIVE_CHECK_TEST_TITLE, async function () {
+          expect(await getSQRTokenBalance(this, this.user1Address)).eq(
+            seedData.userInitBalance - seedData.deposit1,
+          );
+
+          expect(await this.owner2SQRStaking.balanceOf(seedData.userId1)).eq(seedData.deposit1);
+
+          const fundItem = await this.user1SQRStaking.fetchFundItem(seedData.userId1);
+          expect(fundItem.balance).eq(seedData.deposit1);
+
+          expect(await this.owner2SQRStaking.totalBalance()).eq(seedData.deposit1);
+
+          const transactionItem = await this.user1SQRStaking.fetchTransactionItem(
+            seedData.depositTransationId1,
+          );
+          expect(transactionItem.amount).eq(seedData.deposit1);
+        });
+
+        it('user1 tries to call deposit with the same transationId', async function () {
+          await this.user1SQRToken.approve(this.sqrStakingAddress, seedData.extraDeposit1);
+
+          const signature = await signMessageForDeposit(
+            this.owner2,
+            seedData.userId1,
+            seedData.depositTransationId1,
+            seedData.deposit1,
+            seedData.nowPlus1m,
+          );
+
+          await expect(
+            this.user1SQRStaking.depositSig(
+              seedData.userId1,
+              seedData.depositTransationId1,
+              seedData.deposit1,
+              seedData.nowPlus1m,
+              signature,
+            ),
+          ).revertedWith(errorMessage.transactionIdWasUsedBefore);
+        });
+      });
+    });
+  });
 }

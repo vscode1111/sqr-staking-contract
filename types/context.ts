@@ -30,7 +30,7 @@ export interface SQRTokenContext {
 
 export interface SQRStakingContext {
   sqrStakingFactory: SQRStaking__factory;
-  owner2SqrSkakingFactory: SQRStaking__factory;
+  owner2SqrStakingFactory: SQRStaking__factory;
   sqrStakingAddress: string;
   ownerSQRStaking: SQRStaking;
   user1SQRStaking: SQRStaking;

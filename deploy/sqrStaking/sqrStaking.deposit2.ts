@@ -2,13 +2,14 @@ import { DeployFunction } from 'hardhat-deploy/types';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { callWithTimerHre, toNumberDecimals, waitTx } from '~common';
 import { SQR_STAKING_NAME } from '~constants';
-import { StakingTypeID, contractConfig, seedData } from '~seeds';
-import { getAddressesFromHre, getContext, signMessageForStake } from '~utils';
+import { contractConfig, seedData } from '~seeds';
+import { getAddressesFromHre, getContext, signMessageForDeposit } from '~utils';
+import { deployData } from './deployData';
 
 const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<void> => {
   await callWithTimerHre(async () => {
     const { sqrStakingAddress } = getAddressesFromHre(hre);
-    console.log(`${SQR_STAKING_NAME} ${sqrStakingAddress} is staking...`);
+    console.log(`${SQR_STAKING_NAME} ${sqrStakingAddress} is depositing...`);
     const sqrTokenAddress = contractConfig.sqrToken;
     const context = await getContext(sqrTokenAddress, sqrStakingAddress);
     const { owner2, user2Address, user2SQRToken, user2SQRStaking } = context;
@@ -19,15 +20,20 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<voi
     console.log(`${toNumberDecimals(currentAllowance, decimals)} SQR was allowed`);
 
     const params = {
-      amount: seedData.stake1,
-      stakingTypeId: StakingTypeID.Type10Minutes,
-      userID: seedData.userId2,
-      stakingID: seedData.skakeTransationId1,
-      timestampLimit: seedData.nowPlus1m,
+      userId: deployData.userId2,
+      transationId: seedData.depositTransationId2,
+      amount: seedData.deposit2,
+      timestamptLimit: seedData.nowPlus1m,
       signature: '',
     };
 
-    params.signature = await signMessageForStake(owner2, user2Address, seedData.nowPlus1m);
+    params.signature = await signMessageForDeposit(
+      owner2,
+      params.userId,
+      params.transationId,
+      params.amount,
+      params.timestamptLimit,
+    );
 
     if (params.amount > currentAllowance) {
       const askAllowance = seedData.allowance;
@@ -40,19 +46,18 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<voi
     console.table(params);
 
     await waitTx(
-      user2SQRStaking.stakeSig(
-        params.stakingTypeId,
-        params.userID,
-        params.stakingID,
+      user2SQRStaking.depositSig(
+        params.userId,
+        params.transationId,
         params.amount,
-        params.timestampLimit,
+        params.timestamptLimit,
         params.signature,
       ),
-      'stakeSig',
+      'depositSig',
     );
   }, hre);
 };
 
-func.tags = [`${SQR_STAKING_NAME}:stake2`];
+func.tags = [`${SQR_STAKING_NAME}:deposit-sig2`];
 
 export default func;
