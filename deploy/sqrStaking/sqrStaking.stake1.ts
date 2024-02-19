@@ -27,7 +27,17 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<voi
       signature: '',
     };
 
-    params.signature = await signMessageForStake(owner2, user1Address, seedData.nowPlus1m);
+    params.signature = await signMessageForStake(
+      owner2,
+      params.userID,
+      params.stakingID,
+      user1Address,
+      params.amount,
+      sqrStakingAddress,
+      seedData.nowPlus1m,
+    );
+
+    console.log(params.signature);
 
     if (params.amount > currentAllowance) {
       const askAllowance = seedData.allowance;
@@ -41,9 +51,9 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<voi
 
     await waitTx(
       user1SQRStaking.stakeSig(
-        params.stakingTypeId,
         params.userID,
         params.stakingID,
+        params.stakingTypeId,
         params.amount,
         params.timestampLimit,
         params.signature,
