@@ -1,4 +1,8 @@
-import { ChangeBalanceLimitEvent, DepositEvent } from '~typechain-types/contracts/SQRStaking';
+import {
+  ChangeBalanceLimitEvent,
+  DepositEvent,
+  EmergencyWithdrawEvent,
+} from '~typechain-types/contracts/SQRStaking';
 import { ContextBase } from '~types';
 
 type Fixture<T> = () => Promise<T>;
@@ -16,3 +20,6 @@ export interface EventArgs<T> {
 export type ChangeBalanceLimitArgs = ChangeBalanceLimitEvent.Event & EventArgs<[string, bigint]>;
 
 export type DepositEventArgs = DepositEvent.Event & EventArgs<[string, number]>;
+
+export type EmergencyWithdrawEventArgs = EmergencyWithdrawEvent.Event &
+  EventArgs<[string, string, number]>;
