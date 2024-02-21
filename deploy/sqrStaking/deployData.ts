@@ -10,5 +10,5 @@ export const deployData = {
   now: toUnixTime(),
   nullAddress: '0x0000000000000000000000000000000000000000',
   userMintAmount: 100000,
-  balanceLimit: toWei(1000, sqrDecimals),
+  balanceLimit: toWei(1, sqrDecimals),
 };

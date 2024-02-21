@@ -3140,7 +3140,7 @@
             "label": "sqrToken",
             "offset": 0,
             "slot": "251",
-            "type": "t_contract(IPermitToken)3687",
+            "type": "t_contract(IPermitToken)3691",
             "contract": "SQRStaking",
             "src": "contracts\\SQRStaking.sol:40"
           },
@@ -3172,7 +3172,7 @@
             "label": "_balances",
             "offset": 0,
             "slot": "255",
-            "type": "t_mapping(t_bytes32,t_struct(FundItem)3173_storage)",
+            "type": "t_mapping(t_bytes32,t_struct(FundItem)3177_storage)",
             "contract": "SQRStaking",
             "src": "contracts\\SQRStaking.sol:45"
           },
@@ -3180,7 +3180,7 @@
             "label": "_transactionIds",
             "offset": 0,
             "slot": "256",
-            "type": "t_mapping(t_bytes32,t_struct(TransactionItem)3176_storage)",
+            "type": "t_mapping(t_bytes32,t_struct(TransactionItem)3180_storage)",
             "contract": "SQRStaking",
             "src": "contracts\\SQRStaking.sol:46"
           }
@@ -3206,19 +3206,19 @@
             "label": "bytes32",
             "numberOfBytes": "32"
           },
-          "t_contract(IPermitToken)3687": {
+          "t_contract(IPermitToken)3691": {
             "label": "contract IPermitToken",
             "numberOfBytes": "20"
           },
-          "t_mapping(t_bytes32,t_struct(FundItem)3173_storage)": {
+          "t_mapping(t_bytes32,t_struct(FundItem)3177_storage)": {
             "label": "mapping(bytes32 => struct SQRStaking.FundItem)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_bytes32,t_struct(TransactionItem)3176_storage)": {
+          "t_mapping(t_bytes32,t_struct(TransactionItem)3180_storage)": {
             "label": "mapping(bytes32 => struct SQRStaking.TransactionItem)",
             "numberOfBytes": "32"
           },
-          "t_struct(FundItem)3173_storage": {
+          "t_struct(FundItem)3177_storage": {
             "label": "struct SQRStaking.FundItem",
             "members": [
               {
@@ -3230,7 +3230,7 @@
             ],
             "numberOfBytes": "32"
           },
-          "t_struct(TransactionItem)3176_storage": {
+          "t_struct(TransactionItem)3180_storage": {
             "label": "struct SQRStaking.TransactionItem",
             "members": [
               {
