@@ -28,10 +28,17 @@ export const prodContractConfig: Partial<ContractConfig> = {
   balanceLimit: toWei(25_000, sqrDecimals),
 };
 
+// export const testContractConfig: Partial<ContractConfig> = {
+//   newOwner: '0x627Ab3fbC3979158f451347aeA288B0A3A47E1EF', //My s-owner2
+//   sqrToken: '0x4072b57e9B3dA8eEB9F8998b69C868E9a1698E54', //tSQR
+//   coldWallet: '0x21D73A5dF25DAB8AcB73E782f71678c3b00A198F', //My s-coldWallet
+//   balanceLimit: toWei(1000, sqrDecimals) / priceDiv,
+// };
+
 export const testContractConfig: Partial<ContractConfig> = {
-  newOwner: '0x627Ab3fbC3979158f451347aeA288B0A3A47E1EF', //My owner2
+  newOwner: '0x1D5eeCbD950C22Ec2B5813Ab1D65ED5fFD83F32B', //My owner2
   sqrToken: '0x4072b57e9B3dA8eEB9F8998b69C868E9a1698E54', //tSQR
-  coldWallet: '0x21D73A5dF25DAB8AcB73E782f71678c3b00A198F', //My coldWallet
+  coldWallet: '0xAca11c3Dde62ACdffE8d9279fDc8AFDD945556A7', //My coldWallet
   balanceLimit: toWei(1000, sqrDecimals) / priceDiv,
 };
 

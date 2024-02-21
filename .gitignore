@@ -21,6 +21,7 @@
 
 # files
 *.env
+*.env.old*
 *.log
 .pnp.*
 coverage.json

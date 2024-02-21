@@ -4,10 +4,12 @@ pragma solidity ^0.8.17;
 import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import {UUPSUpgradeable} from "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import {ReentrancyGuardUpgradeable} from "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
-import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
+import {ECDSA} from "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import {IPermitToken} from "./interfaces/IPermitToken.sol";
+import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgradeable {
+  using SafeERC20 for IPermitToken;
   using ECDSA for bytes32;
 
   /// @custom:oz-upgrades-unsafe-allow constructor
@@ -27,7 +29,6 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
 
     __Ownable_init();
     __UUPSUpgradeable_init();
-
     _transferOwnership(_newOwner);
     sqrToken = IPermitToken(_sqrToken);
     coldWallet = _coldWallet;
@@ -141,20 +142,16 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
       }
 
       if (userToContractAmount > 0) {
-        bool success = sqrToken.transferFrom(sender, address(this), userToContractAmount);
-        require(success, "Token transfer from sender failed");
+        sqrToken.safeTransferFrom(sender, address(this), userToContractAmount);
       }
       if (userToColdWalletAmount > 0) {
-        bool success = sqrToken.transferFrom(sender, coldWallet, userToColdWalletAmount);
-        require(success, "Token transfer from sender failed");
+        sqrToken.safeTransferFrom(sender, coldWallet, userToColdWalletAmount);
       }
       if (contractToColdWalletAmount > 0) {
-        bool success = sqrToken.transfer(coldWallet, contractToColdWalletAmount);
-        require(success, "Token transfer to coldWallet failed");
+        sqrToken.safeTransfer(coldWallet, contractToColdWalletAmount);
       }
     } else {
-      bool success = sqrToken.transferFrom(sender, address(this), amount);
-      require(success, "Token transfer from sender failed");
+      sqrToken.safeTransferFrom(sender, address(this), amount);
     }
 
     emit Deposit(sender, amount);
@@ -190,8 +187,7 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
 
   function emergencyWithdraw(address token, address to, uint256 amount) external onlyOwner {
     IPermitToken permitToken = IPermitToken(token);
-    bool success = permitToken.transfer(to, amount);
-    require(success, "Token transfer to argument address failed");
+    permitToken.safeTransfer(to, amount);
     emit EmergencyWithdraw(token, to, amount);
   }
 }

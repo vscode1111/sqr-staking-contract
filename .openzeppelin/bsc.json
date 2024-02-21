@@ -105,6 +105,11 @@
       "address": "0xC85AC922880b2eD44a2D9a78739740990B6219f5",
       "txHash": "0xba956aca80dbec67cc848a53177e856ef792b359dae8b104b9f1ef9d804f2835",
       "kind": "uups"
+    },
+    {
+      "address": "0x7D82090d0f7901Dfe612486E6D5A9A1d1c6e5f62",
+      "txHash": "0xd3c6fcc7515622e4ef632c4fc98146811e392eba7c669be218b3d72b1536d78f",
+      "kind": "uups"
     }
   ],
   "impls": {
@@ -3140,9 +3145,9 @@
             "label": "sqrToken",
             "offset": 0,
             "slot": "251",
-            "type": "t_contract(IPermitToken)3691",
+            "type": "t_contract(IPermitToken)4402",
             "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:40"
+            "src": "contracts\\SQRStaking.sol:42"
           },
           {
             "label": "coldWallet",
@@ -3150,7 +3155,7 @@
             "slot": "252",
             "type": "t_address",
             "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:41"
+            "src": "contracts\\SQRStaking.sol:43"
           },
           {
             "label": "balanceLimit",
@@ -3158,7 +3163,7 @@
             "slot": "253",
             "type": "t_uint256",
             "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:42"
+            "src": "contracts\\SQRStaking.sol:44"
           },
           {
             "label": "totalBalance",
@@ -3166,23 +3171,23 @@
             "slot": "254",
             "type": "t_uint256",
             "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:43"
+            "src": "contracts\\SQRStaking.sol:45"
           },
           {
             "label": "_balances",
             "offset": 0,
             "slot": "255",
-            "type": "t_mapping(t_bytes32,t_struct(FundItem)3177_storage)",
+            "type": "t_mapping(t_bytes32,t_struct(FundItem)3888_storage)",
             "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:45"
+            "src": "contracts\\SQRStaking.sol:47"
           },
           {
             "label": "_transactionIds",
             "offset": 0,
             "slot": "256",
-            "type": "t_mapping(t_bytes32,t_struct(TransactionItem)3180_storage)",
+            "type": "t_mapping(t_bytes32,t_struct(TransactionItem)3891_storage)",
             "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:46"
+            "src": "contracts\\SQRStaking.sol:48"
           }
         ],
         "types": {
@@ -3206,19 +3211,19 @@
             "label": "bytes32",
             "numberOfBytes": "32"
           },
-          "t_contract(IPermitToken)3691": {
+          "t_contract(IPermitToken)4402": {
             "label": "contract IPermitToken",
             "numberOfBytes": "20"
           },
-          "t_mapping(t_bytes32,t_struct(FundItem)3177_storage)": {
+          "t_mapping(t_bytes32,t_struct(FundItem)3888_storage)": {
             "label": "mapping(bytes32 => struct SQRStaking.FundItem)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_bytes32,t_struct(TransactionItem)3180_storage)": {
+          "t_mapping(t_bytes32,t_struct(TransactionItem)3891_storage)": {
             "label": "mapping(bytes32 => struct SQRStaking.TransactionItem)",
             "numberOfBytes": "32"
           },
-          "t_struct(FundItem)3177_storage": {
+          "t_struct(FundItem)3888_storage": {
             "label": "struct SQRStaking.FundItem",
             "members": [
               {
@@ -3230,7 +3235,204 @@
             ],
             "numberOfBytes": "32"
           },
-          "t_struct(TransactionItem)3180_storage": {
+          "t_struct(TransactionItem)3891_storage": {
+            "label": "struct SQRStaking.TransactionItem",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "8dd8c6697b4c9fb1c125d7d23132f96fffc0de693f8f5fa66be61c6e5ee962f1": {
+      "address": "0x4E98A436838175D12d95F87A5547a6B414284a60",
+      "txHash": "0x9e4108c49a0ab580e6bb3dc37870619fe68d8330e50c627b4e18ddbf7163cd24",
+      "layout": {
+        "solcVersion": "0.8.19",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:88"
+          },
+          {
+            "label": "sqrToken",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_contract(IPermitToken)4374",
+            "contract": "SQRStaking",
+            "src": "contracts\\SQRStaking.sol:41"
+          },
+          {
+            "label": "coldWallet",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_address",
+            "contract": "SQRStaking",
+            "src": "contracts\\SQRStaking.sol:42"
+          },
+          {
+            "label": "balanceLimit",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_uint256",
+            "contract": "SQRStaking",
+            "src": "contracts\\SQRStaking.sol:43"
+          },
+          {
+            "label": "totalBalance",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_uint256",
+            "contract": "SQRStaking",
+            "src": "contracts\\SQRStaking.sol:44"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_mapping(t_bytes32,t_struct(FundItem)3890_storage)",
+            "contract": "SQRStaking",
+            "src": "contracts\\SQRStaking.sol:46"
+          },
+          {
+            "label": "_transactionIds",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_mapping(t_bytes32,t_struct(TransactionItem)3893_storage)",
+            "contract": "SQRStaking",
+            "src": "contracts\\SQRStaking.sol:47"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_contract(IPermitToken)4374": {
+            "label": "contract IPermitToken",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_bytes32,t_struct(FundItem)3890_storage)": {
+            "label": "mapping(bytes32 => struct SQRStaking.FundItem)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(TransactionItem)3893_storage)": {
+            "label": "mapping(bytes32 => struct SQRStaking.TransactionItem)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(FundItem)3890_storage": {
+            "label": "struct SQRStaking.FundItem",
+            "members": [
+              {
+                "label": "balance",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(TransactionItem)3893_storage": {
             "label": "struct SQRStaking.TransactionItem",
             "members": [
               {
