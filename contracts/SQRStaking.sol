@@ -141,16 +141,20 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
       }
 
       if (userToContractAmount > 0) {
-        sqrToken.transferFrom(sender, address(this), userToContractAmount);
+        bool success = sqrToken.transferFrom(sender, address(this), userToContractAmount);
+        require(success, "Token transfer from sender failed");
       }
       if (userToColdWalletAmount > 0) {
-        sqrToken.transferFrom(sender, coldWallet, userToColdWalletAmount);
+        bool success = sqrToken.transferFrom(sender, coldWallet, userToColdWalletAmount);
+        require(success, "Token transfer from sender failed");
       }
       if (contractToColdWalletAmount > 0) {
-        sqrToken.transfer(coldWallet, contractToColdWalletAmount);
+        bool success = sqrToken.transfer(coldWallet, contractToColdWalletAmount);
+        require(success, "Token transfer to coldWallet failed");
       }
     } else {
-      sqrToken.transferFrom(sender, address(this), amount);
+      bool success = sqrToken.transferFrom(sender, address(this), amount);
+      require(success, "Token transfer from sender failed");
     }
 
     emit Deposit(sender, amount);
@@ -186,7 +190,8 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
 
   function emergencyWithdraw(address token, address to, uint256 amount) external onlyOwner {
     IPermitToken permitToken = IPermitToken(token);
-    permitToken.transfer(to, amount);
+    bool success = permitToken.transfer(to, amount);
+    require(success, "Token transfer to argument address failed");
     emit EmergencyWithdraw(token, to, amount);
   }
 }
