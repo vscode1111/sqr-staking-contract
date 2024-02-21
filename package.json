@@ -1,12 +1,13 @@
 {
   "name": "msq-staking-contract",
   "description": "Solidity smart contracts for SQR staking functionality",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "scripts": {
     "clean": "shx rm -rf ./dist ./artifacts ./cache ./coverage ./typechain-types ./coverage.json && yarn typechain",
     "commit": "git-cz",
     "compile": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat compile && tsc",
     "verify": "hardhat verify",
+    "slither": "slither SQRStaking.sol --solc-remaps '@openzeppelin=node_modules/@openzeppelin @chainlink=node_modules/@chainlink' --exclude naming-convention,external-function,low-level-calls",
     "coverage": "hardhat coverage --network hardhat --solcoverjs ./.solcover.js --temp artifacts --testfiles \"test/**/*.ts\" --show-stack-traces && pnpm typechain",
     "deploy": "hardhat deploy",
     "deploy:accounts": "hardhat deploy --tags accounts",

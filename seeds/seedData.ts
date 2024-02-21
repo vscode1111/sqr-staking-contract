@@ -18,7 +18,7 @@ if (!isTest) {
   throw 'Are you sure? It is PROD!';
 }
 
-const priceDiv = BigInt(10_000);
+const priceDiv = BigInt(1_000);
 const userDiv = BigInt(2);
 
 export const prodContractConfig: Partial<ContractConfig> = {
@@ -74,11 +74,7 @@ export function getTokenArgs(newOnwer: string): DeployTokenArgs {
 
 const userInitBalance = toWei(10_000, sqrDecimals);
 const deposit1 = toWei(100, sqrDecimals) / priceDiv;
-const withdraw1 = toWei(30, sqrDecimals) / priceDiv;
-const extraWithdraw1 = toWei(3000, sqrDecimals) / priceDiv;
-const remains1 = deposit1 - withdraw1;
 const extraDeposit1 = toWei(2500, sqrDecimals) / priceDiv;
-const owner2Withdraw = toWei(300, sqrDecimals) / priceDiv;
 
 const now1 = dayjs();
 
@@ -87,37 +83,22 @@ const userId2 = uuidv4();
 
 const depositTransationId1 = uuidv4();
 const depositTransationId2 = uuidv4();
-const withdrawTransationId1 = uuidv4();
-const withdrawTransationId2 = uuidv4();
 
 export const seedData = {
   zero: toWei(0),
   userInitBalance,
   totalAccountBalance: tokenConfig.initMint,
   deposit1,
-  withdraw1,
-  remains1,
   deposit2: deposit1 / userDiv,
-  withdraw2: withdraw1 / userDiv,
-  remains2: remains1 / userDiv,
   deposit3: deposit1 / userDiv / userDiv,
-  withdraw3: withdraw1 / userDiv / userDiv,
   extraDeposit1,
   extraDeposit2: extraDeposit1 / userDiv,
-  extraWithdraw1,
-  extraWithdraw2: extraWithdraw1 / userDiv,
-  owner2Withdraw,
   balanceLimit: toWei(100, sqrDecimals),
   allowance: toWei(1000000, sqrDecimals),
-  now1: toUnixTime(now1.toDate()),
   balanceDelta: toWei(0.01, sqrDecimals),
-  timeDelta: 500,
-  wrongLockPeriod: 4,
   nowPlus1m: toUnixTime(now1.add(1, 'minute').toDate()),
   userId1,
   userId2,
   depositTransationId1,
   depositTransationId2,
-  withdrawTransationId1,
-  withdrawTransationId2,
 };

@@ -342,7 +342,7 @@ export function shouldBehaveCorrectFunding(): void {
           const [token, to, amount] = eventLog?.args;
           expect(token).eq(this.sqrTokenAddress);
           expect(to).eq(this.user3Address);
-          expect(amount).closeTo(seedData.withdraw1, seedData.balanceDelta);
+          expect(amount).closeTo(contractAmount, seedData.balanceDelta);
 
           expect(await getSQRTokenBalance(this, this.user1Address)).eq(
             seedData.userInitBalance - seedData.deposit1,
