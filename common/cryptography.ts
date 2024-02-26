@@ -1,17 +1,30 @@
 import { arrayify } from '@ethersproject/bytes';
-import { Signer, keccak256, solidityPackedKeccak256, toUtf8Bytes } from 'ethers';
+import { AbiCoder, Signer, keccak256, solidityPacked, toUtf8Bytes } from 'ethers';
 import { MerkleTree } from 'merkletreejs';
 
 export function keccak256FromStr(data: string): string {
   return keccak256(toUtf8Bytes(data));
 }
 
-export async function signMessage(
+export async function signEncodePackedMessage(
   signer: Signer,
   types: readonly string[],
   values: readonly any[],
-) {
-  const hash = solidityPackedKeccak256(types, values);
+): Promise<string> {
+  const packed = solidityPacked(types, values);
+  const hash = keccak256(packed);
+  const messageHashBin = arrayify(hash);
+  return signer.signMessage(messageHashBin);
+}
+
+export async function signEncodedMessage(
+  signer: Signer,
+  types: readonly string[],
+  values: readonly any[],
+): Promise<string> {
+  const abiCoder = AbiCoder.defaultAbiCoder();
+  const encoded = abiCoder.encode(types, values);
+  const hash = keccak256(encoded);
   const messageHashBin = arrayify(hash);
   return signer.signMessage(messageHashBin);
 }

@@ -1,7 +1,7 @@
 {
   "name": "msq-staking-contract",
   "description": "Solidity smart contracts for SQR staking functionality",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "scripts": {
     "clean": "shx rm -rf ./dist ./artifacts ./cache ./coverage ./typechain-types ./coverage.json && yarn typechain",
     "commit": "git-cz",
@@ -17,6 +17,7 @@
     "deploy:fetch": "hardhat deploy --tags SQRStaking:fetch",
     "deploy:fetch2": "hardhat deploy --tags SQRStaking:fetch2",
     "deploy:deposit-sig1": "hardhat deploy --tags SQRStaking:deposit-sig1",
+    "deploy:deposit-sig1-manual": "hardhat deploy --tags SQRStaking:deposit-sig1-manual",
     "deploy:deposit-sig2": "hardhat deploy --tags SQRStaking:deposit-sig2",
     "deploy:emergency-withdraw": "hardhat deploy --tags SQRStaking:emergency-withdraw",
     "deploy:change-balance-limit": "hardhat deploy --tags SQRStaking:change-balance-limit",

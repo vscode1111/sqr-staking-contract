@@ -1,5 +1,5 @@
 import { Signer } from 'ethers';
-import { signMessage } from '~common';
+import { signEncodedMessage } from '~common';
 
 export async function signMessageForDeposit(
   signer: Signer,
@@ -8,7 +8,7 @@ export async function signMessageForDeposit(
   amount: bigint,
   timestampLimit: number,
 ) {
-  return signMessage(
+  return signEncodedMessage(
     signer,
     // userId,  transactionId, amount, timestampLimit
     ['string', 'string', 'uint256', 'uint32'],

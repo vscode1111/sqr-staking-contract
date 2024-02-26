@@ -37,7 +37,7 @@ export function shouldBehaveCorrectFunding(): void {
       ).revertedWith(errorMessage.amountMustBeGreaterThanZero);
     });
 
-    it('user1 tries to deposit without allowence', async function () {
+    it('user1 tries to deposit without allowance', async function () {
       const signature = await signMessageForDeposit(
         this.owner2,
         seedData.userId1,
@@ -99,7 +99,7 @@ export function shouldBehaveCorrectFunding(): void {
       ).revertedWith(errorMessage.invalidSignature);
     });
 
-    it('user1 tries to deposit with allowence but no funds', async function () {
+    it('user1 tries to deposit with allowance but no funds', async function () {
       await this.user1SQRToken.approve(this.sqrStakingAddress, seedData.extraDeposit1);
 
       const signature = await signMessageForDeposit(
@@ -121,7 +121,7 @@ export function shouldBehaveCorrectFunding(): void {
       ).revertedWith(errorMessage.userMustHaveFunds);
     });
 
-    it('user2 tries to deposit without allowence', async function () {
+    it('user2 tries to deposit without allowance', async function () {
       const signature = await signMessageForDeposit(
         this.owner2,
         seedData.userId2,
@@ -153,6 +153,26 @@ export function shouldBehaveCorrectFunding(): void {
       it(INITIAL_POSITIVE_CHECK_TEST_TITLE, async function () {
         expect(await getSQRTokenBalance(this, this.user1Address)).eq(seedData.userInitBalance);
         expect(await getSQRTokenBalance(this, this.user2Address)).eq(seedData.userInitBalance);
+      });
+
+      it('check hash collision for signMessageForDeposit', async function () {
+        const wrongSignature = await signMessageForDeposit(
+          this.owner2,
+          '123',
+          '123',
+          seedData.deposit1,
+          seedData.nowPlus1m,
+        );
+
+        await expect(
+          this.user1SQRStaking.depositSig(
+            '12',
+            '3123',
+            seedData.deposit1,
+            seedData.nowPlus1m,
+            wrongSignature,
+          ),
+        ).revertedWith(errorMessage.invalidSignature);
       });
 
       it('user1 is allowed to deposit (check event)', async function () {

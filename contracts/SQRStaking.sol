@@ -164,9 +164,7 @@ contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgra
     uint32 timestampLimit,
     bytes memory signature
   ) private view returns (bool) {
-    bytes32 messageHash = keccak256(
-      abi.encodePacked(userId, transactionId, amount, timestampLimit)
-    );
+    bytes32 messageHash = keccak256(abi.encode(userId, transactionId, amount, timestampLimit));
     address recover = messageHash.toEthSignedMessageHash().recover(signature);
     return recover == owner();
   }
