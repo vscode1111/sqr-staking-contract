@@ -1,24 +1,19 @@
 import { loadFixture } from '@nomicfoundation/hardhat-network-helpers';
 import { SQR_STAKING_NAME } from '~constants';
-import { ContextBase } from '~types';
-import { shouldBehaveCorrectControl } from './sqrStaking.behavior.control';
+import { shouldBehaveCorrectDeployment } from './sqrStaking.behavior.deployment';
 import { shouldBehaveCorrectFetching } from './sqrStaking.behavior.fetching';
-import { shouldBehaveCorrectFunding } from './sqrStaking.behavior.funding';
-import { deploySQRStakingContractFixture } from './sqrStaking.fixture';
+import { shouldBehaveCorrectFundingAprCalculationCase } from './sqrStaking.behavior.funding-apr-calculation-case';
+import { shouldBehaveCorrectFundingWithdrawExcessRewardCase } from './sqrStaking.behavior.funding-case-withdraw-excess-reward';
+import { shouldBehaveCorrectFundingDefaultCase } from './sqrStaking.behavior.funding-default-case';
 
 describe(SQR_STAKING_NAME, function () {
   before(async function () {
     this.loadFixture = loadFixture;
   });
 
-  beforeEach(async function () {
-    const fixture = await this.loadFixture(deploySQRStakingContractFixture);
-    for (const field in fixture) {
-      this[field] = fixture[field as keyof ContextBase];
-    }
-  });
-
-  shouldBehaveCorrectControl();
+  shouldBehaveCorrectDeployment();
   shouldBehaveCorrectFetching();
-  shouldBehaveCorrectFunding();
+  shouldBehaveCorrectFundingDefaultCase();
+  shouldBehaveCorrectFundingAprCalculationCase();
+  shouldBehaveCorrectFundingWithdrawExcessRewardCase();
 });

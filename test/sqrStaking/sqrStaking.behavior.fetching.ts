@@ -1,20 +1,46 @@
 import { expect } from 'chai';
-import { contractConfig, seedData } from '~seeds';
-import { getSQRTokenBalance } from './utils';
+import { APR_DIVIDER, VERSION, YEAR_PERIOD } from '~constants';
+import { seedData } from '~seeds';
+import { loadSQRStakingFixture } from './utils';
 
 export function shouldBehaveCorrectFetching(): void {
   describe('fetching', () => {
-    it('should be correct init values', async function () {
-      expect(await this.ownerSQRStaking.owner()).eq(this.owner2Address);
-      expect(await this.ownerSQRStaking.sqrToken()).eq(this.sqrTokenAddress);
-      expect(await this.ownerSQRStaking.coldWallet()).eq(this.coldWalletAddress);
-      expect(await this.ownerSQRStaking.balanceLimit()).eq(contractConfig.balanceLimit);
+    beforeEach(async function () {
+      await loadSQRStakingFixture(this);
     });
 
-    it('should be correct balances', async function () {
-      expect(await getSQRTokenBalance(this, this.owner2Address)).eq(seedData.totalAccountBalance);
-      expect(await this.ownerSQRStaking.getBalance()).eq(seedData.zero);
-      expect(await this.ownerSQRStaking.totalBalance()).eq(seedData.zero);
+    it('should be correct init values', async function () {
+      expect(await this.owner2SQRStaking.owner()).eq(this.owner2Address);
+      expect(await this.owner2SQRStaking.VERSION()).eq(VERSION);
+      expect(await this.owner2SQRStaking.YEAR_PERIOD()).eq(YEAR_PERIOD);
+      expect(await this.owner2SQRStaking.APR_DIVIDER()).eq(APR_DIVIDER);
+      expect(await this.owner2SQRStaking.isStakeReady()).eq(true);
+      expect(await this.owner2SQRStaking.getBalance()).eq(seedData.zero);
+      expect(await this.owner2SQRStaking.getStakeCount()).eq(0);
+      expect(await this.owner2SQRStaking.getStakerCount()).eq(0);
+      expect(await this.owner2SQRStaking.totalStaked()).eq(seedData.zero);
+      expect(await this.owner2SQRStaking.totalClaimed()).eq(seedData.zero);
+      expect(await this.owner2SQRStaking.totalWithdrawn()).eq(seedData.zero);
+      expect(await this.owner2SQRStaking.totalReservedReward()).eq(seedData.zero);
+      expect(await this.owner2SQRStaking.getStakeCountForUser(this.user1Address)).eq(seedData.zero);
+      expect(await this.owner2SQRStaking.getStakeCountForUser(this.user2Address)).eq(seedData.zero);
+      expect(await this.owner2SQRStaking.getStakeCountForUser(this.companyAddress)).eq(
+        seedData.zero,
+      );
+      expect(
+        await this.owner2SQRStaking.calculateMaxRewardForUser(
+          this.user1Address,
+          seedData.userStakeId1_0,
+        ),
+      ).eq(seedData.zero);
+      expect(
+        await this.owner2SQRStaking.calculateCurrentRewardForUser(
+          this.user1Address,
+          seedData.userStakeId1_0,
+        ),
+      ).eq(seedData.zero);
+      const stakesData = await this.user1SQRStaking.fetchStakesForUser(this.user1Address);
+      expect(stakesData.length).eq(0);
     });
   });
 }

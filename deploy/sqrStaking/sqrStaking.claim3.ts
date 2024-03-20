@@ -9,20 +9,21 @@ import { deployData } from './deployData';
 const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<void> => {
   await callWithTimerHre(async () => {
     const { sqrStakingAddress } = getAddressesFromHre(hre);
-    console.log(`${SQR_STAKING_NAME} ${sqrStakingAddress} is withdrawing to user...`);
-    const sqrTokenAddress = contractConfig.sqrToken;
-    const context = await getContext(sqrTokenAddress, sqrStakingAddress);
-    const { owner2SQRStaking } = context;
+    console.log(`${SQR_STAKING_NAME} ${sqrStakingAddress} is staking...`);
+    const erc20TokenAddress = contractConfig.erc20Token;
+    const context = await getContext(erc20TokenAddress, sqrStakingAddress);
+    const { user3SQRStaking } = context;
 
     const params = {
-      balanceLimit: deployData.balanceLimit,
+      userStakeId: deployData.userStakeId2_0,
     };
 
     console.table(params);
-    await waitTx(owner2SQRStaking.changeBalanceLimit(params.balanceLimit), 'changeBalanceLimit');
+
+    await waitTx(user3SQRStaking.claim(params.userStakeId), 'claim');
   }, hre);
 };
 
-func.tags = [`${SQR_STAKING_NAME}:change-balance-limit`];
+func.tags = [`${SQR_STAKING_NAME}:claim3`];
 
 export default func;

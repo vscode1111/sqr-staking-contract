@@ -1,191 +1,288 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import {UUPSUpgradeable} from "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
-import {ReentrancyGuardUpgradeable} from "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
-import {ECDSA} from "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
-import {IPermitToken} from "./interfaces/IPermitToken.sol";
+import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-contract SQRStaking is OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgradeable {
-  using SafeERC20 for IPermitToken;
-  using ECDSA for bytes32;
+// import "hardhat/console.sol";
 
-  /// @custom:oz-upgrades-unsafe-allow constructor
-  constructor() {
-    _disableInitializers();
-  }
+contract SQRStaking is Ownable, ReentrancyGuard {
+  using SafeERC20 for IERC20;
 
-  function initialize(
-    address _newOwner,
-    address _sqrToken,
-    address _coldWallet,
-    uint256 _balanceLimit
-  ) public initializer {
-    require(_newOwner != address(0), "New owner address can't be zero");
-    require(_sqrToken != address(0), "SQR token address can't be zero");
-    require(_coldWallet != address(0), "Cold wallet address can't be zero");
-
-    __Ownable_init();
-    __UUPSUpgradeable_init();
-    _transferOwnership(_newOwner);
-    sqrToken = IPermitToken(_sqrToken);
-    coldWallet = _coldWallet;
-    balanceLimit = _balanceLimit;
-  }
-
-  function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
+  using Counters for Counters.Counter;
 
   //Variables, structs, modifiers, events------------------------
-  IPermitToken public sqrToken;
-  address public coldWallet;
-  uint256 public balanceLimit;
-  uint256 public totalBalance;
 
-  mapping(bytes32 => FundItem) private _balances;
-  mapping(bytes32 => TransactionItem) private _transactionIds;
+  Counters.Counter private _stakeCounter;
+  Counters.Counter private _stakerCounter;
 
-  struct FundItem {
-    uint256 balance;
+  string public constant VERSION = "1.0";
+  uint32 public constant YEAR_PERIOD = 365 days;
+  uint32 public constant APR_DIVIDER = 1000;
+
+  IERC20 public erc20Token;
+  uint32 public duration;
+  uint32 public apr;
+  uint32 public depositDeadline;
+  uint256 public limit;
+  uint256 public minStakeAmount;
+  uint256 public maxStakeAmount;
+
+  constructor(
+    address _newOwner,
+    address _erc20Token,
+    uint32 _duration,
+    uint32 _apr,
+    uint32 _depositDeadline,
+    uint256 _limit,
+    uint256 _minStakeAmount,
+    uint256 _maxStakeAmount
+  ) {
+    require(_newOwner != address(0), "New owner address can't be zero");
+    require(_erc20Token != address(0), "ERC20 token address can't be zero");
+    require(_duration > 0, "Duration must be greater than zero");
+    require(_apr > 0, "APR must be greater than zero");
+    require(
+      _depositDeadline > uint32(block.timestamp),
+      "depositDeadline must be greater than current time"
+    );
+
+    _transferOwnership(_newOwner);
+
+    erc20Token = IERC20(_erc20Token);
+
+    duration = _duration;
+    apr = _apr;
+    depositDeadline = _depositDeadline;
+    limit = _limit;
+    minStakeAmount = _minStakeAmount;
+    maxStakeAmount = _maxStakeAmount;
   }
 
-  struct TransactionItem {
-    uint256 amount;
+  struct StakeEntry {
+    uint256 stakedAmount;
+    uint256 claimedAmount;
+    uint32 stakedAt;
+    uint32 claimedAt;
+    bool withdrawn;
   }
 
-  event ChangeBalanceLimit(address indexed sender, uint256 balanceLimit);
+  mapping(address => StakeEntry[]) private stakeData;
 
-  event Deposit(address indexed account, uint256 amount);
+  uint256 public totalStaked;
+  uint256 public totalClaimed;
+  uint256 public totalWithdrawn;
+  uint256 public totalReservedReward;
 
-  event EmergencyWithdraw(address indexed token, address indexed to, uint256 amount);
+  event Stake(address indexed user, uint32 userStakeId, uint256 amount);
+  event Claim(address indexed user, uint32 userStakeId, uint256 amount);
+  event Unstake(address indexed user, uint32 userStakeId, uint256 amount);
+  event WithdrawExcessReward(address indexed to, uint256 amount);
 
-  //Functions-------------------------------------------
+  //Read methods-------------------------------------------
 
-  function changeBalanceLimit(uint256 _balanceLimit) external onlyOwner {
-    balanceLimit = _balanceLimit;
-    emit ChangeBalanceLimit(_msgSender(), _balanceLimit);
-  }
-
-  function fetchFundItem(string memory userId) external view returns (FundItem memory) {
-    return _balances[getHash(userId)];
+  function isStakeReady() public view returns (bool) {
+    return uint32(block.timestamp) <= depositDeadline;
   }
 
   function getBalance() public view returns (uint256) {
-    return sqrToken.balanceOf(address(this));
+    return erc20Token.balanceOf(address(this));
   }
 
-  function balanceOf(string memory userId) external view returns (uint256) {
-    FundItem storage fund = _balances[getHash(userId)];
-    return fund.balance;
+  function getStakeCount() public view returns (uint32) {
+    return uint32(_stakeCounter.current());
   }
 
-  function getHash(string memory value) private pure returns (bytes32) {
-    return keccak256(abi.encodePacked(value));
+  function getStakerCount() public view returns (uint32) {
+    return uint32(_stakerCounter.current());
   }
 
-  function fetchTransactionItem(
-    string memory transactionId
-  ) external view returns (TransactionItem memory) {
-    return _transactionIds[getHash(transactionId)];
+  function getStakeCountForUser(address user) public view returns (uint256) {
+    return stakeData[user].length;
   }
 
-  function getTransactionItem(
-    string memory transactionId
-  ) private view returns (bytes32, TransactionItem memory) {
-    bytes32 transactionIdHash = getHash(transactionId);
-    return (transactionIdHash, _transactionIds[transactionIdHash]);
+  function fetchStakesForUser(address user) external view returns (StakeEntry[] memory) {
+    return stakeData[user];
   }
 
-  function _setTransactionId(uint256 amount, string memory transactionId) private {
-    (bytes32 transactionIdHash, TransactionItem memory transactionItem) = getTransactionItem(
-      transactionId
+  function calculateReward(
+    uint256 _amount,
+    uint256 _apr,
+    uint32 _duration
+  ) public pure returns (uint256) {
+    return (((_amount * _apr)) * _duration) / APR_DIVIDER / YEAR_PERIOD;
+  }
+
+  function calculateMaxRewardForStake(
+    StakeEntry memory stakeEntry
+  ) internal view returns (uint256) {
+    return calculateReward(stakeEntry.stakedAmount, apr, duration);
+  }
+
+  function calculateCurrentRewardForStake(
+    StakeEntry memory stakeEntry
+  ) internal view returns (uint256) {
+    uint256 maxReward = calculateMaxRewardForStake(stakeEntry);
+    uint256 remainsReward = maxReward - stakeEntry.claimedAmount;
+
+    uint256 calculatedReward = calculateReward(
+      stakeEntry.stakedAmount,
+      apr,
+      uint32(block.timestamp) - stakeEntry.claimedAt
     );
-    require(transactionItem.amount == 0, "This transactionId was used before");
-    _transactionIds[transactionIdHash] = TransactionItem(amount);
+
+    if (calculatedReward > remainsReward) {
+      return remainsReward;
+    }
+
+    return calculatedReward;
   }
 
-  function _deposit(
-    string memory userId,
-    string memory transactionId,
-    uint256 amount,
-    uint32 timestampLimit
-  ) private nonReentrant {
+  function calculateMaxRewardForUser(
+    address user,
+    uint32 userStakeId
+  ) public view returns (uint256) {
+    if (userStakeId < getStakeCountForUser(user)) {
+      return calculateMaxRewardForStake(stakeData[user][userStakeId]);
+    }
+    return 0;
+  }
+
+  function calculateCurrentRewardForUser(
+    address user,
+    uint32 userStakeId
+  ) public view returns (uint256) {
+    if (userStakeId < getStakeCountForUser(user)) {
+      return calculateCurrentRewardForStake(stakeData[user][userStakeId]);
+    }
+    return 0;
+  }
+
+  function calculateExcessReward() public view returns (uint256) {
+    uint256 contractBalance = getBalance();
+    uint256 totalStakedAndReward = totalStaked + totalReservedReward;
+    if (contractBalance > totalStakedAndReward) {
+      return contractBalance - totalStakedAndReward;
+    }
+    return 0;
+  }
+
+  function calculateRequiredReward() public view returns (uint256) {
+    uint256 contractBalance = getBalance();
+    uint256 totalStakedAndReward = totalStaked + totalReservedReward;
+    if (totalStakedAndReward > contractBalance) {
+      return totalStakedAndReward - contractBalance;
+    }
+    return 0;
+  }
+
+  //Write methods-------------------------------------------
+
+  function stake(uint256 amount) external nonReentrant {
     require(amount > 0, "Amount must be greater than zero");
-    require(block.timestamp <= timestampLimit, "Timeout blocker");
+    require(uint32(block.timestamp) <= depositDeadline, "Deposit deadline is over");
+    require(limit == 0 || totalStaked + amount <= limit, "Stake limit is over");
 
     address sender = _msgSender();
 
-    require(sqrToken.allowance(sender, address(this)) >= amount, "User must allow to use of funds");
+    require(
+      erc20Token.allowance(sender, address(this)) >= amount,
+      "User must allow to use of funds"
+    );
+    require(erc20Token.balanceOf(sender) >= amount, "User must have funds");
+    require(amount >= minStakeAmount, "You can't stake less than minimum amount");
+    require(
+      maxStakeAmount == 0 || amount <= maxStakeAmount,
+      "You can't stake more than maximum amount"
+    );
 
-    require(sqrToken.balanceOf(sender) >= amount, "User must have funds");
+    StakeEntry[] storage stakeEntries = stakeData[sender];
 
-    _setTransactionId(amount, transactionId);
-
-    FundItem storage fund = _balances[getHash(userId)];
-    fund.balance += amount;
-    totalBalance += amount;
-
-    uint256 contractBalance = getBalance();
-    uint256 supposedBalance = contractBalance + amount;
-
-    if (supposedBalance > balanceLimit) {
-      uint256 userToContractAmount = 0;
-      uint256 userToColdWalletAmount = supposedBalance - balanceLimit;
-      uint256 contractToColdWalletAmount = 0;
-
-      if (amount > userToColdWalletAmount) {
-        userToContractAmount = amount - userToColdWalletAmount;
-      } else {
-        userToColdWalletAmount = amount;
-        contractToColdWalletAmount = contractBalance - balanceLimit;
-      }
-
-      if (userToContractAmount > 0) {
-        sqrToken.safeTransferFrom(sender, address(this), userToContractAmount);
-      }
-      if (userToColdWalletAmount > 0) {
-        sqrToken.safeTransferFrom(sender, coldWallet, userToColdWalletAmount);
-      }
-      if (contractToColdWalletAmount > 0) {
-        sqrToken.safeTransfer(coldWallet, contractToColdWalletAmount);
-      }
-    } else {
-      sqrToken.safeTransferFrom(sender, address(this), amount);
+    if (stakeEntries.length == 0) {
+      _stakerCounter.increment();
     }
 
-    emit Deposit(sender, amount);
-  }
-
-  function verifyStakeSignature(
-    string memory userId,
-    string memory transactionId,
-    uint256 amount,
-    uint32 timestampLimit,
-    bytes memory signature
-  ) private view returns (bool) {
-    bytes32 messageHash = keccak256(abi.encode(userId, transactionId, amount, timestampLimit));
-    address recover = messageHash.toEthSignedMessageHash().recover(signature);
-    return recover == owner();
-  }
-
-  function depositSig(
-    string memory userId,
-    string memory transactionId,
-    uint256 amount,
-    uint32 timestampLimit,
-    bytes memory signature
-  ) external {
-    require(
-      verifyStakeSignature(userId, transactionId, amount, timestampLimit, signature),
-      "Invalid signature"
+    StakeEntry memory stakeEntry = StakeEntry(
+      amount,
+      0,
+      uint32(block.timestamp),
+      uint32(block.timestamp),
+      false
     );
-    _deposit(userId, transactionId, amount, timestampLimit);
+
+    stakeEntries.push(stakeEntry);
+    totalStaked += amount;
+    totalReservedReward += calculateReward(amount, apr, duration);
+
+    _stakeCounter.increment();
+
+    erc20Token.safeTransferFrom(sender, address(this), amount);
+
+    emit Stake(sender, uint32(stakeEntries.length) - 1, amount);
   }
 
-  function emergencyWithdraw(address token, address to, uint256 amount) external onlyOwner {
-    IPermitToken permitToken = IPermitToken(token);
-    permitToken.safeTransfer(to, amount);
-    emit EmergencyWithdraw(token, to, amount);
+  function claim(uint32 userStakeId) external nonReentrant {
+    address sender = _msgSender();
+
+    require(userStakeId < getStakeCountForUser(sender), "Stake data isn't found");
+    StakeEntry storage stakeEntry = stakeData[sender][userStakeId];
+
+    require(!stakeEntry.withdrawn, "Already withdrawn");
+
+    uint256 currentReward = calculateCurrentRewardForStake(stakeEntry);
+    require(currentReward > 0, "You have no reward");
+
+    uint256 contractBalance = getBalance();
+    require(contractBalance >= totalStaked + currentReward, "Contract has no tokens for claiming");
+
+    stakeEntry.claimedAmount += currentReward;
+    stakeEntry.claimedAt = uint32(block.timestamp);
+
+    totalWithdrawn += currentReward;
+    totalClaimed += currentReward;
+    totalReservedReward -= currentReward;
+
+    erc20Token.safeTransfer(sender, currentReward);
+
+    emit Claim(sender, userStakeId, currentReward);
+  }
+
+  function unstake(uint32 userStakeId) external nonReentrant {
+    address sender = _msgSender();
+
+    require(userStakeId < getStakeCountForUser(sender), "Stake data isn't found");
+    StakeEntry storage stakeEntry = stakeData[sender][userStakeId];
+
+    require(!stakeEntry.withdrawn, "Already withdrawn");
+    require(uint32(block.timestamp) > stakeEntry.stakedAt + duration, "Too early to withdraw");
+
+    stakeEntry.withdrawn = true;
+
+    uint256 currentReward = calculateCurrentRewardForStake(stakeEntry);
+
+    uint256 contractBalance = getBalance();
+
+    require(contractBalance >= totalStaked + currentReward, "Contract has no tokens for unstake");
+
+    uint256 unstakeAmount = stakeEntry.stakedAmount + currentReward;
+
+    totalStaked -= stakeEntry.stakedAmount;
+    totalClaimed += currentReward;
+    totalWithdrawn += unstakeAmount;
+    totalReservedReward -= currentReward;
+
+    erc20Token.safeTransfer(sender, unstakeAmount);
+
+    emit Unstake(sender, userStakeId, unstakeAmount);
+  }
+
+  function withdrawExcessReward() external nonReentrant onlyOwner {
+    uint256 amount = calculateExcessReward();
+    address to = owner();
+    erc20Token.safeTransfer(to, amount);
+    emit WithdrawExcessReward(to, amount);
   }
 }

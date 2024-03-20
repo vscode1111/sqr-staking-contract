@@ -1,24 +1,30 @@
-import { contractConfig } from '~seeds';
+import { ContractConfig, contractConfig } from '~seeds';
 import { ContextBase } from '~types';
-import { getSQRStakingContext, getSQRTokenContext, getUsers } from '~utils';
+import { getERC20TokenContext, getSQRStakingContext, getUsers } from '~utils';
 
-export async function deploySQRStakingContractFixture(): Promise<ContextBase> {
+export async function deploySQRStakingContractFixture(
+  contractConfigParam?: Partial<ContractConfig>,
+): Promise<ContextBase> {
   const users = await getUsers();
-  const { owner2Address, coldWalletAddress } = users;
+  const { owner2Address } = users;
 
-  const sqrTokenContext = await getSQRTokenContext(users);
-  const { sqrTokenAddress } = sqrTokenContext;
+  const erc20TokenContext = await getERC20TokenContext(users);
+  const { erc20TokenAddress } = erc20TokenContext;
 
-  const sqrStakingContext = await getSQRStakingContext(users, {
+  const config: ContractConfig = {
+    ...contractConfig,
+    ...contractConfigParam,
     newOwner: owner2Address,
-    sqrToken: sqrTokenAddress,
-    coldWallet: coldWalletAddress,
-    balanceLimit: contractConfig.balanceLimit,
-  });
+    erc20Token: erc20TokenAddress,
+  };
+
+  // console.log(111, config);
+
+  const sqrStakingContext = await getSQRStakingContext(users, config);
 
   return {
     ...users,
-    ...sqrTokenContext,
+    ...erc20TokenContext,
     ...sqrStakingContext,
   };
 }

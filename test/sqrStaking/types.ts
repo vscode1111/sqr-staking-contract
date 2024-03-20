@@ -1,15 +1,18 @@
 import {
-  ChangeBalanceLimitEvent,
-  DepositEvent,
-  EmergencyWithdrawEvent,
+  ClaimEvent,
+  StakeEvent,
+  UnstakeEvent,
+  WithdrawExcessRewardEvent,
 } from '~typechain-types/contracts/SQRStaking';
 import { ContextBase } from '~types';
 
-type Fixture<T> = () => Promise<T>;
+export type Fixture<T> = () => Promise<T>;
+
+export type FixtureFn = <T>(fixture: Fixture<T>) => Promise<T>;
 
 declare module 'mocha' {
   export interface Context extends ContextBase {
-    loadFixture: <T>(fixture: Fixture<T>) => Promise<T>;
+    loadFixture: FixtureFn;
   }
 }
 
@@ -17,9 +20,11 @@ export interface EventArgs<T> {
   args: T;
 }
 
-export type ChangeBalanceLimitArgs = ChangeBalanceLimitEvent.Event & EventArgs<[string, bigint]>;
+export type StakeEventArgs = StakeEvent.Event & EventArgs<[string, number, number]>;
 
-export type DepositEventArgs = DepositEvent.Event & EventArgs<[string, number]>;
+export type ClaimEventArgs = ClaimEvent.Event & EventArgs<[string, number, number]>;
 
-export type EmergencyWithdrawEventArgs = EmergencyWithdrawEvent.Event &
-  EventArgs<[string, string, number]>;
+export type UnstakeEventArgs = UnstakeEvent.Event & EventArgs<[string, number, number]>;
+
+export type WithdrawExcessRewardEventArgs = WithdrawExcessRewardEvent.Event &
+  EventArgs<[string, number]>;

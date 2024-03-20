@@ -1,1 +1,6 @@
 slither contracts/SQRStaking.sol --solc-remaps '@openzeppelin=node_modules/@openzeppelin' --exclude naming-convention,external-function,low-level-calls
+
+ToDo for version 1.1:
+1. Add logic to unstake initial stake when contract has no reward. And user is allowed to claim remains reward after unstaking
+2. Add historicalTotalStaked variable (contract limit logic will use that one) and rename totalStaked to currentTotalStaked
+3. Set APR_DIVIDER constant to 10000 instead of 1000

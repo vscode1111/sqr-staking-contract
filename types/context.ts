@@ -1,6 +1,6 @@
 import { Signer } from 'ethers';
+import { ERC20Token } from '~typechain-types/contracts/ERC20Token';
 import { SQRStaking } from '~typechain-types/contracts/SQRStaking';
-import { SQRToken } from '~typechain-types/contracts/SQRToken';
 import { SQRStaking__factory } from '~typechain-types/factories/contracts/SQRStaking__factory';
 
 export interface Users {
@@ -14,18 +14,18 @@ export interface Users {
   user3Address: string;
   owner2: Signer;
   owner2Address: string;
-  coldWallet: Signer;
-  coldWalletAddress: string;
+  company: Signer;
+  companyAddress: string;
 }
 
-export interface SQRTokenContext {
-  sqrTokenAddress: string;
-  ownerSQRToken: SQRToken;
-  user1SQRToken: SQRToken;
-  user2SQRToken: SQRToken;
-  user3SQRToken: SQRToken;
-  owner2SQRToken: SQRToken;
-  coldWalletSQRToken: SQRToken;
+export interface ERC20TokenContext {
+  erc20TokenAddress: string;
+  ownerERC20Token: ERC20Token;
+  user1ERC20Token: ERC20Token;
+  user2ERC20Token: ERC20Token;
+  user3ERC20Token: ERC20Token;
+  owner2ERC20Token: ERC20Token;
+  companyERC20Token: ERC20Token;
 }
 
 export interface SQRStakingContext {
@@ -37,7 +37,7 @@ export interface SQRStakingContext {
   user2SQRStaking: SQRStaking;
   user3SQRStaking: SQRStaking;
   owner2SQRStaking: SQRStaking;
-  coldWalletSQRStaking: SQRStaking;
+  companySQRStaking: SQRStaking;
 }
 
-export type ContextBase = Users & SQRTokenContext & SQRStakingContext;
+export type ContextBase = Users & ERC20TokenContext & SQRStakingContext;

@@ -21,7 +21,7 @@ function getAccounts() {
     `0x${getEnv('USER2_PRIVATE_KEY')}`,
     `0x${getEnv('USER3_PRIVATE_KEY')}`,
     `0x${getEnv('OWNER2_PRIVATE_KEY')}`,
-    `0x${getEnv('COLD_WALLET_PRIVATE_KEY')}`,
+    `0x${getEnv('COMPANY_PRIVATE_KEY')}`,
   ];
 }
 
