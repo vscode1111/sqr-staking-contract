@@ -18,8 +18,6 @@ export async function deploySQRStakingContractFixture(
     erc20Token: erc20TokenAddress,
   };
 
-  // console.log(111, config);
-
   const sqrStakingContext = await getSQRStakingContext(users, config);
 
   return {

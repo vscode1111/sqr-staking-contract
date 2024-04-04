@@ -1,6 +1,6 @@
 import { toUnixTime, toWei } from '~common';
-import { DAYS } from '~constants';
-import { ContractConfig, contractConfig, erc20Decimals, now } from '~seeds';
+import { DAYS, MINUTES } from '~constants';
+import { ContractConfig, contractConfig, erc20Decimals, isTest, now } from '~seeds';
 import { calculateAprForContract } from '~utils';
 
 export const verifyRequired = false;
@@ -10,12 +10,11 @@ export const deployData = {
   companyReward: toWei(10_0000, erc20Decimals),
   // allowance: toWei(1_000_000, erc20Decimals),
   // stake1: toWei(123.12345678, erc20Decimals),
-  allowance: toWei(1, erc20Decimals),
-  stake1: toWei(0.001, erc20Decimals),
-
+  allowance: toWei(10_0000, erc20Decimals),
+  stake1: toWei(551.337, erc20Decimals),
   stake2: toWei(345.12345678, erc20Decimals),
   stake3: toWei(678.12345678, erc20Decimals),
-  userStakeId1_0: 0,
+  userStakeId1_0: 5,
   userStakeId2_0: 0,
   userStakeId3_0: 0,
 };
@@ -26,22 +25,21 @@ export const deployData = {
 //   limit: ZERO,
 //   minStakeAmount: ZERO,
 //   maxStakeAmount: ZERO,
-//   apr: calculateAprForConfig(365 * 100),
-//   // depositDeadline: toUnixTime(now.add(10, 'days').toDate()),
-//   depositDeadline: 1710762760,
-// };
-
-// const mainContractConfig: Partial<ContractConfig> = {
-//   //demo - contract 10% / 10 mins
-//   duration: 10 * MINUTES,
-//   limit: toWei(1000, erc20Decimals),
-//   minStakeAmount: toWei(100, erc20Decimals),
-//   maxStakeAmount: toWei(500, erc20Decimals),
-//   apr: calculateAprForContract(10),
-//   // depositDeadline: toUnixTime(now.add(10, 'days').toDate()),
-//   depositDeadline: toUnixTime(now.add(30, 'minutes').toDate()),
+//   apr: calculateAprForContract(365 * 100),
+//   depositDeadline: toUnixTime(now.add(30, 'days').toDate()),
 //   // depositDeadline: 1710762760,
 // };
+
+const mainContractConfig: Partial<ContractConfig> = {
+  //demo - contract 10% / 10 mins
+  duration: 10 * MINUTES,
+  limit: toWei(100_000, erc20Decimals),
+  minStakeAmount: toWei(100, erc20Decimals),
+  maxStakeAmount: toWei(5000, erc20Decimals),
+  apr: calculateAprForContract(10),
+  depositDeadline: toUnixTime(now.add(30, 'days').toDate()),
+  // depositDeadline: 1710762760,
+};
 
 // const mainContractConfig: Partial<ContractConfig> = {
 //   //demo - contract 10% / 10 days
@@ -71,8 +69,9 @@ function prepareProdConfig(
 // const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(60, 13.75, 120);
 const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(90, 15, 180);
 
+const extContractConfig = isTest ? mainContractConfig : prodContractConfig;
+
 export const deployContractConfig: ContractConfig = {
   ...contractConfig,
-  // ...mainContractConfig,
-  ...prodContractConfig,
+  ...extContractConfig,
 };

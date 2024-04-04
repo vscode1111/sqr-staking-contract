@@ -12,7 +12,7 @@ const chainDecimals: Record<DeployNetworkKey, number> = {
 
 export const erc20Decimals = chainDecimals[defaultNetwork];
 
-const isTest = true; //false - PROD!
+export const isTest = true; //false - PROD!
 
 if (!isTest) {
   throw 'Are you sure? It is PROD!';
@@ -35,8 +35,8 @@ export const prodContractConfig: Partial<ContractConfig> = {
 export const mainContractConfig: Partial<ContractConfig> = {
   newOwner: '0x627Ab3fbC3979158f451347aeA288B0A3A47E1EF', //owner2
   // erc20Token: '0x4072b57e9B3dA8eEB9F8998b69C868E9a1698E54', //tSQR
-  // erc20Token: '0x8364a68c32E581332b962D88CdC8dBe8b3e0EE9c', //tSQR2
-  erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
+  erc20Token: '0x8364a68c32E581332b962D88CdC8dBe8b3e0EE9c', //tSQR2
+  // erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
   duration: 20 * MINUTES,
   // depositDeadline: toUnixTime(now.add(1, 'days').toDate()),
   depositDeadline: 1709898420,

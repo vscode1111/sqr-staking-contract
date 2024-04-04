@@ -31,6 +31,9 @@ export const CONTRACTS: Record<CONTRACT_LIST, DeployNetworks> = {
     // bsc: '0x5086F59846d156D8bAb083DEfdebC59F00e0c1F3', //test3 - 10% - 10 mins
     // bsc: '0x83966A040bF388429FB57d0775277f337F44eC64', //test3 - 10% - dur:10 mins - ded:30 mins
 
+    // bsc: '0xAE04b794e2360501212c1d7E64da32895E7F1667', //main - 10% - 10 minutes
+    // bsc: '0xB99CB43DaA871d818dc96b86606B1e5605aB3D5d', //main - 36500% - 1 day
+
     // minStakeAmount = 100 SQR
     // bsc: '0x135b578E30510Bf87f4e72D74f491c59fC5b7022', //prod - 10d - 10% - 20d
     // bsc: '0xf030DEDD371673bbb2B702A42b754DA440F69D5F', //prod - 30d - 12.5% - 60d
@@ -41,6 +44,8 @@ export const CONTRACTS: Record<CONTRACT_LIST, DeployNetworks> = {
     // bsc: '0xC196B70a36A7B51BFD92120c3F8b9232204a491f', //prod - 10d - 10% - 20d
     // bsc: '0x8Dc66FB19469259f99Dbe3bc59bCa4132C62901a', //prod - 30d - 12.5% - 60d
     // bsc: '0xee2a61aF0718513bf5C5878E41164E7946A24256', //prod - 60d - 13.75% - 120d
-    bsc: '0xdD96B57B3a962C1682eb5bB84cDd854CA0632128', //prod - 90d - 15% - 180d
+    // bsc: '0xdD96B57B3a962C1682eb5bB84cDd854CA0632128', //prod - 90d - 15% - 180d
+    // bsc: '0x44087D3Ea6c9E1430373a6c0C4bd9A6120D6A7c6', //prod - 30d - 12.5% - 60d
+    bsc: '0x4388A1aED92B557e791FeF9a1C651c63098252bc', //prod - 90d - 15% - 180d
   },
 };

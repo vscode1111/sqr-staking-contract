@@ -1,5 +1,5 @@
 import appRoot from 'app-root-path';
-import { ChalkInstance } from 'chalk';
+// import type { ChalkInstance } from 'chalk';
 import { getContractArgs } from '~seeds';
 import { deployContractConfig, verifyArgsRequired } from './deployData';
 
@@ -12,6 +12,6 @@ export function getSourcePath(contractName: string): string {
   return `${root}/artifacts/contracts/${contractName}.sol/${contractName}.json`;
 }
 
-export async function makeChalk(): Promise<ChalkInstance> {
+export async function makeChalk(): Promise<any> {
   return (await import('chalk')).default;
 }
