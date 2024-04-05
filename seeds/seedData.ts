@@ -25,7 +25,8 @@ const priceDiv = BigInt(1000);
 const userDiv = BigInt(2);
 
 export const prodContractConfig: Partial<ContractConfig> = {
-  newOwner: '0x898Fa021cB148fC9B560cAEC32644941EFb4928D', //Matan
+  // newOwner: '0x898Fa021cB148fC9B560cAEC32644941EFb4928D', //Matan
+  newOwner: '0x1C991e2A0643F4f4F9499ff940869528589Cde6a', //Gnosis-community
   erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
   limit: toWei(1_000_000, erc20Decimals),
   minStakeAmount: ZERO,

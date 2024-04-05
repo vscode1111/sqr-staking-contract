@@ -65,9 +65,10 @@ function prepareProdConfig(
 }
 
 // const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(10, 10, 20);
+const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(10, 10, 365);
 // const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(30, 12.5, 60);
 // const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(60, 13.75, 120);
-const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(90, 15, 180);
+// const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(90, 15, 180);
 
 const extContractConfig = isTest ? mainContractConfig : prodContractConfig;
 
