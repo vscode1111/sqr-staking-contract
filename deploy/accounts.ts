@@ -4,7 +4,7 @@ import { ethers } from 'hardhat';
 import { DeployFunction } from 'hardhat-deploy/types';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { FRACTION_DIGITS, getNetworkName, toNumber } from '~common';
-import { getUsers } from '~utils';
+import { getUsers } from '~utils/context/getUsers'; //Do not change, otherwise deploy scripts will not work
 
 const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<void> => {
   const name = getNetworkName(hre);

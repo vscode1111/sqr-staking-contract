@@ -1,7 +1,7 @@
 import { toUnixTime, toWei } from '~common';
 import { DAYS, MINUTES } from '~constants';
 import { ContractConfig, contractConfig, erc20Decimals, isTest, now } from '~seeds';
-import { calculateAprForContract } from '~utils';
+import { calculateAprForContract } from '../../utils';
 
 export const verifyRequired = false;
 export const verifyArgsRequired = true;
@@ -55,20 +55,25 @@ const mainContractConfig: Partial<ContractConfig> = {
 function prepareProdConfig(
   durationInDays: number,
   aprInPercents: number,
-  depositDeadlineInDays: number,
+  limit: number,
 ): Partial<ContractConfig> {
   return {
     duration: durationInDays * DAYS,
     apr: calculateAprForContract(aprInPercents),
-    depositDeadline: toUnixTime(now.add(depositDeadlineInDays, 'days').toDate()),
+    depositDeadline: toUnixTime(now.add(durationInDays * 2, 'days').toDate()),
+    limit: toWei(limit, erc20Decimals),
+    maxStakeAmount: toWei(limit, erc20Decimals),
   };
 }
 
 // const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(10, 10, 20);
-const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(10, 10, 365);
+// const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(10, 10, 365);
 // const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(30, 12.5, 60);
 // const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(60, 13.75, 120);
-// const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(90, 15, 180);
+
+// const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(90, 14, 1_000_000);
+// const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(180, 17.5, 750_000);
+const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(360, 20, 500_000);
 
 const extContractConfig = isTest ? mainContractConfig : prodContractConfig;
 
