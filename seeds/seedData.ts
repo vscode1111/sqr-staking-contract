@@ -103,10 +103,7 @@ const userInitBalance = toWei(10_000, erc20Decimals) / priceDiv;
 const minStake = toWei(0.001, erc20Decimals) / priceDiv;
 const stake1 = toWei(100, erc20Decimals) / priceDiv;
 const unstake = toWei(30, erc20Decimals) / priceDiv;
-const extraUnstke1 = toWei(3000, erc20Decimals) / priceDiv;
-const remains1 = stake1 - unstake;
 const extraStake1 = toWei(1000, erc20Decimals) / priceDiv;
-const owner2Unstake = toWei(300, erc20Decimals) / priceDiv;
 const companyRewards = toWei(1000, erc20Decimals) / priceDiv;
 
 const userStakeId1_0 = 0;
@@ -119,24 +116,14 @@ export const seedData = {
   totalAccountBalance: tokenConfig.initMint,
   minStake,
   stake1,
-  withdraw1: unstake,
-  remains1,
   stake2: stake1 / userDiv,
   unstake2: unstake / userDiv,
-  remains2: remains1 / userDiv,
   stake3: stake1 / userDiv / userDiv,
-  unstake3: unstake / userDiv / userDiv,
   extraStake1,
-  extraStake2: extraStake1 / userDiv,
   maximumStake: maxStakeAmount + BigInt(1),
-  extraWithdraw1: extraUnstke1,
-  extraWithdraw2: extraUnstke1 / userDiv,
-  owner2Withdraw: owner2Unstake,
-  allowance: toWei(1000000, erc20Decimals),
   tokenMicroDelta: BigInt(10),
   tokenDelta: toWei(0.001, erc20Decimals),
   timeDelta: 50,
-  wrongLockPeriod: 4,
   now: toUnixTime(),
   userStakeId1_0,
   userStakeId1_1,
