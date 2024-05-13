@@ -1,5 +1,5 @@
 import { toUnixTime, toWei } from '~common';
-import { DAYS, MINUTES } from '~constants';
+import { DAYS } from '~constants';
 import { ContractConfig, contractConfig, erc20Decimals, isTest, now } from '~seeds';
 import { calculateAprForContract } from '../../utils';
 
@@ -32,12 +32,12 @@ export const deployData = {
 
 const mainContractConfig: Partial<ContractConfig> = {
   //demo - contract 10% / 10 mins
-  duration: 10 * MINUTES,
-  limit: toWei(100_000, erc20Decimals),
-  minStakeAmount: toWei(100, erc20Decimals),
-  maxStakeAmount: toWei(5000, erc20Decimals),
-  apr: calculateAprForContract(10),
-  depositDeadline: toUnixTime(now.add(30, 'days').toDate()),
+  duration: 720 * DAYS,
+  limit: toWei(1_000_000, erc20Decimals),
+  minStakeAmount: toWei(0, erc20Decimals),
+  maxStakeAmount: toWei(1_000_000, erc20Decimals),
+  apr: calculateAprForContract(900),
+  depositDeadline: toUnixTime(now.add(3650, 'days').toDate()),
   // depositDeadline: 1710762760,
 };
 

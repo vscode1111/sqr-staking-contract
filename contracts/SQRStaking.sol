@@ -7,8 +7,6 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-// import "hardhat/console.sol";
-
 contract SQRStaking is Ownable, ReentrancyGuard {
   using SafeERC20 for IERC20;
 
@@ -19,7 +17,7 @@ contract SQRStaking is Ownable, ReentrancyGuard {
   Counters.Counter private _stakeCounter;
   Counters.Counter private _stakerCounter;
 
-  string public constant VERSION = "1.0";
+  string public constant VERSION = "1.1";
   uint32 public constant YEAR_PERIOD = 365 days;
   uint32 public constant APR_DIVIDER = 1000;
 
@@ -44,7 +42,6 @@ contract SQRStaking is Ownable, ReentrancyGuard {
     require(_newOwner != address(0), "New owner address can't be zero");
     require(_erc20Token != address(0), "ERC20 token address can't be zero");
     require(_duration > 0, "Duration must be greater than zero");
-    require(_apr > 0, "APR must be greater than zero");
     require(
       _depositDeadline > uint32(block.timestamp),
       "depositDeadline must be greater than current time"

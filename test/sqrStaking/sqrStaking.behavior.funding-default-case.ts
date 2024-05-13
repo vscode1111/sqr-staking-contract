@@ -45,20 +45,20 @@ export function shouldBehaveCorrectFundingDefaultCase(): void {
       expect(await this.owner2SQRStaking.isStakeReady()).eq(true);
     });
 
-    it('user1 tries to stake without allowence', async function () {
+    it('user1 tries to stake without allowance', async function () {
       await expect(this.user1SQRStaking.stake(seedData.stake1)).revertedWith(
         errorMessage.userMustAllowToUseOfFund,
       );
     });
 
-    it('user1 tries to stake with allowence but no funds', async function () {
+    it('user1 tries to stake with allowance but no funds', async function () {
       await this.user1ERC20Token.approve(this.sqrStakingAddress, seedData.extraStake1);
       await expect(this.user1SQRStaking.stake(seedData.stake1)).revertedWith(
         errorMessage.userMustHaveFunds,
       );
     });
 
-    it('user2 tries to stake without allowence', async function () {
+    it('user2 tries to stake without allowance', async function () {
       await expect(this.user2SQRStaking.stake(seedData.stake2)).revertedWith(
         errorMessage.userMustAllowToUseOfFund,
       );
@@ -215,7 +215,7 @@ export function shouldBehaveCorrectFundingDefaultCase(): void {
             );
           });
 
-          it('user1 fetch calculatation reward for claiming', async function () {
+          it('user1 fetch calculation reward for claiming', async function () {
             const increaseTo = addSeedSeconds(chainTime, caseSettings.claimDuration);
             await time.increaseTo(increaseTo);
             const currentReward1 = calculateReward(

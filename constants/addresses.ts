@@ -33,6 +33,8 @@ export const CONTRACTS: Record<CONTRACT_LIST, DeployNetworks> = {
 
     // bsc: '0xAE04b794e2360501212c1d7E64da32895E7F1667', //main - 10% - 10 minutes
     // bsc: '0xB99CB43DaA871d818dc96b86606B1e5605aB3D5d', //main - 36500% - 1 day
+    // bsc: '0x200DF1d0AAc1C7B1470a185660be23d1E402b009', //main - 36500% - 1 year
+    bsc: '0x72ceE1337F257b94CEBC3d140E6682923Dfb1fCE', //main - 900% - 1 year
 
     // minStakeAmount = 100 SQR
     // bsc: '0x135b578E30510Bf87f4e72D74f491c59fC5b7022', //prod - 10d - 10% - 20d
@@ -48,10 +50,10 @@ export const CONTRACTS: Record<CONTRACT_LIST, DeployNetworks> = {
     // bsc: '0x44087D3Ea6c9E1430373a6c0C4bd9A6120D6A7c6', //prod - 30d - 12.5% - 60d
     // bsc: '0x4388A1aED92B557e791FeF9a1C651c63098252bc', //prod - 90d - 15% - 180d
     // bsc: '0x1aEabE4a8D4Fdc3cBa7c5eB35101e914A3551188', //prod - 10d - 10% - 365d
-    
+
     //https://magic-square-ltd.slack.com/archives/C06HWPB5CMA/p1712761885753739
     // bsc: '0xd8491426BA3c3143A73Bb6Cb7aAe696dC9BbbC7C', //prod - 90 days / 14% / 1,000,000
     // bsc: '0x78edf1E40d47B042e1c73Da2ee98EAA6dBfec530', //prod - 180 days / 17.5% / 750,000
-    bsc: '0x3e5d5396087868459f99C02cc3885A99C3067966', //prod - 180 days / 17.5% / 750,000
+    // bsc: '0x3e5d5396087868459f99C02cc3885A99C3067966', //prod - 180 days / 17.5% / 750,000
   },
 };

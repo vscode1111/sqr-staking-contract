@@ -36,16 +36,6 @@ export function shouldBehaveCorrectDeployment(): void {
       ).revertedWith(errorMessage.durationMustBeGreaterThanZero);
     });
 
-    it('owner tries to deploy with zero apr', async function () {
-      const users = await getUsers();
-      await expect(
-        getSQRStakingContext(users, {
-          ...contractConfig,
-          apr: 0,
-        }),
-      ).revertedWith(errorMessage.aprMustBeGreaterThanZero);
-    });
-
     it('owner tries to deploy with depositDeadline near to current time', async function () {
       const users = await getUsers();
       await expect(
