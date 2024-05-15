@@ -34,7 +34,8 @@ export const CONTRACTS: Record<CONTRACT_LIST, DeployNetworks> = {
     // bsc: '0xAE04b794e2360501212c1d7E64da32895E7F1667', //main - 10% - 10 minutes
     // bsc: '0xB99CB43DaA871d818dc96b86606B1e5605aB3D5d', //main - 36500% - 1 day
     // bsc: '0x200DF1d0AAc1C7B1470a185660be23d1E402b009', //main - 36500% - 1 year
-    bsc: '0x72ceE1337F257b94CEBC3d140E6682923Dfb1fCE', //main - 900% - 1 year
+    // bsc: '0x72ceE1337F257b94CEBC3d140E6682923Dfb1fCE', //main - 900% - 1 year
+    bsc: '0x99EEAabEc494eBdfDd51902c2ff55a2BFd6956e2', //main - 0% - 10 years
 
     // minStakeAmount = 100 SQR
     // bsc: '0x135b578E30510Bf87f4e72D74f491c59fC5b7022', //prod - 10d - 10% - 20d
@@ -43,17 +44,23 @@ export const CONTRACTS: Record<CONTRACT_LIST, DeployNetworks> = {
     // bsc: '0xdd2435D7ADfDCD446578aB969EC372E198259c71', //prod - 90d - 15% - 180d
 
     // minStakeAmount = 0 SQR
-    // bsc: '0xC196B70a36A7B51BFD92120c3F8b9232204a491f', //prod - 10d - 10% - 20d
-    // bsc: '0x8Dc66FB19469259f99Dbe3bc59bCa4132C62901a', //prod - 30d - 12.5% - 60d
-    // bsc: '0xee2a61aF0718513bf5C5878E41164E7946A24256', //prod - 60d - 13.75% - 120d
-    // bsc: '0xdD96B57B3a962C1682eb5bB84cDd854CA0632128', //prod - 90d - 15% - 180d
-    // bsc: '0x44087D3Ea6c9E1430373a6c0C4bd9A6120D6A7c6', //prod - 30d - 12.5% - 60d
-    // bsc: '0x4388A1aED92B557e791FeF9a1C651c63098252bc', //prod - 90d - 15% - 180d
-    // bsc: '0x1aEabE4a8D4Fdc3cBa7c5eB35101e914A3551188', //prod - 10d - 10% - 365d
+    // bsc: '0xC196B70a36A7B51BFD92120c3F8b9232204a491f', //prod/stage - 10d - 10% - 20d
+    // bsc: '0x8Dc66FB19469259f99Dbe3bc59bCa4132C62901a', //prod/stage - 30d - 12.5% - 60d
+    // bsc: '0xee2a61aF0718513bf5C5878E41164E7946A24256', //prod/stage - 60d - 13.75% - 120d
+    // bsc: '0xdD96B57B3a962C1682eb5bB84cDd854CA0632128', //prod/stage - 90d - 15% - 180d
+    // bsc: '0x44087D3Ea6c9E1430373a6c0C4bd9A6120D6A7c6', //prod/stage - 30d - 12.5% - 60d
+    // bsc: '0x1aEabE4a8D4Fdc3cBa7c5eB35101e914A3551188', //prod/stage - 10d - 10% - 365d
 
     //https://magic-square-ltd.slack.com/archives/C06HWPB5CMA/p1712761885753739
-    // bsc: '0xd8491426BA3c3143A73Bb6Cb7aAe696dC9BbbC7C', //prod - 90 days / 14% / 1,000,000
-    // bsc: '0x78edf1E40d47B042e1c73Da2ee98EAA6dBfec530', //prod - 180 days / 17.5% / 750,000
-    // bsc: '0x3e5d5396087868459f99C02cc3885A99C3067966', //prod - 180 days / 17.5% / 750,000
+    // bsc: '0xd8491426BA3c3143A73Bb6Cb7aAe696dC9BbbC7C', //prod/stage - 90 days / 14% / 1,000,000
+    // bsc: '0x78edf1E40d47B042e1c73Da2ee98EAA6dBfec530', //prod/stage - 180 days / 17.5% / 750,000
+    // bsc: '0x3e5d5396087868459f99C02cc3885A99C3067966', //prod/stage - 180 days / 17.5% / 750,000
+
+    //15.05.2024
+    // bsc: '0x73766fABf4CFabC3EA2894fB2BF89eF7F0B62946', //prod/stage - 30 days / 0% / 5 years
+    // bsc: '0x25B8E2050DDA8492DA611026d73FF96Db4f38CE5', //prod/stage - 30 days / 10% / 5 years
+    // bsc: '0xe6B88daf0C371c226E4190D745370FF28bad69E9', //prod/stage - 60 days / 12.5% / 5 years
+    // bsc: '0xBF027d7A1c31787Df45d89C16a05284afC9A00f3', //prod/stage - 360 days / 15% / 5 years
+    // bsc: '0x4925C9F8A8286f658E684941fa76B1c580F174a8', //prod/stage - 360 days / 0% / 5 years
   },
 };

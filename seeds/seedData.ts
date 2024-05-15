@@ -40,7 +40,7 @@ export const mainContractConfig: Partial<ContractConfig> = {
   // erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
   duration: 20 * MINUTES,
   // depositDeadline: toUnixTime(now.add(1, 'days').toDate()),
-  depositDeadline: 1709898420,
+  depositDeadline: 1873465218,
 };
 
 const extContractConfig = isTest ? mainContractConfig : prodContractConfig;

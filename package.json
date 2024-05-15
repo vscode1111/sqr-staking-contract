@@ -1,7 +1,7 @@
 {
   "name": "msq-staking-contract",
   "description": "Solidity smart contracts for SQR staking functionality",
-  "version": "0.0.38",
+  "version": "0.0.39",
   "scripts": {
     "clean": "shx rm -rf ./dist ./artifacts ./cache ./coverage ./typechain-types ./coverage.json && yarn typechain",
     "commit": "git-cz",
