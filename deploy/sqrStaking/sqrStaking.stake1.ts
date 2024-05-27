@@ -17,7 +17,12 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<voi
     const decimals = Number(await user1ERC20Token.decimals());
 
     const currentAllowance = await user1ERC20Token.allowance(user1Address, sqrStakingAddress);
-    console.log(`${toNumberDecimals(currentAllowance, decimals)} SQR was allowed`);
+    console.log(
+      `${toNumberDecimals(
+        currentAllowance,
+        decimals,
+      )} SQR was allowed ${await user1ERC20Token.getAddress()} contract`,
+    );
 
     const params = {
       amount: deployData.stake1,

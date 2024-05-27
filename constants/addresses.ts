@@ -10,7 +10,8 @@ export enum CONTRACT_LIST {
 
 export const CONTRACTS: Record<CONTRACT_LIST, DeployNetworks> = {
   ERC20_TOKEN: {
-    bsc: '0x8364a68c32E581332b962D88CdC8dBe8b3e0EE9c', //tSQR2
+    // bsc: '0x8364a68c32E581332b962D88CdC8dBe8b3e0EE9c', //tSQR2
+    bsc: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
   },
   SQR_STAKING: {
     // bsc: '0x571C48cBd0EAD806386e3DbA0adB4E8C3De0A0A6', //test
@@ -35,7 +36,7 @@ export const CONTRACTS: Record<CONTRACT_LIST, DeployNetworks> = {
     // bsc: '0xB99CB43DaA871d818dc96b86606B1e5605aB3D5d', //main - 36500% - 1 day
     // bsc: '0x200DF1d0AAc1C7B1470a185660be23d1E402b009', //main - 36500% - 1 year
     // bsc: '0x72ceE1337F257b94CEBC3d140E6682923Dfb1fCE', //main - 900% - 1 year
-    bsc: '0x99EEAabEc494eBdfDd51902c2ff55a2BFd6956e2', //main - 0% - 10 years
+    // bsc: '0x99EEAabEc494eBdfDd51902c2ff55a2BFd6956e2', //main - 0% - 10 years
 
     // minStakeAmount = 100 SQR
     // bsc: '0x135b578E30510Bf87f4e72D74f491c59fC5b7022', //prod - 10d - 10% - 20d
@@ -60,7 +61,7 @@ export const CONTRACTS: Record<CONTRACT_LIST, DeployNetworks> = {
     // bsc: '0x73766fABf4CFabC3EA2894fB2BF89eF7F0B62946', //prod/stage - 30 days / 0% / 5 years
     // bsc: '0x25B8E2050DDA8492DA611026d73FF96Db4f38CE5', //prod/stage - 30 days / 10% / 5 years
     // bsc: '0xe6B88daf0C371c226E4190D745370FF28bad69E9', //prod/stage - 60 days / 12.5% / 5 years
-    // bsc: '0xBF027d7A1c31787Df45d89C16a05284afC9A00f3', //prod/stage - 360 days / 15% / 5 years
+    bsc: '0xBF027d7A1c31787Df45d89C16a05284afC9A00f3', //prod/stage - 360 days / 15% / 5 years
     // bsc: '0x4925C9F8A8286f658E684941fa76B1c580F174a8', //prod/stage - 360 days / 0% / 5 years
   },
 };
