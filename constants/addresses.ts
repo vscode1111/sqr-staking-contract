@@ -61,7 +61,12 @@ export const CONTRACTS: Record<CONTRACT_LIST, DeployNetworks> = {
     // bsc: '0x73766fABf4CFabC3EA2894fB2BF89eF7F0B62946', //prod/stage - 30 days / 0% / 5 years
     // bsc: '0x25B8E2050DDA8492DA611026d73FF96Db4f38CE5', //prod/stage - 30 days / 10% / 5 years
     // bsc: '0xe6B88daf0C371c226E4190D745370FF28bad69E9', //prod/stage - 60 days / 12.5% / 5 years
-    bsc: '0xBF027d7A1c31787Df45d89C16a05284afC9A00f3', //prod/stage - 360 days / 15% / 5 years
+    // bsc: '0xBF027d7A1c31787Df45d89C16a05284afC9A00f3', //prod/stage - 360 days / 15% / 5 years
     // bsc: '0x4925C9F8A8286f658E684941fa76B1c580F174a8', //prod/stage - 360 days / 0% / 5 years
+
+    //26.07.2024
+    // bsc: '0x75A6D8E70ffE2ceCf5c40E73e1EEfA58A2F2fb20', //prod - 60 days / 10% / 5 years
+    // bsc: '0xF75020FA1A8eAB5890D650c027509A4fdd503445', //prod - 180 days / 17.5% / 5 years
+    bsc: '0xF75020FA1A8eAB5890D650c027509A4fdd503445', //prod - 360 days / 20% / 5 years
   },
 };

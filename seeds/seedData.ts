@@ -12,11 +12,11 @@ const chainDecimals: Record<DeployNetworkKey, number> = {
 
 export const erc20Decimals = chainDecimals[defaultNetwork];
 
-export const isTest = true; //false - PROD!
+export const isTest = false; //false - PROD!
 
-if (!isTest) {
-  throw 'Are you sure? It is PROD!';
-}
+// if (!isTest) {
+//   throw 'Are you sure? It is PROD!';
+// }
 
 export const now = dayjs();
 
@@ -26,7 +26,8 @@ const userDiv = BigInt(2);
 
 export const prodContractConfig: Partial<ContractConfig> = {
   // newOwner: '0x898Fa021cB148fC9B560cAEC32644941EFb4928D', //Matan
-  newOwner: '0x1C991e2A0643F4f4F9499ff940869528589Cde6a', //Gnosis-community
+  // newOwner: '0x1C991e2A0643F4f4F9499ff940869528589Cde6a', //Gnosis-community
+  newOwner: '0xda8b7cbC1C246a0F8Dcfe6d5dF4750100787cf2e', //Matan2
   erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
   limit: toWei(1_000_000, erc20Decimals),
   minStakeAmount: ZERO,

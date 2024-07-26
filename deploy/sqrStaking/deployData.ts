@@ -86,11 +86,9 @@ function prepareProdConfig(
 // const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(360, 0, 750_000);
 
 //26.07.2024
-// const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(30, 0, 500_000);
-// const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(30, 10, 2_000_000);
-// const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(60, 12.5, 2_000_000);
-// const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(360, 15, 2_000_000);
-const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(360, 0, 750_000);
+// const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(60, 10, 1_000_000);
+// const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(180, 17.5, 750_000);
+const prodContractConfig: Partial<ContractConfig> = prepareProdConfig(360, 20, 500_000);
 
 const extContractConfig = isTest ? mainContractConfig : prodContractConfig;
 
