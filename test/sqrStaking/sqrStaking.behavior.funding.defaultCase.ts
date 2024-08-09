@@ -116,7 +116,7 @@ export function shouldBehaveCorrectFundingDefaultCase(): void {
         }
 
         await expect(this.user1SQRStaking.stake(seedData.stake1)).revertedWith(
-          errorMessage.stakeLimitIsOver,
+          errorMessage.contractStakeLimitIsOver,
         );
       });
 

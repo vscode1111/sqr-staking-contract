@@ -7,6 +7,7 @@ export interface ContractConfig {
   limit: bigint;
   minStakeAmount: bigint;
   maxStakeAmount: bigint;
+  accountLimit: bigint;
 }
 
 export type DeployContractArgs = [
@@ -18,6 +19,7 @@ export type DeployContractArgs = [
   limit: bigint,
   minStakeAmount: bigint,
   maxStakeAmount: bigint,
+  accountLimit: bigint,
 ];
 
 export interface TokenConfig {

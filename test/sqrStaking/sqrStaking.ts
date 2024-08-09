@@ -2,10 +2,11 @@ import { loadFixture } from '@nomicfoundation/hardhat-network-helpers';
 import { SQR_STAKING_NAME } from '~constants';
 import { shouldBehaveCorrectDeployment } from './sqrStaking.behavior.deployment';
 import { shouldBehaveCorrectFetching } from './sqrStaking.behavior.fetching';
-import { shouldBehaveCorrectFundingAprCalculationCase } from './sqrStaking.behavior.funding-apr-calculation-case';
-import { shouldBehaveCorrectFundingWithdrawExcessRewardCase } from './sqrStaking.behavior.funding-case-withdraw-excess-reward';
-import { shouldBehaveCorrectFundingDefaultCase } from './sqrStaking.behavior.funding-default-case';
-import { shouldBehaveCorrectFundingZeroAprCase } from './sqrStaking.behavior.funding-zero-apr-case';
+import { shouldBehaveCorrectFundingAprCalculationCase } from './sqrStaking.behavior.funding.aprCalculationCase';
+import { shouldBehaveCorrectFundingWithdrawExcessRewardCase } from './sqrStaking.behavior.funding.caseWithdrawExcessReward';
+import { shouldBehaveCorrectFundingDefaultCase } from './sqrStaking.behavior.funding.defaultCase';
+import { shouldBehaveCorrectFundingNonZeroAccountLimitCase } from './sqrStaking.behavior.funding.nonZeroAccountLimitCase';
+import { shouldBehaveCorrectFundingZeroAprCase } from './sqrStaking.behavior.funding.zeroAprCase';
 
 describe(SQR_STAKING_NAME, function () {
   before(async function () {
@@ -18,4 +19,5 @@ describe(SQR_STAKING_NAME, function () {
   shouldBehaveCorrectFundingAprCalculationCase();
   shouldBehaveCorrectFundingWithdrawExcessRewardCase();
   shouldBehaveCorrectFundingZeroAprCase();
+  shouldBehaveCorrectFundingNonZeroAccountLimitCase();
 });

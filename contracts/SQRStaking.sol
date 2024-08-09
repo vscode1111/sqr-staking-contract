@@ -7,6 +7,8 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
+// import "hardhat/console.sol";
+
 contract SQRStaking is Ownable, ReentrancyGuard {
   using SafeERC20 for IERC20;
 
@@ -17,7 +19,7 @@ contract SQRStaking is Ownable, ReentrancyGuard {
   Counters.Counter private _stakeCounter;
   Counters.Counter private _stakerCounter;
 
-  string public constant VERSION = "1.1";
+  string public constant VERSION = "1.2";
   uint32 public constant YEAR_PERIOD = 365 days;
   uint32 public constant APR_DIVIDER = 1000;
 
@@ -28,6 +30,7 @@ contract SQRStaking is Ownable, ReentrancyGuard {
   uint256 public limit;
   uint256 public minStakeAmount;
   uint256 public maxStakeAmount;
+  uint256 public accountLimit;
 
   constructor(
     address _newOwner,
@@ -35,9 +38,10 @@ contract SQRStaking is Ownable, ReentrancyGuard {
     uint32 _duration,
     uint32 _apr,
     uint32 _depositDeadline,
-    uint256 _limit,
+    uint256 _limit, //0 - unlimit
     uint256 _minStakeAmount,
-    uint256 _maxStakeAmount
+    uint256 _maxStakeAmount,
+    uint256 _accountLimit //0 - unlimit
   ) {
     require(_newOwner != address(0), "New owner address can't be zero");
     require(_erc20Token != address(0), "ERC20 token address can't be zero");
@@ -57,6 +61,7 @@ contract SQRStaking is Ownable, ReentrancyGuard {
     limit = _limit;
     minStakeAmount = _minStakeAmount;
     maxStakeAmount = _maxStakeAmount;
+    accountLimit = _accountLimit;
   }
 
   struct StakeEntry {
@@ -67,7 +72,12 @@ contract SQRStaking is Ownable, ReentrancyGuard {
     bool withdrawn;
   }
 
-  mapping(address => StakeEntry[]) private stakeData;
+  struct AccountItem {
+    StakeEntry[] stakeEntries;
+    uint256 totalStakedAmount;
+  }
+
+  mapping(address account => AccountItem accountItem) private _accountItems;
 
   uint256 public totalStaked;
   uint256 public totalClaimed;
@@ -98,11 +108,15 @@ contract SQRStaking is Ownable, ReentrancyGuard {
   }
 
   function getStakeCountForUser(address user) public view returns (uint256) {
-    return stakeData[user].length;
+    return _accountItems[user].stakeEntries.length;
   }
 
   function fetchStakesForUser(address user) external view returns (StakeEntry[] memory) {
-    return stakeData[user];
+    return _accountItems[user].stakeEntries;
+  }
+
+  function fetchAccountInfo(address user) external view returns (AccountItem memory) {
+    return _accountItems[user];
   }
 
   function calculateReward(
@@ -143,7 +157,7 @@ contract SQRStaking is Ownable, ReentrancyGuard {
     uint32 userStakeId
   ) public view returns (uint256) {
     if (userStakeId < getStakeCountForUser(user)) {
-      return calculateMaxRewardForStake(stakeData[user][userStakeId]);
+      return calculateMaxRewardForStake(_accountItems[user].stakeEntries[userStakeId]);
     }
     return 0;
   }
@@ -153,7 +167,7 @@ contract SQRStaking is Ownable, ReentrancyGuard {
     uint32 userStakeId
   ) public view returns (uint256) {
     if (userStakeId < getStakeCountForUser(user)) {
-      return calculateCurrentRewardForStake(stakeData[user][userStakeId]);
+      return calculateCurrentRewardForStake(_accountItems[user].stakeEntries[userStakeId]);
     }
     return 0;
   }
@@ -181,7 +195,7 @@ contract SQRStaking is Ownable, ReentrancyGuard {
   function stake(uint256 amount) external nonReentrant {
     require(amount > 0, "Amount must be greater than zero");
     require(uint32(block.timestamp) <= depositDeadline, "Deposit deadline is over");
-    require(limit == 0 || totalStaked + amount <= limit, "Stake limit is over");
+    require(limit == 0 || totalStaked + amount <= limit, "Contract stake limit is over");
 
     address sender = _msgSender();
 
@@ -196,7 +210,14 @@ contract SQRStaking is Ownable, ReentrancyGuard {
       "You can't stake more than maximum amount"
     );
 
-    StakeEntry[] storage stakeEntries = stakeData[sender];
+    AccountItem storage accountItem = _accountItems[sender];
+
+    require(
+      accountLimit == 0 || accountItem.totalStakedAmount + amount <= accountLimit,
+      "User stake limit is over"
+    );
+
+    StakeEntry[] storage stakeEntries = accountItem.stakeEntries;
 
     if (stakeEntries.length == 0) {
       _stakerCounter.increment();
@@ -209,6 +230,8 @@ contract SQRStaking is Ownable, ReentrancyGuard {
       uint32(block.timestamp),
       false
     );
+
+    accountItem.totalStakedAmount += amount;
 
     stakeEntries.push(stakeEntry);
     totalStaked += amount;
@@ -225,7 +248,7 @@ contract SQRStaking is Ownable, ReentrancyGuard {
     address sender = _msgSender();
 
     require(userStakeId < getStakeCountForUser(sender), "Stake data isn't found");
-    StakeEntry storage stakeEntry = stakeData[sender][userStakeId];
+    StakeEntry storage stakeEntry = _accountItems[sender].stakeEntries[userStakeId];
 
     require(!stakeEntry.withdrawn, "Already withdrawn");
 
@@ -251,7 +274,7 @@ contract SQRStaking is Ownable, ReentrancyGuard {
     address sender = _msgSender();
 
     require(userStakeId < getStakeCountForUser(sender), "Stake data isn't found");
-    StakeEntry storage stakeEntry = stakeData[sender][userStakeId];
+    StakeEntry storage stakeEntry = _accountItems[sender].stakeEntries[userStakeId];
 
     require(!stakeEntry.withdrawn, "Already withdrawn");
     require(uint32(block.timestamp) > stakeEntry.stakedAt + duration, "Too early to withdraw");

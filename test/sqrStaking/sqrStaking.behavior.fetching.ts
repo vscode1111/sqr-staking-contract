@@ -41,6 +41,14 @@ export function shouldBehaveCorrectFetching(): void {
       ).eq(seedData.zero);
       const stakesData = await this.user1SQRStaking.fetchStakesForUser(this.user1Address);
       expect(stakesData.length).eq(0);
+
+      const accountInfo1 = await this.user1SQRStaking.fetchAccountInfo(this.user1Address);
+      expect(accountInfo1.stakeEntries).eql([]);
+      expect(accountInfo1.totalStakedAmount).eq(0);
+
+      const accountInfo2 = await this.user1SQRStaking.fetchAccountInfo(this.user2Address);
+      expect(accountInfo2.stakeEntries).eql([]);
+      expect(accountInfo2.totalStakedAmount).eq(0);
     });
   });
 }

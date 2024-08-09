@@ -12,7 +12,7 @@ const chainDecimals: Record<DeployNetworkKey, number> = {
 
 export const erc20Decimals = chainDecimals[defaultNetwork];
 
-export const isTest = false; //false - PROD!
+export const isTest = true; //false - PROD!
 
 // if (!isTest) {
 //   throw 'Are you sure? It is PROD!';
@@ -50,6 +50,8 @@ const depositDeadline = toUnixTime(now.add(100, 'days').toDate());
 const limit = toWei(3000, erc20Decimals) / priceDiv;
 const minStakeAmount = toWei(1, erc20Decimals) / priceDiv;
 const maxStakeAmount = toWei(2000, erc20Decimals) / priceDiv;
+// const accountLimit = toWei(3000, erc20Decimals) / priceDiv;
+const accountLimit = ZERO;
 
 export const contractConfig: ContractConfig = {
   newOwner: '0x1D5eeCbD950C22Ec2B5813Ab1D65ED5fFD83F32B',
@@ -60,6 +62,7 @@ export const contractConfig: ContractConfig = {
   limit,
   minStakeAmount,
   maxStakeAmount,
+  accountLimit,
   ...extContractConfig,
 };
 
@@ -73,6 +76,7 @@ export function getContractArgs(contractConfig: ContractConfig): DeployContractA
     limit,
     minStakeAmount,
     maxStakeAmount,
+    accountLimit,
   } = contractConfig;
 
   return [
@@ -84,6 +88,7 @@ export function getContractArgs(contractConfig: ContractConfig): DeployContractA
     limit,
     minStakeAmount,
     maxStakeAmount,
+    accountLimit,
   ];
 }
 

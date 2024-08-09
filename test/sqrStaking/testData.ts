@@ -17,6 +17,7 @@ export const errorMessage = {
   tooEarlyToWithdraw: `Too early to withdraw`,
   contractHasNoTokensFoUnstake: `Contract has no tokens for unstake`,
   depositDeadlineIsOver: `Deposit deadline is over`,
-  stakeLimitIsOver: `Stake limit is over`,
+  contractStakeLimitIsOver: `Contract stake limit is over`,
   youHaveNoReward: `You have no reward`,
+  userStakeLimitIsOver: `User stake limit is over`,
 };
