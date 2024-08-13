@@ -1,6 +1,7 @@
 import { DeployFunction } from 'hardhat-deploy/types';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import { callWithTimerHre, sleep, verifyContract } from '~common';
+import { sleep } from '~common';
+import { callWithTimerHre, verifyContract } from '~common-contract';
 import { ERC20_TOKEN_NAME } from '~constants';
 import { getTokenArgs } from '~seeds';
 import { getERC20TokenContext, getUsers } from '~utils';

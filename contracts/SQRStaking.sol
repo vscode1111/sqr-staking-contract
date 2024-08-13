@@ -1,23 +1,21 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.17;
+pragma solidity >=0.8.19;
 
-import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import {IContractInfo} from "./IContractInfo.sol";
 
 // import "hardhat/console.sol";
 
-contract SQRStaking is Ownable, ReentrancyGuard {
+contract SQRStaking is Ownable, ReentrancyGuard, IContractInfo {
   using SafeERC20 for IERC20;
-
-  using Counters for Counters.Counter;
 
   //Variables, structs, modifiers, events------------------------
 
-  Counters.Counter private _stakeCounter;
-  Counters.Counter private _stakerCounter;
+  uint32 private _stakeCounter;
+  uint32 private _stakerCounter;
 
   string public constant VERSION = "1.2";
   uint32 public constant YEAR_PERIOD = 365 days;
@@ -42,16 +40,13 @@ contract SQRStaking is Ownable, ReentrancyGuard {
     uint256 _minStakeAmount,
     uint256 _maxStakeAmount,
     uint256 _accountLimit //0 - unlimit
-  ) {
-    require(_newOwner != address(0), "New owner address can't be zero");
+  ) Ownable(_newOwner) {
     require(_erc20Token != address(0), "ERC20 token address can't be zero");
     require(_duration > 0, "Duration must be greater than zero");
     require(
       _depositDeadline > uint32(block.timestamp),
       "depositDeadline must be greater than current time"
     );
-
-    _transferOwnership(_newOwner);
 
     erc20Token = IERC20(_erc20Token);
 
@@ -90,7 +85,16 @@ contract SQRStaking is Ownable, ReentrancyGuard {
   event WithdrawExcessReward(address indexed to, uint256 amount);
 
   //Read methods-------------------------------------------
+  //IContractInfo implementation
+  function getContractName() external pure returns (string memory) {
+    return "Staking";
+  }
 
+  function getContractVersion() external pure returns (string memory) {
+    return VERSION;
+  }
+
+  //Custom
   function isStakeReady() public view returns (bool) {
     return uint32(block.timestamp) <= depositDeadline;
   }
@@ -100,11 +104,11 @@ contract SQRStaking is Ownable, ReentrancyGuard {
   }
 
   function getStakeCount() public view returns (uint32) {
-    return uint32(_stakeCounter.current());
+    return _stakeCounter;
   }
 
   function getStakerCount() public view returns (uint32) {
-    return uint32(_stakerCounter.current());
+    return _stakerCounter;
   }
 
   function getStakeCountForUser(address user) public view returns (uint256) {
@@ -220,7 +224,7 @@ contract SQRStaking is Ownable, ReentrancyGuard {
     StakeEntry[] storage stakeEntries = accountItem.stakeEntries;
 
     if (stakeEntries.length == 0) {
-      _stakerCounter.increment();
+      _stakerCounter++;
     }
 
     StakeEntry memory stakeEntry = StakeEntry(
@@ -237,7 +241,7 @@ contract SQRStaking is Ownable, ReentrancyGuard {
     totalStaked += amount;
     totalReservedReward += calculateReward(amount, apr, duration);
 
-    _stakeCounter.increment();
+    _stakeCounter++;
 
     erc20Token.safeTransferFrom(sender, address(this), amount);
 

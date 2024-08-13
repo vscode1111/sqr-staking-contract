@@ -1,6 +1,7 @@
 import { DeployFunction } from 'hardhat-deploy/types';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import { callWithTimerHre, toNumberDecimals, waitTx } from '~common';
+import { toNumberDecimals } from '~common';
+import { callWithTimerHre, waitTx } from '~common-contract';
 import { SQR_STAKING_NAME } from '~constants';
 import { contractConfig } from '~seeds';
 import { getAddressesFromHre, getContext } from '~utils';
@@ -16,8 +17,8 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<voi
 
     console.log(`owner2Address: ${owner2Address}`);
 
-    const conatracBalance = await owner2SQRStaking.getBalance();
-    console.log(`${toNumberDecimals(conatracBalance, decimals)} tokens in contract`);
+    const contractBalance = await owner2SQRStaking.getBalance();
+    console.log(`${toNumberDecimals(contractBalance, decimals)} tokens in contract`);
 
     const excessReward = await owner2SQRStaking.calculateExcessReward();
     console.log(`${toNumberDecimals(excessReward, decimals)} tokens in contract as excess reward`);

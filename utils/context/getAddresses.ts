@@ -1,5 +1,5 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import { getNetworkName } from '~common';
+import { getNetworkName } from '~common-contract';
 import { CONTRACTS } from '~constants';
 import { Addresses, DeployNetworks } from '~types';
 

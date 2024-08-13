@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { APR_DIVIDER, VERSION, YEAR_PERIOD } from '~constants';
+import { APR_DIVIDER, CONTRACT_NAME, CONTRACT_VERSION, YEAR_PERIOD } from '~constants';
 import { seedData } from '~seeds';
 import { loadSQRStakingFixture } from './utils';
 
@@ -11,7 +11,8 @@ export function shouldBehaveCorrectFetching(): void {
 
     it('should be correct init values', async function () {
       expect(await this.owner2SQRStaking.owner()).eq(this.owner2Address);
-      expect(await this.owner2SQRStaking.VERSION()).eq(VERSION);
+      expect(await this.owner2SQRStaking.getContractName()).eq(CONTRACT_NAME);
+      expect(await this.owner2SQRStaking.getContractVersion()).eq(CONTRACT_VERSION);
       expect(await this.owner2SQRStaking.YEAR_PERIOD()).eq(YEAR_PERIOD);
       expect(await this.owner2SQRStaking.APR_DIVIDER()).eq(APR_DIVIDER);
       expect(await this.owner2SQRStaking.isStakeReady()).eq(true);

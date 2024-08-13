@@ -2,18 +2,21 @@ import { expect } from 'chai';
 import { ZeroAddress } from 'ethers';
 import { contractConfig, seedData } from '~seeds';
 import { getSQRStakingContext, getUsers } from '~utils';
-import { errorMessage } from '.';
+import { customError, errorMessage } from '.';
 
 export function shouldBehaveCorrectDeployment(): void {
   describe('control', () => {
     it('owner tries to deploy with zero new owner address', async function () {
       const users = await getUsers();
+
+      const { owner2SQRStaking } = await getSQRStakingContext(users, contractConfig);
+
       await expect(
         getSQRStakingContext(users, {
           ...contractConfig,
           newOwner: ZeroAddress,
         }),
-      ).revertedWith(errorMessage.newOwnerAddressCantBeZero);
+      ).revertedWithCustomError(owner2SQRStaking, customError.ownableInvalidOwner);
     });
 
     it('owner tries to deploy with zero ERC20 token address', async function () {

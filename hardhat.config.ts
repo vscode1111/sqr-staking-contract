@@ -6,6 +6,7 @@ import type { HardhatUserConfig } from 'hardhat/config';
 import type { HardhatNetworkAccountUserConfig, NetworkUserConfig } from 'hardhat/types';
 import { resolve } from 'path';
 import 'tsconfig-paths/register';
+import { toBoolean } from '~common';
 import { DeployNetworks } from '~types';
 import { getEnv } from './common/config';
 
@@ -13,6 +14,9 @@ const dotenvConfigPath: string = process.env.DOTENV_CONFIG_PATH || './.env';
 dotenvConfig({
   path: resolve(__dirname, dotenvConfigPath),
 });
+
+const isCoverage = toBoolean(process.env.COVERAGE);
+const gasReporterEnable = false;
 
 function getAccounts() {
   return [
@@ -46,17 +50,16 @@ function getChainConfig(
 export const defaultNetwork: keyof DeployNetworks = 'bsc';
 
 const config: HardhatUserConfig = {
-  defaultNetwork,
+  defaultNetwork: isCoverage ? 'hardhat' : defaultNetwork,
   etherscan: {
     apiKey: {
       bsc: getEnv('BSC_SCAN_API_KEY'),
     },
   },
   gasReporter: {
+    enabled: gasReporterEnable,
     currency: 'USD',
-    enabled: false,
     excludeContracts: [],
-    src: './contracts',
   },
   networks: {
     hardhat: {
@@ -81,7 +84,7 @@ const config: HardhatUserConfig = {
     tests: './test',
   },
   solidity: {
-    version: '0.8.19',
+    version: '0.8.21',
     settings: {
       metadata: {
         bytecodeHash: 'none',

@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { ethers } from 'hardhat';
 import { DeployFunction } from 'hardhat-deploy/types';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import { callWithTimerHre } from '~common';
+import { callWithTimerHre } from '~common-contract';
 import { SQR_STAKING_NAME } from '~constants';
 import { getAddressesFromHre } from '~utils';
 import { getSourcePath, makeChalk } from './utils';

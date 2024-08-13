@@ -1,6 +1,7 @@
 import { DeployFunction } from 'hardhat-deploy/types';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import { callWithTimerHre, toNumberDecimals } from '~common';
+import { toNumberDecimals } from '~common';
+import { callWithTimerHre } from '~common-contract';
 import { SQR_STAKING_NAME } from '~constants';
 import { erc20Decimals, seedData } from '~seeds';
 import {

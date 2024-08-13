@@ -37,6 +37,7 @@ export const CONTRACTS: Record<CONTRACT_LIST, DeployNetworks> = {
     // bsc: '0x200DF1d0AAc1C7B1470a185660be23d1E402b009', //main - 36500% - 1 year
     // bsc: '0x72ceE1337F257b94CEBC3d140E6682923Dfb1fCE', //main - 900% - 1 year
     // bsc: '0x99EEAabEc494eBdfDd51902c2ff55a2BFd6956e2', //main - 0% - 10 years
+    bsc: '0xE978bB5d607D598d9B5210Daf52B337aA95A1424', //main
 
     // minStakeAmount = 100 SQR
     // bsc: '0x135b578E30510Bf87f4e72D74f491c59fC5b7022', //prod - 10d - 10% - 20d
@@ -67,6 +68,6 @@ export const CONTRACTS: Record<CONTRACT_LIST, DeployNetworks> = {
     //26.07.2024
     // bsc: '0x75A6D8E70ffE2ceCf5c40E73e1EEfA58A2F2fb20', //prod - 60 days / 10% / 5 years
     // bsc: '0xF75020FA1A8eAB5890D650c027509A4fdd503445', //prod - 180 days / 17.5% / 5 years
-    bsc: '0xF75020FA1A8eAB5890D650c027509A4fdd503445', //prod - 360 days / 20% / 5 years
+    // bsc: '0xdfE32A476e7b4171a2d674459e605372C3F02984', //prod - 360 days / 20% / 5 years
   },
 };

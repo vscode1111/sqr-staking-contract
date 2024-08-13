@@ -1,7 +1,8 @@
 import { time } from '@nomicfoundation/hardhat-network-helpers';
 import { expect } from 'chai';
 import { Dayjs } from 'dayjs';
-import { INITIAL_POSITIVE_CHECK_TEST_TITLE, toUnixTime, waitTx } from '~common';
+import { INITIAL_POSITIVE_CHECK_TEST_TITLE, toUnixTime } from '~common';
+import { waitTx } from '~common-contract';
 import { contractConfig, seedData } from '~seeds';
 import { calculateAprInNumber, calculateReward } from '~utils';
 import {
@@ -9,6 +10,7 @@ import {
   StakeEventArgs,
   UnstakeEventArgs,
   WithdrawExcessRewardEventArgs,
+  customError,
   errorMessage,
 } from '.';
 import {
@@ -663,8 +665,11 @@ export function shouldBehaveCorrectFundingDefaultCase(): void {
                           });
 
                           it('user1 tries to call withdrawExcessReward without permission', async function () {
-                            await expect(this.user1SQRStaking.withdrawExcessReward()).revertedWith(
-                              errorMessage.onlyOwner,
+                            await expect(
+                              this.user1SQRStaking.withdrawExcessReward(),
+                            ).revertedWithCustomError(
+                              this.owner2SQRStaking,
+                              customError.ownableUnauthorizedAccount,
                             );
                           });
 

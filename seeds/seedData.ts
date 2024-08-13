@@ -1,10 +1,20 @@
 import dayjs from 'dayjs';
 import { toUnixTime, toWei } from '~common';
+import { MATAN_WALLET2 } from '~common-contract';
 import { DAYS, MINUTES, ZERO } from '~constants';
 import { DeployNetworkKey } from '~types';
 import { calculateAprForContract } from '~utils';
 import { defaultNetwork } from '../hardhat.config';
 import { ContractConfig, DeployContractArgs, DeployTokenArgs, TokenConfig } from './types';
+
+type DeployType = 'test' | 'main' | 'stage' | 'prod';
+
+const deployType: DeployType = (process.env.ENV as DeployType) ?? 'main';
+
+// const isProd = deployType === ('prod' as any);
+// if (isProd) {
+//   throw 'Are you sure? It is PROD!';
+// }
 
 const chainDecimals: Record<DeployNetworkKey, number> = {
   bsc: 8,
@@ -12,39 +22,69 @@ const chainDecimals: Record<DeployNetworkKey, number> = {
 
 export const erc20Decimals = chainDecimals[defaultNetwork];
 
-export const isTest = true; //false - PROD!
-
-// if (!isTest) {
-//   throw 'Are you sure? It is PROD!';
-// }
-
 export const now = dayjs();
 
 // const priceDiv = BigInt(10_000);
 const priceDiv = BigInt(1000);
 const userDiv = BigInt(2);
 
-export const prodContractConfig: Partial<ContractConfig> = {
-  // newOwner: '0x898Fa021cB148fC9B560cAEC32644941EFb4928D', //Matan
-  // newOwner: '0x1C991e2A0643F4f4F9499ff940869528589Cde6a', //Gnosis-community
-  newOwner: '0xda8b7cbC1C246a0F8Dcfe6d5dF4750100787cf2e', //Matan2
-  erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
-  limit: toWei(1_000_000, erc20Decimals),
-  minStakeAmount: ZERO,
-  maxStakeAmount: toWei(1_000_000, erc20Decimals),
+export const contractConfigDeployMap: Record<DeployType, Partial<ContractConfig>> = {
+  test: {
+    newOwner: '0x627Ab3fbC3979158f451347aeA288B0A3A47E1EF', //owner2
+    // erc20Token: '0x4072b57e9B3dA8eEB9F8998b69C868E9a1698E54', //tSQR
+    erc20Token: '0x8364a68c32E581332b962D88CdC8dBe8b3e0EE9c', //tSQR2
+    // erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
+    duration: 20 * MINUTES,
+    // depositDeadline: toUnixTime(now.add(1, 'days').toDate()),
+    depositDeadline: 1873465218,
+  },
+  main: {
+    newOwner: '0x627Ab3fbC3979158f451347aeA288B0A3A47E1EF', //owner2
+    // erc20Token: '0x4072b57e9B3dA8eEB9F8998b69C868E9a1698E54', //tSQR
+    erc20Token: '0x8364a68c32E581332b962D88CdC8dBe8b3e0EE9c', //tSQR2
+    // erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
+    duration: 20 * DAYS,
+    // depositDeadline: toUnixTime(now.add(1, 'days').toDate()),
+    depositDeadline: 1728000,
+    accountLimit: toWei(3, erc20Decimals),
+  },
+  stage: {
+    newOwner: MATAN_WALLET2,
+    erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
+    limit: toWei(1_000_000, erc20Decimals),
+    minStakeAmount: ZERO,
+    maxStakeAmount: toWei(1_000_000, erc20Decimals),
+  },
+  prod: {
+    newOwner: MATAN_WALLET2,
+    erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
+    limit: toWei(1_000_000, erc20Decimals),
+    minStakeAmount: ZERO,
+    maxStakeAmount: toWei(1_000_000, erc20Decimals),
+  },
 };
 
-export const mainContractConfig: Partial<ContractConfig> = {
-  newOwner: '0x627Ab3fbC3979158f451347aeA288B0A3A47E1EF', //owner2
-  // erc20Token: '0x4072b57e9B3dA8eEB9F8998b69C868E9a1698E54', //tSQR
-  erc20Token: '0x8364a68c32E581332b962D88CdC8dBe8b3e0EE9c', //tSQR2
-  // erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
-  duration: 20 * MINUTES,
-  // depositDeadline: toUnixTime(now.add(1, 'days').toDate()),
-  depositDeadline: 1873465218,
-};
+// export const prodContractConfig: Partial<ContractConfig> = {
+//   // newOwner: '0x898Fa021cB148fC9B560cAEC32644941EFb4928D', //Matan
+//   // newOwner: '0x1C991e2A0643F4f4F9499ff940869528589Cde6a', //Gnosis-community
+//   newOwner: MATAN_WALLET2,
+//   erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
+//   limit: toWei(1_000_000, erc20Decimals),
+//   minStakeAmount: ZERO,
+//   maxStakeAmount: toWei(1_000_000, erc20Decimals),
+// };
 
-const extContractConfig = isTest ? mainContractConfig : prodContractConfig;
+// export const mainContractConfig: Partial<ContractConfig> = {
+//   newOwner: '0x627Ab3fbC3979158f451347aeA288B0A3A47E1EF', //owner2
+//   // erc20Token: '0x4072b57e9B3dA8eEB9F8998b69C868E9a1698E54', //tSQR
+//   erc20Token: '0x8364a68c32E581332b962D88CdC8dBe8b3e0EE9c', //tSQR2
+//   // erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
+//   duration: 20 * MINUTES,
+//   // depositDeadline: toUnixTime(now.add(1, 'days').toDate()),
+//   depositDeadline: 1873465218,
+// };
+
+const extContractConfig = contractConfigDeployMap[deployType];
 
 const depositDeadline = toUnixTime(now.add(100, 'days').toDate());
 const limit = toWei(3000, erc20Decimals) / priceDiv;
