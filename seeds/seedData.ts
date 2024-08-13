@@ -44,9 +44,9 @@ export const contractConfigDeployMap: Record<DeployType, Partial<ContractConfig>
     erc20Token: '0x8364a68c32E581332b962D88CdC8dBe8b3e0EE9c', //tSQR2
     // erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
     duration: 20 * DAYS,
-    // depositDeadline: toUnixTime(now.add(1, 'days').toDate()),
-    depositDeadline: 1728000,
-    accountLimit: toWei(3, erc20Decimals),
+    // depositDeadline: toUnixTime(now.add(100, 'days').toDate()),
+    depositDeadline: 1732205548,
+    accountLimit: toWei(2, erc20Decimals),
   },
   stage: {
     newOwner: MATAN_WALLET2,
@@ -64,32 +64,12 @@ export const contractConfigDeployMap: Record<DeployType, Partial<ContractConfig>
   },
 };
 
-// export const prodContractConfig: Partial<ContractConfig> = {
-//   // newOwner: '0x898Fa021cB148fC9B560cAEC32644941EFb4928D', //Matan
-//   // newOwner: '0x1C991e2A0643F4f4F9499ff940869528589Cde6a', //Gnosis-community
-//   newOwner: MATAN_WALLET2,
-//   erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
-//   limit: toWei(1_000_000, erc20Decimals),
-//   minStakeAmount: ZERO,
-//   maxStakeAmount: toWei(1_000_000, erc20Decimals),
-// };
-
-// export const mainContractConfig: Partial<ContractConfig> = {
-//   newOwner: '0x627Ab3fbC3979158f451347aeA288B0A3A47E1EF', //owner2
-//   // erc20Token: '0x4072b57e9B3dA8eEB9F8998b69C868E9a1698E54', //tSQR
-//   erc20Token: '0x8364a68c32E581332b962D88CdC8dBe8b3e0EE9c', //tSQR2
-//   // erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
-//   duration: 20 * MINUTES,
-//   // depositDeadline: toUnixTime(now.add(1, 'days').toDate()),
-//   depositDeadline: 1873465218,
-// };
-
 const extContractConfig = contractConfigDeployMap[deployType];
 
 const depositDeadline = toUnixTime(now.add(100, 'days').toDate());
 const limit = toWei(3000, erc20Decimals) / priceDiv;
 const minStakeAmount = toWei(1, erc20Decimals) / priceDiv;
-const maxStakeAmount = toWei(2000, erc20Decimals) / priceDiv;
+const maxStakeAmount = toWei(1500, erc20Decimals) / priceDiv;
 // const accountLimit = toWei(3000, erc20Decimals) / priceDiv;
 const accountLimit = ZERO;
 

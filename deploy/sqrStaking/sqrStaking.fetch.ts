@@ -32,6 +32,7 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<voi
       limit: printToken(await owner2SQRStaking.limit()),
       minStakeAmount: printToken(await owner2SQRStaking.minStakeAmount()),
       maxStakeAmount: printToken(await owner2SQRStaking.maxStakeAmount()),
+      accountLimit: printToken(await owner2SQRStaking.accountLimit()),
       isStakeReady: await owner2SQRStaking.isStakeReady(),
       getBalance: printToken(await owner2SQRStaking.getBalance()),
       getStakeCount: Number(await owner2SQRStaking.getStakeCount()),
