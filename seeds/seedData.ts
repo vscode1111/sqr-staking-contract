@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { toUnixTime, toWei } from '~common';
-import { MATAN_WALLET2 } from '~common-contract';
+import { MATAN_WALLET_STAKING } from '~common-contract';
 import { DAYS, MINUTES, ZERO } from '~constants';
 import { DeployNetworkKey } from '~types';
 import { calculateAprForContract } from '~utils';
@@ -49,14 +49,14 @@ export const contractConfigDeployMap: Record<DeployType, Partial<ContractConfig>
     accountLimit: toWei(2, erc20Decimals),
   },
   stage: {
-    newOwner: MATAN_WALLET2,
+    newOwner: MATAN_WALLET_STAKING,
     erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
     limit: toWei(1_000_000, erc20Decimals),
     minStakeAmount: ZERO,
     maxStakeAmount: toWei(1_000_000, erc20Decimals),
   },
   prod: {
-    newOwner: MATAN_WALLET2,
+    newOwner: MATAN_WALLET_STAKING,
     erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
     limit: toWei(1_000_000, erc20Decimals),
     minStakeAmount: ZERO,
