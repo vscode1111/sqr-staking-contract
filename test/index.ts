@@ -1,1 +1,1 @@
-export * from './sqrStaking';
+export * from './web3Staking';

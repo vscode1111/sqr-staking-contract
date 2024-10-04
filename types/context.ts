@@ -1,7 +1,7 @@
 import { Signer } from 'ethers';
 import { ERC20Token } from '~typechain-types/contracts/ERC20Token';
-import { SQRStaking } from '~typechain-types/contracts/SQRStaking';
-import { SQRStaking__factory } from '~typechain-types/factories/contracts/SQRStaking__factory';
+import { WEB3Staking } from '~typechain-types/contracts/WEB3Staking';
+import { WEB3Staking__factory } from '~typechain-types/factories/contracts/WEB3Staking__factory';
 
 export interface Users {
   owner: Signer;
@@ -28,16 +28,16 @@ export interface ERC20TokenContext {
   companyERC20Token: ERC20Token;
 }
 
-export interface SQRStakingContext {
-  sqrStakingFactory: SQRStaking__factory;
-  owner2SqrStakingFactory: SQRStaking__factory;
-  sqrStakingAddress: string;
-  ownerSQRStaking: SQRStaking;
-  user1SQRStaking: SQRStaking;
-  user2SQRStaking: SQRStaking;
-  user3SQRStaking: SQRStaking;
-  owner2SQRStaking: SQRStaking;
-  companySQRStaking: SQRStaking;
+export interface WEB3StakingContext {
+  web3StakingFactory: WEB3Staking__factory;
+  owner2Web3StakingFactory: WEB3Staking__factory;
+  web3StakingAddress: string;
+  ownerWEB3Staking: WEB3Staking;
+  user1WEB3Staking: WEB3Staking;
+  user2WEB3Staking: WEB3Staking;
+  user3WEB3Staking: WEB3Staking;
+  owner2WEB3Staking: WEB3Staking;
+  companyWEB3Staking: WEB3Staking;
 }
 
-export type ContextBase = Users & ERC20TokenContext & SQRStakingContext;
+export type ContextBase = Users & ERC20TokenContext & WEB3StakingContext;

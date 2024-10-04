@@ -1,4 +1,4 @@
-slither contracts/SQRStaking.sol --solc-remaps '@openzeppelin=node_modules/@openzeppelin' --exclude naming-convention,external-function,low-level-calls
+slither contracts/WEB3Staking.sol --solc-remaps '@openzeppelin=node_modules/@openzeppelin' --exclude naming-convention,external-function,low-level-calls
 
 ToDo for version 1.1:
 1. Add logic to unstake initial stake when contract has no reward. And user is allowed to claim remains reward after unstaking

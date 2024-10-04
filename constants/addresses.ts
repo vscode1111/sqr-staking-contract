@@ -1,19 +1,19 @@
 import { DeployNetworks } from '~types';
 
-export const SQR_STAKING_NAME = 'SQRStaking';
+export const WEB3_STAKING_NAME = 'WEB3Staking';
 export const ERC20_TOKEN_NAME = 'ERC20Token';
 
 export enum CONTRACT_LIST {
   ERC20_TOKEN = 'ERC20_TOKEN',
-  SQR_STAKING = 'SQR_STAKING',
+  WEB3_STAKING = 'WEB3_STAKING',
 }
 
 export const CONTRACTS: Record<CONTRACT_LIST, DeployNetworks> = {
   ERC20_TOKEN: {
-    // bsc: '0x8364a68c32E581332b962D88CdC8dBe8b3e0EE9c', //tSQR2
-    bsc: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
+    // bsc: '0x8364a68c32E581332b962D88CdC8dBe8b3e0EE9c', //tWEB32
+    bsc: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //WEB3
   },
-  SQR_STAKING: {
+  WEB3_STAKING: {
     // bsc: '0x571C48cBd0EAD806386e3DbA0adB4E8C3De0A0A6', //test
     // bsc: '0xF28a353D1F72429d7559e207a044D03AeC61A63c', //test
     // bsc: '0xd9dFb1bE1860ed3615fc7E5EF8761B0D5FdA40bD', //test
@@ -39,13 +39,13 @@ export const CONTRACTS: Record<CONTRACT_LIST, DeployNetworks> = {
     // bsc: '0x99EEAabEc494eBdfDd51902c2ff55a2BFd6956e2', //main - 0% - 10 years
     bsc: '0xc974B811352BA278a168771759ed0080167BBa01', //main
 
-    // minStakeAmount = 100 SQR
+    // minStakeAmount = 100 WEB3
     // bsc: '0x135b578E30510Bf87f4e72D74f491c59fC5b7022', //prod - 10d - 10% - 20d
     // bsc: '0xf030DEDD371673bbb2B702A42b754DA440F69D5F', //prod - 30d - 12.5% - 60d
     // bsc: '0x70A268A6f267847Bf295f61A8f48f926E629eAD9', //prod - 60d - 13.75% - 120d
     // bsc: '0xdd2435D7ADfDCD446578aB969EC372E198259c71', //prod - 90d - 15% - 180d
 
-    // minStakeAmount = 0 SQR
+    // minStakeAmount = 0 WEB3
     // bsc: '0xC196B70a36A7B51BFD92120c3F8b9232204a491f', //prod/stage - 10d - 10% - 20d
     // bsc: '0x8Dc66FB19469259f99Dbe3bc59bCa4132C62901a', //prod/stage - 30d - 12.5% - 60d
     // bsc: '0xee2a61aF0718513bf5C5878E41164E7946A24256', //prod/stage - 60d - 13.75% - 120d

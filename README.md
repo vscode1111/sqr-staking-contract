@@ -1,4 +1,4 @@
-# Solidity smart contracts for SQR staking functionality
+# Solidity smart contracts for WEB3 staking functionality
 
 ## Getting Started
 

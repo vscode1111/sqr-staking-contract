@@ -31,18 +31,18 @@ const userDiv = BigInt(2);
 export const contractConfigDeployMap: Record<DeployType, Partial<ContractConfig>> = {
   test: {
     newOwner: '0x627Ab3fbC3979158f451347aeA288B0A3A47E1EF', //owner2
-    // erc20Token: '0x4072b57e9B3dA8eEB9F8998b69C868E9a1698E54', //tSQR
-    erc20Token: '0x8364a68c32E581332b962D88CdC8dBe8b3e0EE9c', //tSQR2
-    // erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
+    // erc20Token: '0x4072b57e9B3dA8eEB9F8998b69C868E9a1698E54', //tWEB3
+    erc20Token: '0x8364a68c32E581332b962D88CdC8dBe8b3e0EE9c', //tWEB32
+    // erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //WEB3
     duration: 20 * MINUTES,
     // depositDeadline: toUnixTime(now.add(1, 'days').toDate()),
     depositDeadline: 1873465218,
   },
   main: {
     newOwner: '0x627Ab3fbC3979158f451347aeA288B0A3A47E1EF', //owner2
-    // erc20Token: '0x4072b57e9B3dA8eEB9F8998b69C868E9a1698E54', //tSQR
-    erc20Token: '0x8364a68c32E581332b962D88CdC8dBe8b3e0EE9c', //tSQR2
-    // erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
+    // erc20Token: '0x4072b57e9B3dA8eEB9F8998b69C868E9a1698E54', //tWEB3
+    erc20Token: '0x8364a68c32E581332b962D88CdC8dBe8b3e0EE9c', //tWEB32
+    // erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //WEB3
     duration: 20 * DAYS,
     // depositDeadline: toUnixTime(now.add(100, 'days').toDate()),
     depositDeadline: 1732205548,
@@ -50,14 +50,14 @@ export const contractConfigDeployMap: Record<DeployType, Partial<ContractConfig>
   },
   stage: {
     newOwner: MATAN_WALLET_STAKING,
-    erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
+    erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //WEB3
     limit: toWei(1_000_000, erc20Decimals),
     minStakeAmount: ZERO,
     maxStakeAmount: toWei(1_000_000, erc20Decimals),
   },
   prod: {
     newOwner: MATAN_WALLET_STAKING,
-    erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //SQR
+    erc20Token: '0x2B72867c32CF673F7b02d208B26889fEd353B1f8', //WEB3
     limit: toWei(1_000_000, erc20Decimals),
     minStakeAmount: ZERO,
     maxStakeAmount: toWei(1_000_000, erc20Decimals),
@@ -75,7 +75,7 @@ const accountLimit = ZERO;
 
 export const contractConfig: ContractConfig = {
   newOwner: '0x1D5eeCbD950C22Ec2B5813Ab1D65ED5fFD83F32B',
-  erc20Token: '0x4072b57e9B3dA8eEB9F8998b69C868E9a1698E54', //tSQR
+  erc20Token: '0x4072b57e9B3dA8eEB9F8998b69C868E9a1698E54', //tWEB3
   duration: 30 * DAYS,
   apr: calculateAprForContract(20),
   depositDeadline,

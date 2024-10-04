@@ -6,7 +6,7 @@ export const verifyArgsRequired = true;
 
 const mainTokenConfig: Partial<TokenConfig> = {
   name: 'Magic Square Test2',
-  symbol: 'tSQR2',
+  symbol: 'tWEB32',
   initMint: toWei(1_000_000_000_000, erc20Decimals),
 };
 

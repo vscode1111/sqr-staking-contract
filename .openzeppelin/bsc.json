@@ -197,32 +197,32 @@
             "offset": 0,
             "slot": "251",
             "type": "t_mapping(t_address,t_struct(FundItem)1527_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:33"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:33"
           },
           {
             "label": "_erc20Token",
             "offset": 0,
             "slot": "252",
             "type": "t_contract(IERC20)1445",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:35"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:35"
           },
           {
             "label": "_coldWallet",
             "offset": 0,
             "slot": "253",
             "type": "t_address",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:36"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:36"
           },
           {
             "label": "_balanceLimit",
             "offset": 0,
             "slot": "254",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:37"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:37"
           }
         ],
         "types": {
@@ -247,11 +247,11 @@
             "numberOfBytes": "20"
           },
           "t_mapping(t_address,t_struct(FundItem)1527_storage)": {
-            "label": "mapping(address => struct SQRStaking.FundItem)",
+            "label": "mapping(address => struct WEB3Staking.FundItem)",
             "numberOfBytes": "32"
           },
           "t_struct(FundItem)1527_storage": {
-            "label": "struct SQRStaking.FundItem",
+            "label": "struct WEB3Staking.FundItem",
             "members": [
               {
                 "label": "balance",
@@ -357,40 +357,40 @@
             "offset": 0,
             "slot": "251",
             "type": "t_contract(IERC20)2235",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:34"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:34"
           },
           {
             "label": "coldWallet",
             "offset": 0,
             "slot": "252",
             "type": "t_address",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:35"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:35"
           },
           {
             "label": "balanceLimit",
             "offset": 0,
             "slot": "253",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:36"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:36"
           },
           {
             "label": "totalBalance",
             "offset": 0,
             "slot": "254",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:37"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:37"
           },
           {
             "label": "_balances",
             "offset": 0,
             "slot": "255",
             "type": "t_mapping(t_address,t_struct(FundItem)4791_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:39"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:39"
           }
         ],
         "types": {
@@ -415,11 +415,11 @@
             "numberOfBytes": "20"
           },
           "t_mapping(t_address,t_struct(FundItem)4791_storage)": {
-            "label": "mapping(address => struct SQRStaking.FundItem)",
+            "label": "mapping(address => struct WEB3Staking.FundItem)",
             "numberOfBytes": "32"
           },
           "t_struct(FundItem)4791_storage": {
-            "label": "struct SQRStaking.FundItem",
+            "label": "struct WEB3Staking.FundItem",
             "members": [
               {
                 "label": "balance",
@@ -525,48 +525,48 @@
             "offset": 0,
             "slot": "251",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:40"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:40"
           },
           {
             "label": "erc20Token",
             "offset": 0,
             "slot": "252",
             "type": "t_contract(IPermitToken)2087",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:42"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:42"
           },
           {
             "label": "coldWallet",
             "offset": 0,
             "slot": "253",
             "type": "t_address",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:43"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:43"
           },
           {
             "label": "balanceLimit",
             "offset": 0,
             "slot": "254",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:44"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:44"
           },
           {
             "label": "totalBalance",
             "offset": 0,
             "slot": "255",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:45"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:45"
           },
           {
             "label": "_balances",
             "offset": 0,
             "slot": "256",
             "type": "t_mapping(t_address,t_struct(FundItem)1592_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:47"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:47"
           }
         ],
         "types": {
@@ -591,7 +591,7 @@
             "numberOfBytes": "20"
           },
           "t_enum(LockPeriod)1582": {
-            "label": "enum SQRStaking.LockPeriod",
+            "label": "enum WEB3Staking.LockPeriod",
             "members": [
               "Month",
               "OneYear",
@@ -601,11 +601,11 @@
             "numberOfBytes": "1"
           },
           "t_mapping(t_address,t_struct(FundItem)1592_storage)": {
-            "label": "mapping(address => struct SQRStaking.FundItem)",
+            "label": "mapping(address => struct WEB3Staking.FundItem)",
             "numberOfBytes": "32"
           },
           "t_struct(FundItem)1592_storage": {
-            "label": "struct SQRStaking.FundItem",
+            "label": "struct WEB3Staking.FundItem",
             "members": [
               {
                 "label": "balance",
@@ -733,48 +733,48 @@
             "offset": 0,
             "slot": "251",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:39"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:39"
           },
           {
             "label": "erc20Token",
             "offset": 0,
             "slot": "252",
             "type": "t_contract(IPermitToken)2153",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:41"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:41"
           },
           {
             "label": "coldWallet",
             "offset": 0,
             "slot": "253",
             "type": "t_address",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:42"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:42"
           },
           {
             "label": "balanceLimit",
             "offset": 0,
             "slot": "254",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:43"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:43"
           },
           {
             "label": "totalBalance",
             "offset": 0,
             "slot": "255",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:44"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:44"
           },
           {
             "label": "_balances",
             "offset": 0,
             "slot": "256",
             "type": "t_mapping(t_address,t_struct(FundItem)1592_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:46"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:46"
           }
         ],
         "types": {
@@ -799,7 +799,7 @@
             "numberOfBytes": "20"
           },
           "t_enum(LockPeriod)1582": {
-            "label": "enum SQRStaking.LockPeriod",
+            "label": "enum WEB3Staking.LockPeriod",
             "members": [
               "Month",
               "OneYear",
@@ -809,11 +809,11 @@
             "numberOfBytes": "1"
           },
           "t_mapping(t_address,t_struct(FundItem)1592_storage)": {
-            "label": "mapping(address => struct SQRStaking.FundItem)",
+            "label": "mapping(address => struct WEB3Staking.FundItem)",
             "numberOfBytes": "32"
           },
           "t_struct(FundItem)1592_storage": {
-            "label": "struct SQRStaking.FundItem",
+            "label": "struct WEB3Staking.FundItem",
             "members": [
               {
                 "label": "balance",
@@ -941,48 +941,48 @@
             "offset": 0,
             "slot": "251",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:39"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:39"
           },
           {
             "label": "erc20Token",
             "offset": 0,
             "slot": "252",
             "type": "t_contract(IPermitToken)2161",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:41"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:41"
           },
           {
             "label": "coldWallet",
             "offset": 0,
             "slot": "253",
             "type": "t_address",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:42"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:42"
           },
           {
             "label": "balanceLimit",
             "offset": 0,
             "slot": "254",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:43"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:43"
           },
           {
             "label": "totalBalance",
             "offset": 0,
             "slot": "255",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:44"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:44"
           },
           {
             "label": "_balances",
             "offset": 0,
             "slot": "256",
             "type": "t_mapping(t_address,t_struct(FundItem)1592_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:46"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:46"
           }
         ],
         "types": {
@@ -1007,7 +1007,7 @@
             "numberOfBytes": "20"
           },
           "t_enum(LockPeriod)1582": {
-            "label": "enum SQRStaking.LockPeriod",
+            "label": "enum WEB3Staking.LockPeriod",
             "members": [
               "Month",
               "OneYear",
@@ -1017,11 +1017,11 @@
             "numberOfBytes": "1"
           },
           "t_mapping(t_address,t_struct(FundItem)1592_storage)": {
-            "label": "mapping(address => struct SQRStaking.FundItem)",
+            "label": "mapping(address => struct WEB3Staking.FundItem)",
             "numberOfBytes": "32"
           },
           "t_struct(FundItem)1592_storage": {
-            "label": "struct SQRStaking.FundItem",
+            "label": "struct WEB3Staking.FundItem",
             "members": [
               {
                 "label": "balance",
@@ -1149,48 +1149,48 @@
             "offset": 0,
             "slot": "251",
             "type": "t_contract(IPermitToken)5409",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:41"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:41"
           },
           {
             "label": "coldWallet",
             "offset": 0,
             "slot": "252",
             "type": "t_address",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:42"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:42"
           },
           {
             "label": "balanceLimit",
             "offset": 0,
             "slot": "253",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:43"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:43"
           },
           {
             "label": "totalBalance",
             "offset": 0,
             "slot": "254",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:44"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:44"
           },
           {
             "label": "_balances",
             "offset": 0,
             "slot": "255",
             "type": "t_mapping(t_address,t_struct(FundItem)4807_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:46"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:46"
           },
           {
             "label": "_transactionIds",
             "offset": 0,
             "slot": "256",
             "type": "t_mapping(t_bytes32,t_struct(TransactionItem)4812_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:47"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:47"
           }
         ],
         "types": {
@@ -1219,15 +1219,15 @@
             "numberOfBytes": "20"
           },
           "t_mapping(t_address,t_struct(FundItem)4807_storage)": {
-            "label": "mapping(address => struct SQRStaking.FundItem)",
+            "label": "mapping(address => struct WEB3Staking.FundItem)",
             "numberOfBytes": "32"
           },
           "t_mapping(t_bytes32,t_struct(TransactionItem)4812_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.TransactionItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.TransactionItem)",
             "numberOfBytes": "32"
           },
           "t_struct(FundItem)4807_storage": {
-            "label": "struct SQRStaking.FundItem",
+            "label": "struct WEB3Staking.FundItem",
             "members": [
               {
                 "label": "balance",
@@ -1239,7 +1239,7 @@
             "numberOfBytes": "32"
           },
           "t_struct(TransactionItem)4812_storage": {
-            "label": "struct SQRStaking.TransactionItem",
+            "label": "struct WEB3Staking.TransactionItem",
             "members": [
               {
                 "label": "account",
@@ -1351,48 +1351,48 @@
             "offset": 0,
             "slot": "251",
             "type": "t_contract(IPermitToken)5429",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:41"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:41"
           },
           {
             "label": "coldWallet",
             "offset": 0,
             "slot": "252",
             "type": "t_address",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:42"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:42"
           },
           {
             "label": "balanceLimit",
             "offset": 0,
             "slot": "253",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:43"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:43"
           },
           {
             "label": "totalBalance",
             "offset": 0,
             "slot": "254",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:44"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:44"
           },
           {
             "label": "_balances",
             "offset": 0,
             "slot": "255",
             "type": "t_mapping(t_bytes32,t_struct(FundItem)4810_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:46"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:46"
           },
           {
             "label": "_transactionIds",
             "offset": 0,
             "slot": "256",
             "type": "t_mapping(t_bytes32,t_struct(TransactionItem)4818_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:47"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:47"
           }
         ],
         "types": {
@@ -1421,7 +1421,7 @@
             "numberOfBytes": "20"
           },
           "t_enum(TransactionType)4807": {
-            "label": "enum SQRStaking.TransactionType",
+            "label": "enum WEB3Staking.TransactionType",
             "members": [
               "DEPOSIT",
               "WITHDRAW"
@@ -1429,11 +1429,11 @@
             "numberOfBytes": "1"
           },
           "t_mapping(t_bytes32,t_struct(FundItem)4810_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.FundItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.FundItem)",
             "numberOfBytes": "32"
           },
           "t_mapping(t_bytes32,t_struct(TransactionItem)4818_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.TransactionItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.TransactionItem)",
             "numberOfBytes": "32"
           },
           "t_string_storage": {
@@ -1441,7 +1441,7 @@
             "numberOfBytes": "32"
           },
           "t_struct(FundItem)4810_storage": {
-            "label": "struct SQRStaking.FundItem",
+            "label": "struct WEB3Staking.FundItem",
             "members": [
               {
                 "label": "balance",
@@ -1453,7 +1453,7 @@
             "numberOfBytes": "32"
           },
           "t_struct(TransactionItem)4818_storage": {
-            "label": "struct SQRStaking.TransactionItem",
+            "label": "struct WEB3Staking.TransactionItem",
             "members": [
               {
                 "label": "user",
@@ -1571,48 +1571,48 @@
             "offset": 0,
             "slot": "251",
             "type": "t_contract(IPermitToken)3688",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:41"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:41"
           },
           {
             "label": "coldWallet",
             "offset": 0,
             "slot": "252",
             "type": "t_address",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:42"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:42"
           },
           {
             "label": "balanceLimit",
             "offset": 0,
             "slot": "253",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:43"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:43"
           },
           {
             "label": "totalBalance",
             "offset": 0,
             "slot": "254",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:44"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:44"
           },
           {
             "label": "_balances",
             "offset": 0,
             "slot": "255",
             "type": "t_mapping(t_bytes32,t_struct(FundItem)3150_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:46"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:46"
           },
           {
             "label": "_transactionIds",
             "offset": 0,
             "slot": "256",
             "type": "t_mapping(t_bytes32,t_struct(TransactionItem)3153_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:47"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:47"
           }
         ],
         "types": {
@@ -1641,15 +1641,15 @@
             "numberOfBytes": "20"
           },
           "t_mapping(t_bytes32,t_struct(FundItem)3150_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.FundItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.FundItem)",
             "numberOfBytes": "32"
           },
           "t_mapping(t_bytes32,t_struct(TransactionItem)3153_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.TransactionItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.TransactionItem)",
             "numberOfBytes": "32"
           },
           "t_struct(FundItem)3150_storage": {
-            "label": "struct SQRStaking.FundItem",
+            "label": "struct WEB3Staking.FundItem",
             "members": [
               {
                 "label": "balance",
@@ -1661,7 +1661,7 @@
             "numberOfBytes": "32"
           },
           "t_struct(TransactionItem)3153_storage": {
-            "label": "struct SQRStaking.TransactionItem",
+            "label": "struct WEB3Staking.TransactionItem",
             "members": [
               {
                 "label": "amount",
@@ -1767,48 +1767,48 @@
             "offset": 0,
             "slot": "251",
             "type": "t_contract(IPermitToken)3688",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:41"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:41"
           },
           {
             "label": "coldWallet",
             "offset": 0,
             "slot": "252",
             "type": "t_address",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:42"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:42"
           },
           {
             "label": "balanceLimit",
             "offset": 0,
             "slot": "253",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:43"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:43"
           },
           {
             "label": "totalBalance",
             "offset": 0,
             "slot": "254",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:44"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:44"
           },
           {
             "label": "_balances",
             "offset": 0,
             "slot": "255",
             "type": "t_mapping(t_bytes32,t_struct(FundItem)3150_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:46"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:46"
           },
           {
             "label": "_transactionIds",
             "offset": 0,
             "slot": "256",
             "type": "t_mapping(t_bytes32,t_struct(TransactionItem)3153_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:47"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:47"
           }
         ],
         "types": {
@@ -1837,15 +1837,15 @@
             "numberOfBytes": "20"
           },
           "t_mapping(t_bytes32,t_struct(FundItem)3150_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.FundItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.FundItem)",
             "numberOfBytes": "32"
           },
           "t_mapping(t_bytes32,t_struct(TransactionItem)3153_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.TransactionItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.TransactionItem)",
             "numberOfBytes": "32"
           },
           "t_struct(FundItem)3150_storage": {
-            "label": "struct SQRStaking.FundItem",
+            "label": "struct WEB3Staking.FundItem",
             "members": [
               {
                 "label": "balance",
@@ -1857,7 +1857,7 @@
             "numberOfBytes": "32"
           },
           "t_struct(TransactionItem)3153_storage": {
-            "label": "struct SQRStaking.TransactionItem",
+            "label": "struct WEB3Staking.TransactionItem",
             "members": [
               {
                 "label": "amount",
@@ -1964,48 +1964,48 @@
             "offset": 0,
             "slot": "251",
             "type": "t_contract(IPermitToken)3688",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:41"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:41"
           },
           {
             "label": "coldWallet",
             "offset": 0,
             "slot": "252",
             "type": "t_address",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:42"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:42"
           },
           {
             "label": "balanceLimit",
             "offset": 0,
             "slot": "253",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:43"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:43"
           },
           {
             "label": "totalBalance",
             "offset": 0,
             "slot": "254",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:44"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:44"
           },
           {
             "label": "_balances",
             "offset": 0,
             "slot": "255",
             "type": "t_mapping(t_bytes32,t_struct(FundItem)3150_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:46"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:46"
           },
           {
             "label": "_transactionIds",
             "offset": 0,
             "slot": "256",
             "type": "t_mapping(t_bytes32,t_struct(TransactionItem)3153_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:47"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:47"
           }
         ],
         "types": {
@@ -2034,15 +2034,15 @@
             "numberOfBytes": "20"
           },
           "t_mapping(t_bytes32,t_struct(FundItem)3150_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.FundItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.FundItem)",
             "numberOfBytes": "32"
           },
           "t_mapping(t_bytes32,t_struct(TransactionItem)3153_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.TransactionItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.TransactionItem)",
             "numberOfBytes": "32"
           },
           "t_struct(FundItem)3150_storage": {
-            "label": "struct SQRStaking.FundItem",
+            "label": "struct WEB3Staking.FundItem",
             "members": [
               {
                 "label": "balance",
@@ -2054,7 +2054,7 @@
             "numberOfBytes": "32"
           },
           "t_struct(TransactionItem)3153_storage": {
-            "label": "struct SQRStaking.TransactionItem",
+            "label": "struct WEB3Staking.TransactionItem",
             "members": [
               {
                 "label": "amount",
@@ -2161,48 +2161,48 @@
             "offset": 0,
             "slot": "251",
             "type": "t_contract(IPermitToken)3688",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:41"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:41"
           },
           {
             "label": "coldWallet",
             "offset": 0,
             "slot": "252",
             "type": "t_address",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:42"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:42"
           },
           {
             "label": "balanceLimit",
             "offset": 0,
             "slot": "253",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:43"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:43"
           },
           {
             "label": "totalBalance",
             "offset": 0,
             "slot": "254",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:44"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:44"
           },
           {
             "label": "_balances",
             "offset": 0,
             "slot": "255",
             "type": "t_mapping(t_bytes32,t_struct(FundItem)3150_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:46"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:46"
           },
           {
             "label": "_transactionIds",
             "offset": 0,
             "slot": "256",
             "type": "t_mapping(t_bytes32,t_struct(TransactionItem)3153_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:47"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:47"
           }
         ],
         "types": {
@@ -2231,15 +2231,15 @@
             "numberOfBytes": "20"
           },
           "t_mapping(t_bytes32,t_struct(FundItem)3150_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.FundItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.FundItem)",
             "numberOfBytes": "32"
           },
           "t_mapping(t_bytes32,t_struct(TransactionItem)3153_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.TransactionItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.TransactionItem)",
             "numberOfBytes": "32"
           },
           "t_struct(FundItem)3150_storage": {
-            "label": "struct SQRStaking.FundItem",
+            "label": "struct WEB3Staking.FundItem",
             "members": [
               {
                 "label": "balance",
@@ -2251,7 +2251,7 @@
             "numberOfBytes": "32"
           },
           "t_struct(TransactionItem)3153_storage": {
-            "label": "struct SQRStaking.TransactionItem",
+            "label": "struct WEB3Staking.TransactionItem",
             "members": [
               {
                 "label": "amount",
@@ -2358,48 +2358,48 @@
             "offset": 0,
             "slot": "251",
             "type": "t_contract(IPermitToken)5473",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:41"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:41"
           },
           {
             "label": "coldWallet",
             "offset": 0,
             "slot": "252",
             "type": "t_address",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:42"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:42"
           },
           {
             "label": "balanceLimit",
             "offset": 0,
             "slot": "253",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:43"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:43"
           },
           {
             "label": "totalBalance",
             "offset": 0,
             "slot": "254",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:44"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:44"
           },
           {
             "label": "_balances",
             "offset": 0,
             "slot": "255",
             "type": "t_mapping(t_bytes32,t_struct(FundItem)4810_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:46"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:46"
           },
           {
             "label": "_transactionIds",
             "offset": 0,
             "slot": "256",
             "type": "t_mapping(t_bytes32,t_struct(TransactionItem)4813_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:47"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:47"
           }
         ],
         "types": {
@@ -2428,15 +2428,15 @@
             "numberOfBytes": "20"
           },
           "t_mapping(t_bytes32,t_struct(FundItem)4810_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.FundItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.FundItem)",
             "numberOfBytes": "32"
           },
           "t_mapping(t_bytes32,t_struct(TransactionItem)4813_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.TransactionItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.TransactionItem)",
             "numberOfBytes": "32"
           },
           "t_struct(FundItem)4810_storage": {
-            "label": "struct SQRStaking.FundItem",
+            "label": "struct WEB3Staking.FundItem",
             "members": [
               {
                 "label": "balance",
@@ -2448,7 +2448,7 @@
             "numberOfBytes": "32"
           },
           "t_struct(TransactionItem)4813_storage": {
-            "label": "struct SQRStaking.TransactionItem",
+            "label": "struct WEB3Staking.TransactionItem",
             "members": [
               {
                 "label": "amount",
@@ -2555,48 +2555,48 @@
             "offset": 0,
             "slot": "251",
             "type": "t_contract(IPermitToken)3747",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:38"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:38"
           },
           {
             "label": "coldWallet",
             "offset": 0,
             "slot": "252",
             "type": "t_address",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:39"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:39"
           },
           {
             "label": "balanceLimit",
             "offset": 0,
             "slot": "253",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:40"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:40"
           },
           {
             "label": "totalBalance",
             "offset": 0,
             "slot": "254",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:41"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:41"
           },
           {
             "label": "_balances",
             "offset": 0,
             "slot": "255",
             "type": "t_mapping(t_bytes32,t_struct(FundItem)3147_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:43"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:43"
           },
           {
             "label": "_transactionIds",
             "offset": 0,
             "slot": "256",
             "type": "t_mapping(t_bytes32,t_struct(TransactionItem)3150_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:44"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:44"
           }
         ],
         "types": {
@@ -2625,15 +2625,15 @@
             "numberOfBytes": "20"
           },
           "t_mapping(t_bytes32,t_struct(FundItem)3147_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.FundItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.FundItem)",
             "numberOfBytes": "32"
           },
           "t_mapping(t_bytes32,t_struct(TransactionItem)3150_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.TransactionItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.TransactionItem)",
             "numberOfBytes": "32"
           },
           "t_struct(FundItem)3147_storage": {
-            "label": "struct SQRStaking.FundItem",
+            "label": "struct WEB3Staking.FundItem",
             "members": [
               {
                 "label": "balance",
@@ -2645,7 +2645,7 @@
             "numberOfBytes": "32"
           },
           "t_struct(TransactionItem)3150_storage": {
-            "label": "struct SQRStaking.TransactionItem",
+            "label": "struct WEB3Staking.TransactionItem",
             "members": [
               {
                 "label": "amount",
@@ -2752,48 +2752,48 @@
             "offset": 0,
             "slot": "251",
             "type": "t_contract(IPermitToken)3765",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:42"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:42"
           },
           {
             "label": "coldWallet",
             "offset": 0,
             "slot": "252",
             "type": "t_address",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:43"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:43"
           },
           {
             "label": "balanceLimit",
             "offset": 0,
             "slot": "253",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:44"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:44"
           },
           {
             "label": "totalBalance",
             "offset": 0,
             "slot": "254",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:45"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:45"
           },
           {
             "label": "_balances",
             "offset": 0,
             "slot": "255",
             "type": "t_mapping(t_bytes32,t_struct(FundItem)3177_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:47"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:47"
           },
           {
             "label": "_transactionIds",
             "offset": 0,
             "slot": "256",
             "type": "t_mapping(t_bytes32,t_struct(TransactionItem)3180_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:48"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:48"
           }
         ],
         "types": {
@@ -2822,15 +2822,15 @@
             "numberOfBytes": "20"
           },
           "t_mapping(t_bytes32,t_struct(FundItem)3177_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.FundItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.FundItem)",
             "numberOfBytes": "32"
           },
           "t_mapping(t_bytes32,t_struct(TransactionItem)3180_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.TransactionItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.TransactionItem)",
             "numberOfBytes": "32"
           },
           "t_struct(FundItem)3177_storage": {
-            "label": "struct SQRStaking.FundItem",
+            "label": "struct WEB3Staking.FundItem",
             "members": [
               {
                 "label": "balance",
@@ -2842,7 +2842,7 @@
             "numberOfBytes": "32"
           },
           "t_struct(TransactionItem)3180_storage": {
-            "label": "struct SQRStaking.TransactionItem",
+            "label": "struct WEB3Staking.TransactionItem",
             "members": [
               {
                 "label": "amount",
@@ -2949,88 +2949,88 @@
             "offset": 0,
             "slot": "251",
             "type": "t_array(t_struct(StackingType)4865_storage)dyn_storage",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:56"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:56"
           },
           {
             "label": "_stackesCount",
             "offset": 0,
             "slot": "252",
             "type": "t_mapping(t_address,t_uint256)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:58"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:58"
           },
           {
             "label": "_stackOwners",
             "offset": 0,
             "slot": "253",
             "type": "t_mapping(t_uint256,t_address)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:59"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:59"
           },
           {
             "label": "stackingData",
             "offset": 0,
             "slot": "254",
             "type": "t_mapping(t_address,t_array(t_struct(StackEntry)4858_storage)dyn_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:61"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:61"
           },
           {
             "label": "PNL",
             "offset": 0,
             "slot": "255",
             "type": "t_contract(IERC20)2235",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:63"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:63"
           },
           {
             "label": "stackedAmount",
             "offset": 0,
             "slot": "256",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:64"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:64"
           },
           {
             "label": "paidAmount",
             "offset": 0,
             "slot": "257",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:65"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:65"
           },
           {
             "label": "stackingID",
             "offset": 0,
             "slot": "258",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:67"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:67"
           },
           {
             "label": "_multiplierDivider",
             "offset": 0,
             "slot": "259",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:69"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:69"
           },
           {
             "label": "_apyDivider",
             "offset": 0,
             "slot": "260",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:70"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:70"
           },
           {
             "label": "_minStackAmount",
             "offset": 0,
             "slot": "261",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:72"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:72"
           }
         ],
         "types": {
@@ -3039,11 +3039,11 @@
             "numberOfBytes": "20"
           },
           "t_array(t_struct(StackEntry)4858_storage)dyn_storage": {
-            "label": "struct SQRStaking.StackEntry[]",
+            "label": "struct WEB3Staking.StackEntry[]",
             "numberOfBytes": "32"
           },
           "t_array(t_struct(StackingType)4865_storage)dyn_storage": {
-            "label": "struct SQRStaking.StackingType[]",
+            "label": "struct WEB3Staking.StackingType[]",
             "numberOfBytes": "32"
           },
           "t_array(t_uint256)49_storage": {
@@ -3063,7 +3063,7 @@
             "numberOfBytes": "20"
           },
           "t_mapping(t_address,t_array(t_struct(StackEntry)4858_storage)dyn_storage)": {
-            "label": "mapping(address => struct SQRStaking.StackEntry[])",
+            "label": "mapping(address => struct WEB3Staking.StackEntry[])",
             "numberOfBytes": "32"
           },
           "t_mapping(t_address,t_uint256)": {
@@ -3075,7 +3075,7 @@
             "numberOfBytes": "32"
           },
           "t_struct(StackEntry)4858_storage": {
-            "label": "struct SQRStaking.StackEntry",
+            "label": "struct WEB3Staking.StackEntry",
             "members": [
               {
                 "label": "PNLamount",
@@ -3105,7 +3105,7 @@
             "numberOfBytes": "128"
           },
           "t_struct(StackingType)4865_storage": {
-            "label": "struct SQRStaking.StackingType",
+            "label": "struct WEB3Staking.StackingType",
             "members": [
               {
                 "label": "duration",
@@ -3224,88 +3224,88 @@
             "offset": 0,
             "slot": "251",
             "type": "t_array(t_struct(StackingType)3205_storage)dyn_storage",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:56"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:56"
           },
           {
             "label": "_stackesCount",
             "offset": 0,
             "slot": "252",
             "type": "t_mapping(t_address,t_uint256)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:58"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:58"
           },
           {
             "label": "_stackOwners",
             "offset": 0,
             "slot": "253",
             "type": "t_mapping(t_uint256,t_address)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:59"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:59"
           },
           {
             "label": "stackingData",
             "offset": 0,
             "slot": "254",
             "type": "t_mapping(t_address,t_array(t_struct(StackEntry)3198_storage)dyn_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:61"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:61"
           },
           {
             "label": "PNL",
             "offset": 0,
             "slot": "255",
             "type": "t_contract(IERC20)1445",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:63"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:63"
           },
           {
             "label": "stackedAmount",
             "offset": 0,
             "slot": "256",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:64"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:64"
           },
           {
             "label": "paidAmount",
             "offset": 0,
             "slot": "257",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:65"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:65"
           },
           {
             "label": "stackingID",
             "offset": 0,
             "slot": "258",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:67"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:67"
           },
           {
             "label": "_multiplierDivider",
             "offset": 0,
             "slot": "259",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:69"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:69"
           },
           {
             "label": "_apyDivider",
             "offset": 0,
             "slot": "260",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:70"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:70"
           },
           {
             "label": "_minStackAmount",
             "offset": 0,
             "slot": "261",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:72"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:72"
           }
         ],
         "types": {
@@ -3314,11 +3314,11 @@
             "numberOfBytes": "20"
           },
           "t_array(t_struct(StackEntry)3198_storage)dyn_storage": {
-            "label": "struct SQRStaking.StackEntry[]",
+            "label": "struct WEB3Staking.StackEntry[]",
             "numberOfBytes": "32"
           },
           "t_array(t_struct(StackingType)3205_storage)dyn_storage": {
-            "label": "struct SQRStaking.StackingType[]",
+            "label": "struct WEB3Staking.StackingType[]",
             "numberOfBytes": "32"
           },
           "t_array(t_uint256)49_storage": {
@@ -3338,7 +3338,7 @@
             "numberOfBytes": "20"
           },
           "t_mapping(t_address,t_array(t_struct(StackEntry)3198_storage)dyn_storage)": {
-            "label": "mapping(address => struct SQRStaking.StackEntry[])",
+            "label": "mapping(address => struct WEB3Staking.StackEntry[])",
             "numberOfBytes": "32"
           },
           "t_mapping(t_address,t_uint256)": {
@@ -3350,7 +3350,7 @@
             "numberOfBytes": "32"
           },
           "t_struct(StackEntry)3198_storage": {
-            "label": "struct SQRStaking.StackEntry",
+            "label": "struct WEB3Staking.StackEntry",
             "members": [
               {
                 "label": "PNLamount",
@@ -3380,7 +3380,7 @@
             "numberOfBytes": "128"
           },
           "t_struct(StackingType)3205_storage": {
-            "label": "struct SQRStaking.StackingType",
+            "label": "struct WEB3Staking.StackingType",
             "members": [
               {
                 "label": "duration",
@@ -3499,88 +3499,88 @@
             "offset": 0,
             "slot": "251",
             "type": "t_array(t_struct(StackingType)3205_storage)dyn_storage",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:56"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:56"
           },
           {
             "label": "_stackesCount",
             "offset": 0,
             "slot": "252",
             "type": "t_mapping(t_address,t_uint256)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:58"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:58"
           },
           {
             "label": "_stackOwners",
             "offset": 0,
             "slot": "253",
             "type": "t_mapping(t_uint256,t_address)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:59"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:59"
           },
           {
             "label": "stackingData",
             "offset": 0,
             "slot": "254",
             "type": "t_mapping(t_address,t_array(t_struct(StackEntry)3198_storage)dyn_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:61"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:61"
           },
           {
             "label": "PNL",
             "offset": 0,
             "slot": "255",
             "type": "t_contract(IERC20)1445",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:63"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:63"
           },
           {
             "label": "stackedAmount",
             "offset": 0,
             "slot": "256",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:64"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:64"
           },
           {
             "label": "paidAmount",
             "offset": 0,
             "slot": "257",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:65"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:65"
           },
           {
             "label": "stackingID",
             "offset": 0,
             "slot": "258",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:67"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:67"
           },
           {
             "label": "_multiplierDivider",
             "offset": 0,
             "slot": "259",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:69"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:69"
           },
           {
             "label": "_apyDivider",
             "offset": 0,
             "slot": "260",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:70"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:70"
           },
           {
             "label": "_minStackAmount",
             "offset": 0,
             "slot": "261",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:72"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:72"
           }
         ],
         "types": {
@@ -3589,11 +3589,11 @@
             "numberOfBytes": "20"
           },
           "t_array(t_struct(StackEntry)3198_storage)dyn_storage": {
-            "label": "struct SQRStaking.StackEntry[]",
+            "label": "struct WEB3Staking.StackEntry[]",
             "numberOfBytes": "32"
           },
           "t_array(t_struct(StackingType)3205_storage)dyn_storage": {
-            "label": "struct SQRStaking.StackingType[]",
+            "label": "struct WEB3Staking.StackingType[]",
             "numberOfBytes": "32"
           },
           "t_array(t_uint256)49_storage": {
@@ -3613,7 +3613,7 @@
             "numberOfBytes": "20"
           },
           "t_mapping(t_address,t_array(t_struct(StackEntry)3198_storage)dyn_storage)": {
-            "label": "mapping(address => struct SQRStaking.StackEntry[])",
+            "label": "mapping(address => struct WEB3Staking.StackEntry[])",
             "numberOfBytes": "32"
           },
           "t_mapping(t_address,t_uint256)": {
@@ -3625,7 +3625,7 @@
             "numberOfBytes": "32"
           },
           "t_struct(StackEntry)3198_storage": {
-            "label": "struct SQRStaking.StackEntry",
+            "label": "struct WEB3Staking.StackEntry",
             "members": [
               {
                 "label": "PNLamount",
@@ -3655,7 +3655,7 @@
             "numberOfBytes": "128"
           },
           "t_struct(StackingType)3205_storage": {
-            "label": "struct SQRStaking.StackingType",
+            "label": "struct WEB3Staking.StackingType",
             "members": [
               {
                 "label": "duration",
@@ -3774,80 +3774,80 @@
             "offset": 0,
             "slot": "251",
             "type": "t_array(t_struct(StakingType)3195_storage)dyn_storage",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:54"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:54"
           },
           {
             "label": "_stakesCount",
             "offset": 0,
             "slot": "252",
             "type": "t_mapping(t_address,t_uint256)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:56"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:56"
           },
           {
             "label": "_stakOwners",
             "offset": 0,
             "slot": "253",
             "type": "t_mapping(t_uint256,t_address)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:57"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:57"
           },
           {
             "label": "stakingData",
             "offset": 0,
             "slot": "254",
             "type": "t_mapping(t_address,t_array(t_struct(StakEntry)3188_storage)dyn_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:59"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:59"
           },
           {
             "label": "erc20Token",
             "offset": 0,
             "slot": "251",
             "type": "t_contract(IPermitToken)5380",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:40"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:40"
           },
           {
             "label": "coldWallet",
             "offset": 0,
             "slot": "252",
             "type": "t_address",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:41"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:41"
           },
           {
             "label": "balanceLimit",
             "offset": 0,
             "slot": "253",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:42"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:42"
           },
           {
             "label": "totalBalance",
             "offset": 0,
             "slot": "254",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:43"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:43"
           },
           {
             "label": "_balances",
             "offset": 0,
             "slot": "255",
             "type": "t_mapping(t_bytes32,t_struct(FundItem)4833_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:45"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:45"
           },
           {
             "label": "_transactionIds",
             "offset": 0,
             "slot": "256",
             "type": "t_mapping(t_bytes32,t_struct(TransactionItem)4836_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:46"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:46"
           }
         ],
         "types": {
@@ -3876,15 +3876,15 @@
             "numberOfBytes": "20"
           },
           "t_mapping(t_bytes32,t_struct(FundItem)4833_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.FundItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.FundItem)",
             "numberOfBytes": "32"
           },
           "t_mapping(t_bytes32,t_struct(TransactionItem)4836_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.TransactionItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.TransactionItem)",
             "numberOfBytes": "32"
           },
           "t_struct(FundItem)4833_storage": {
-            "label": "struct SQRStaking.FundItem",
+            "label": "struct WEB3Staking.FundItem",
             "members": [
               {
                 "label": "balance",
@@ -3896,7 +3896,7 @@
             "numberOfBytes": "32"
           },
           "t_struct(TransactionItem)4836_storage": {
-            "label": "struct SQRStaking.TransactionItem",
+            "label": "struct WEB3Staking.TransactionItem",
             "members": [
               {
                 "label": "amount",
@@ -4000,38 +4000,38 @@
           },
           {
 <<<<<<< HEAD
-            "label": "sqrToken",
+            "label": "web3Token",
 =======
             "label": "stakingTypes",
             "offset": 0,
             "slot": "251",
             "type": "t_array(t_struct(StakingType)3194_storage)dyn_storage",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:54"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:54"
           },
           {
             "label": "_stakesCount",
             "offset": 0,
             "slot": "252",
             "type": "t_mapping(t_address,t_uint256)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:56"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:56"
           },
           {
             "label": "_stakOwners",
             "offset": 0,
             "slot": "253",
             "type": "t_mapping(t_uint256,t_address)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:57"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:57"
           },
           {
             "label": "stakingData",
             "offset": 0,
             "slot": "254",
             "type": "t_mapping(t_address,t_array(t_struct(StakEntry)3187_storage)dyn_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:59"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:59"
           },
           {
             "label": "erc20Token",
@@ -4039,48 +4039,48 @@
             "offset": 0,
             "slot": "251",
             "type": "t_contract(IPermitToken)4402",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:42"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:42"
           },
           {
             "label": "coldWallet",
             "offset": 0,
             "slot": "252",
             "type": "t_address",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:43"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:43"
           },
           {
             "label": "balanceLimit",
             "offset": 0,
             "slot": "253",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:44"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:44"
           },
           {
             "label": "totalBalance",
             "offset": 0,
             "slot": "254",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:45"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:45"
           },
           {
             "label": "_balances",
             "offset": 0,
             "slot": "255",
             "type": "t_mapping(t_bytes32,t_struct(FundItem)3888_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:47"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:47"
           },
           {
             "label": "_transactionIds",
             "offset": 0,
             "slot": "256",
             "type": "t_mapping(t_bytes32,t_struct(TransactionItem)3891_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:48"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:48"
           }
         ],
         "types": {
@@ -4109,15 +4109,15 @@
             "numberOfBytes": "20"
           },
           "t_mapping(t_bytes32,t_struct(FundItem)3888_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.FundItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.FundItem)",
             "numberOfBytes": "32"
           },
           "t_mapping(t_bytes32,t_struct(TransactionItem)3891_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.TransactionItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.TransactionItem)",
             "numberOfBytes": "32"
           },
           "t_struct(FundItem)3888_storage": {
-            "label": "struct SQRStaking.FundItem",
+            "label": "struct WEB3Staking.FundItem",
             "members": [
               {
                 "label": "balance",
@@ -4129,7 +4129,7 @@
             "numberOfBytes": "32"
           },
           "t_struct(TransactionItem)3891_storage": {
-            "label": "struct SQRStaking.TransactionItem",
+            "label": "struct WEB3Staking.TransactionItem",
             "members": [
               {
                 "label": "amount",
@@ -4232,52 +4232,52 @@
             "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:88"
           },
           {
-            "label": "sqrToken",
+            "label": "web3Token",
             "offset": 0,
             "slot": "251",
             "type": "t_contract(IPermitToken)4374",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:41"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:41"
           },
           {
             "label": "coldWallet",
             "offset": 0,
             "slot": "252",
             "type": "t_address",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:42"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:42"
           },
           {
             "label": "balanceLimit",
             "offset": 0,
             "slot": "253",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:43"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:43"
           },
           {
             "label": "totalBalance",
             "offset": 0,
             "slot": "254",
             "type": "t_uint256",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:44"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:44"
           },
           {
             "label": "_balances",
             "offset": 0,
             "slot": "255",
             "type": "t_mapping(t_bytes32,t_struct(FundItem)3890_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:46"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:46"
           },
           {
             "label": "_transactionIds",
             "offset": 0,
             "slot": "256",
             "type": "t_mapping(t_bytes32,t_struct(TransactionItem)3893_storage)",
-            "contract": "SQRStaking",
-            "src": "contracts\\SQRStaking.sol:47"
+            "contract": "WEB3Staking",
+            "src": "contracts\\WEB3Staking.sol:47"
           }
         ],
         "types": {
@@ -4306,15 +4306,15 @@
             "numberOfBytes": "20"
           },
           "t_mapping(t_bytes32,t_struct(FundItem)3890_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.FundItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.FundItem)",
             "numberOfBytes": "32"
           },
           "t_mapping(t_bytes32,t_struct(TransactionItem)3893_storage)": {
-            "label": "mapping(bytes32 => struct SQRStaking.TransactionItem)",
+            "label": "mapping(bytes32 => struct WEB3Staking.TransactionItem)",
             "numberOfBytes": "32"
           },
           "t_struct(FundItem)3890_storage": {
-            "label": "struct SQRStaking.FundItem",
+            "label": "struct WEB3Staking.FundItem",
             "members": [
               {
                 "label": "balance",
@@ -4326,7 +4326,7 @@
             "numberOfBytes": "32"
           },
           "t_struct(TransactionItem)3893_storage": {
-            "label": "struct SQRStaking.TransactionItem",
+            "label": "struct WEB3Staking.TransactionItem",
             "members": [
               {
                 "label": "amount",

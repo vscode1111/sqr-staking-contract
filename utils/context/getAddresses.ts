@@ -5,10 +5,10 @@ import { Addresses, DeployNetworks } from '~types';
 
 export function getAddresses(network: keyof DeployNetworks): Addresses {
   const erc20TokenAddress = CONTRACTS.ERC20_TOKEN[network];
-  const sqrStakingAddress = CONTRACTS.SQR_STAKING[network];
+  const web3StakingAddress = CONTRACTS.WEB3_STAKING[network];
   return {
     erc20TokenAddress,
-    sqrStakingAddress,
+    web3StakingAddress,
   };
 }
 
